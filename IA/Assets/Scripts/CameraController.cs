@@ -6,6 +6,23 @@ public class CameraController : MonoBehaviour
 
     public float moveSpeed = 10.0f;
 
+    public static CameraController instance;
+
+    void Start()
+    {
+        
+    }
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    public void changeCarBody(GameObject newCarbody)
+    {
+        this.carBody = newCarbody;
+    }
+
     void Update()
     {
         float interpolation = moveSpeed * Time.deltaTime;
