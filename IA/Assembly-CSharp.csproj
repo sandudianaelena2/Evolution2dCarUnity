@@ -58,6 +58,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Evolution\Chromosome.cs" />
+     <Compile Include="Assets\Evolution\Genes\Implementations\BackWheelGene.cs" />
+     <Compile Include="Assets\Evolution\Genes\Implementations\CarBodyGene.cs" />
+     <Compile Include="Assets\Evolution\Genes\Implementations\FrontWheelGene.cs" />
+     <Compile Include="Assets\Evolution\Genes\Interfaces\IGene.cs" />
+     <Compile Include="Assets\Evolution\Specifications\Implementations\BackWheelSpecifications.cs" />
+     <Compile Include="Assets\Evolution\Specifications\Implementations\CarBodySpecifications.cs" />
+     <Compile Include="Assets\Evolution\Specifications\Implementations\Constraints\CarBodyConstraints.cs" />
+     <Compile Include="Assets\Evolution\Specifications\Implementations\Constraints\WheelConstraints.cs" />
+     <Compile Include="Assets\Evolution\Specifications\Implementations\FrontWheelSpecifications.cs" />
+     <Compile Include="Assets\Evolution\Specifications\Interfaces\ISpecifications.cs" />
      <Compile Include="Assets\Models\Car.cs" />
      <Compile Include="Assets\Scripts\AudioController.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />

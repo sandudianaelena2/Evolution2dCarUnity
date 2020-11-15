@@ -4,10 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Car
-  - Wheel
-  - AllCar
   - NewWheel
+  - BackWheel
+  - FrontWheel
+  - CarBody
+  - Car
   layers:
   - Default
   - TransparentFX

@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 183046972}
   m_Layer: 0
   m_Name: backWheel
-  m_TagString: Wheel
+  m_TagString: BackWheel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -568,8 +568,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183046971}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.3649, y: -0.4973, z: 7.4132814}
-  m_LocalScale: {x: 0.43359485, y: 0.42899373, z: 1}
+  m_LocalPosition: {x: 1.65, y: -0.19, z: 2}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 306492038}
   m_RootOrder: 1
@@ -678,7 +678,7 @@ GameObject:
   - component: {fileID: 306492038}
   m_Layer: 0
   m_Name: Car
-  m_TagString: AllCar
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1252,7 +1252,7 @@ GameObject:
   - component: {fileID: 950434918}
   m_Layer: 9
   m_Name: carBody
-  m_TagString: Car
+  m_TagString: CarBody
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1362,8 +1362,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950434911}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.36, y: 0.198, z: 7.4132814}
-  m_LocalScale: {x: 0.11749223, y: 0.09515314, z: 1}
+  m_LocalPosition: {x: 2.55, y: 0.91, z: 7.4132814}
+  m_LocalScale: {x: 0.1174922, y: 0.1351531, z: 1}
   m_Children: []
   m_Father: {fileID: 306492038}
   m_RootOrder: 0
@@ -1382,7 +1382,7 @@ WheelJoint2D:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: -8.306951, y: -7.1568847}
+  m_Anchor: {x: -8.846834, y: -3.8545876}
   m_ConnectedAnchor: {x: -0.0000028405138, y: 0.000000033235892}
   m_Suspension:
     m_DampingRatio: 1
@@ -1406,7 +1406,7 @@ WheelJoint2D:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 8.766522, y: -7.23045}
+  m_Anchor: {x: 6.894058, y: -3.9436984}
   m_ConnectedAnchor: {x: -0.00000020256266, y: -0.000000018547809}
   m_Suspension:
     m_DampingRatio: 1
@@ -1780,7 +1780,7 @@ GameObject:
   - component: {fileID: 1615873897}
   m_Layer: 0
   m_Name: frontWheel
-  m_TagString: Wheel
+  m_TagString: FrontWheel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1793,7 +1793,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615873895}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.39, y: -0.49, z: 7.4132814}
+  m_LocalPosition: {x: 3.36, y: -0.19, z: 1}
   m_LocalScale: {x: 0.44863635, y: 0.43239006, z: 1}
   m_Children: []
   m_Father: {fileID: 306492038}
