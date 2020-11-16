@@ -18,20 +18,22 @@ public class CameraController : MonoBehaviour
         instance = this;
     }
 
-    public void changeCarBody(GameObject newCarbody)
-    {
-        this.carBody = newCarbody;
-    }
-
     void Update()
     {
-        float interpolation = moveSpeed * Time.deltaTime;
+        carBody = Test.instance._car.transform.GetChild(0).gameObject;
 
-        Vector3 cameraPosition = this.transform.position;
+        if (carBody != null)
+        {
 
-        cameraPosition.y = Mathf.Lerp(this.transform.position.y, carBody.transform.position.y, interpolation);
-        cameraPosition.x = Mathf.Lerp(this.transform.position.x, carBody.transform.position.x, interpolation);
+            float interpolation = moveSpeed * Time.deltaTime;
 
-        this.transform.position = cameraPosition;
+            Vector3 cameraPosition = this.transform.position;
+
+            cameraPosition.y = Mathf.Lerp(this.transform.position.y, carBody.transform.position.y+0.5f, interpolation);
+            cameraPosition.x = Mathf.Lerp(this.transform.position.x, carBody.transform.position.x, interpolation);
+
+            this.transform.position = cameraPosition;
+        }
+
     }
 }

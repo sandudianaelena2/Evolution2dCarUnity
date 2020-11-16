@@ -7,14 +7,16 @@ namespace Assets.Evolution.Specifications.Implementations
     public class CarBodySpecifications:ISpecifications
     {
         private string _tag = "CarBody";
-        private GameObject _carBody;
+        public GameObject _carBody;
         private float _scaleX;
         private float _scaleY;
         private Vector2 _frontWheelPos;
         private Vector2 _backWheelPos;
         public CarBodySpecifications()
         {
-            _carBody = GameObject.FindGameObjectWithTag(_tag);
+            _carBody = Test.instance._car.transform.GetChild(0).gameObject;
+            // _carBody = GameObject.FindGameObjectWithTag(_tag);
+            //_carBody = _carBody.transform.GetChild(0).gameObject;
             _scaleX = Random.Range(CarBodyConstraints.ScaleXmin, CarBodyConstraints.ScaleXmax);
             _scaleY = Random.Range(CarBodyConstraints.ScaleYmin, CarBodyConstraints.ScaleYmax);
             var xMin = _carBody.GetComponent<SpriteRenderer>().sprite.bounds.min.x;

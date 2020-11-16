@@ -6,31 +6,22 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    private GameObject _allCar;
-    private List<Car> cars = new List<Car>();
-    private List<Chromosome> _chromosomes = new List<Chromosome>();
     public static Test instance;
+
+    public GameObject _car;
+    private List<Car> _cars = new List<Car>();
+    private List<Chromosome> _chromosomes = new List<Chromosome>();
     private float time = 0;
     private int index = 1;
-    
-    // Start is called before the first frame update
+
+    public List<Car> getCars() => _cars;
+
     void Awake()
     {
         instance = this;
-        _allCar = GameObject.FindGameObjectWithTag("Car");
-        cars.Add(new Car(_allCar));
         GenerateChromosomes();
     }
 
-    public List<Car> getCars()
-        => cars;
-
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (Time.time - time > 3)
@@ -38,9 +29,9 @@ public class Test : MonoBehaviour
             time = Time.time;
             if (index < 20)
             {
-                cars[index-1].SetActive(false);
-                cars[index].SetActive(true);
-                CameraController.instance.changeCarBody(cars[index].GetCarBody());
+                _cars[index-1].SetActive(false);
+                _car = _cars[index].GetCar();
+                _cars[index].SetActive(true);
             }
             index++;
         }
@@ -53,18 +44,24 @@ public class Test : MonoBehaviour
             var newChromosome = new Chromosome();
             _chromosomes.Add(newChromosome);
             var newCar = constructCar(newChromosome);
-            newCar.SetActive(false);
-            cars.Add(newCar);
+            if (i != 0)
+            {
+                _car = newCar.GetCar();
+                newCar.SetActive(false);
+            }
+            _cars.Add(newCar);
         }
     }
 
     private Car constructCar(Chromosome chromosome)
     {
         var genes = chromosome.Genes;
-        GameObject newCar = GameObject.Instantiate(_allCar);
-        foreach(var gene in genes){
+        GameObject newCar = GameObject.Instantiate(_car);
+        foreach (var gene in genes)
+        {
             gene.GetSpecifications().ChangeGameObject(newCar);
         }
+
         return new Car(newCar);
     }
 }

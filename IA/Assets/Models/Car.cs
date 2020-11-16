@@ -37,6 +37,13 @@ namespace Assets.Models
         {
             return _car.transform.GetChild(0).gameObject;
         }
+
+        public GameObject GetCar()
+        {
+            return _car;
+        }
+
+        
         
     }
 }

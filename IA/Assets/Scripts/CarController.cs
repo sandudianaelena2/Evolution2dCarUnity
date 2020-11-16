@@ -2,46 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Assets.Models;
 
 public class CarController : MonoBehaviour
 {
 
 	static public CarController instance;
-	
+
 	public bool isMoving = true;
 
-	private Car currentCar;
+	public WheelJoint2D frontWheel;
+	public WheelJoint2D backWheel;
+
+	JointMotor2D motorFront;
+
+	public float frontSpeed;
+	public float frontTorque;
 
 	private void Awake()
 	{
 		instance = this;
-		AudioController.instance.PlayMusic();
-	}
+		//AudioController.instance.PlayMusic();
 
-	private void Start()
-	{
-		
 	}
 
 	void Update()
 	{
 		if (isMoving)
 		{
-			
-		}
-	}
 
-	public void setCurrentCar(Car car)
-	{
-		this.currentCar = car;
+			motorFront.motorSpeed = frontSpeed * -1;
+			motorFront.maxMotorTorque = frontTorque;
+
+			frontWheel.motor = motorFront;
+			backWheel.motor = motorFront;
+		}
 	}
 
 	public void Stop()
 	{
-		currentCar.Stop();
-		currentCar.SetActive(false);
-		AudioController.instance.StopMusic();
-	}
+		frontSpeed = 0;
 
+		//AudioController.instance.StopMusic();
+	}
 }
