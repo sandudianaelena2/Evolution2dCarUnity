@@ -19,11 +19,11 @@ public class Test : MonoBehaviour
     void Awake()
     {
         instance = this;
-        GenerateChromosomes();
+        //GenerateChromosomes();
     }
 
     void Update()
-    {
+    {/*
         if (Time.time - time > 3)
         {
             time = Time.time;
@@ -34,7 +34,7 @@ public class Test : MonoBehaviour
                 _cars[index].SetActive(true);
             }
             index++;
-        }
+        }*/
     }
 
     private void GenerateChromosomes()

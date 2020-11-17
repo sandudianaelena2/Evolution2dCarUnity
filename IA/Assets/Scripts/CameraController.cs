@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        carBody = Test.instance._car.transform.GetChild(0).gameObject;
+        //carBody = Test.instance._car.transform.GetChild(0).gameObject;
 
         if (carBody != null)
         {

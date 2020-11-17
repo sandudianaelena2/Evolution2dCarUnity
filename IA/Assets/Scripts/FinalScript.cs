@@ -22,7 +22,7 @@ public class FinalScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         stopCar = collision.tag;
-        if (collision.tag == "Car")
+        if (collision.tag == "CarBody")
         {
             CarController.instance.Stop();
         }
