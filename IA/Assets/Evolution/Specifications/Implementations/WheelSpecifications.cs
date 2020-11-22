@@ -16,9 +16,9 @@ namespace Assets.Evolution.Specifications.Implementations
 
         public void ChangeGameObject(GameObject car)
         {
-            var backWheel = car.transform.GetChild((int)_wheelNumber).gameObject;
-            var newScale =  new Vector3(_scale, _scale, backWheel.transform.localScale.z);
-            backWheel.transform.localScale = newScale;
+            var wheel = car.transform.GetChild((int)_wheelNumber).gameObject;
+            var newScale =  new Vector3(_scale, _scale, wheel.transform.localScale.z);
+            wheel.transform.localScale = newScale;
         }
 
         public void RegenerateValues()

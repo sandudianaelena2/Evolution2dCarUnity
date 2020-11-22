@@ -7,30 +7,19 @@ namespace Assets.Evolution.Specifications.Implementations
     public class CarBodySpecifications:ISpecifications
     {
         private string _tag = "CarBody";
-        public GameObject _carBody;
+        private readonly GameObject _carBody;
         private float _scaleX;
         private float _scaleY;
-        private Vector2 _frontWheelPos;
-        private Vector2 _backWheelPos;
+        private Vector2 _frontWheelAnchorPos;
+        private Vector2 _backWheelAnchorPos;
+        private Vector2 _spriteMaxPoint;
+        private Vector2 _spriteMinPoint;
         public CarBodySpecifications()
         {
             _carBody = Test.instance._car.transform.GetChild(0).gameObject;
-            // _carBody = GameObject.FindGameObjectWithTag(_tag);
-            //_carBody = _carBody.transform.GetChild(0).gameObject;
-            _scaleX = Random.Range(CarBodyConstraints.ScaleXmin, CarBodyConstraints.ScaleXmax);
-            _scaleY = Random.Range(CarBodyConstraints.ScaleYmin, CarBodyConstraints.ScaleYmax);
-            var xMin = _carBody.GetComponent<SpriteRenderer>().sprite.bounds.min.x;
-            var xMax = _carBody.GetComponent<SpriteRenderer>().sprite.bounds.max.x;
-            var yMin = _carBody.GetComponent<SpriteRenderer>().sprite.bounds.min.y;
-            var yMax = _carBody.GetComponent<SpriteRenderer>().sprite.bounds.max.y;
-            _frontWheelPos = new Vector2();
-            _backWheelPos = new Vector2();
-            _frontWheelPos.x = Random.Range(xMin, xMax);
-            _backWheelPos.x = Random.Range(xMin, xMax);
-            _frontWheelPos.y = Random.Range(yMin, yMax);
-            _backWheelPos.y = Random.Range(yMin, yMax);
-            Debug.unityLogger.Log("Xmin:" + xMin + " Xmax:"+xMax);
-            Debug.unityLogger.Log("Ymin:" + yMin + " Ymax:"+yMax);
+            _frontWheelAnchorPos = new Vector2();
+            _backWheelAnchorPos = new Vector2();
+            RegenerateValues();
         }
 
         public void ChangeGameObject(GameObject car)
@@ -44,27 +33,41 @@ namespace Assets.Evolution.Specifications.Implementations
             jointMotor2D.maxMotorTorque = CarBodyConstraints.MotorTorque;
             frontWheelJoint.motor = jointMotor2D;
             backWheelJoint.motor = jointMotor2D;
-            frontWheelJoint.anchor = _frontWheelPos;
-            backWheelJoint.anchor = _backWheelPos;
+            frontWheelJoint.anchor = _frontWheelAnchorPos;
+            backWheelJoint.anchor = _backWheelAnchorPos;
         }
 
         public void RegenerateValues()
         {
-            _scaleX = Random.Range(CarBodyConstraints.ScaleXmin, CarBodyConstraints.ScaleXmax);
-            _scaleY = Random.Range(CarBodyConstraints.ScaleYmin, CarBodyConstraints.ScaleYmax);
-            var xMin = (_carBody.GetComponent<SpriteRenderer>().sprite.bounds.min.x * _scaleX)/ _carBody.transform.localScale.x;
-            var xMax = (_carBody.GetComponent<SpriteRenderer>().sprite.bounds.max.x * _scaleX)/ _carBody.transform.localScale.x;
-            var yMin = (_carBody.GetComponent<SpriteRenderer>().sprite.bounds.min.y * _scaleY)/ _carBody.transform.localScale.y;
-            var yMax = (_carBody.GetComponent<SpriteRenderer>().sprite.bounds.max.y * _scaleY)/ _carBody.transform.localScale.y;
-            _frontWheelPos.x = Random.Range(xMin, xMax);
-            _backWheelPos.x = Random.Range(xMin, xMax);
-            _frontWheelPos.y = Random.Range(yMin, yMax);
-            _backWheelPos.y = Random.Range(yMin, yMax);
+            GenerateNewScale();
+            RefreshSpriteBounds();
+            GenerateNewAnchorPositions();
         }
 
         public void RemoveObject(GameObject car)
         {
-            
+            //Do nothing   
+        }
+        
+        private void RefreshSpriteBounds()
+        {
+            _spriteMaxPoint = _carBody.GetComponent<SpriteRenderer>().sprite.bounds.max;
+            _spriteMinPoint = _carBody.GetComponent<SpriteRenderer>().sprite.bounds.min;
+        }
+
+        private void GenerateNewScale()
+        {
+            _scaleX = Random.Range(CarBodyConstraints.ScaleXmin, CarBodyConstraints.ScaleXmax);
+            _scaleY = Random.Range(CarBodyConstraints.ScaleYmin, CarBodyConstraints.ScaleYmax);
+        }
+
+        private void GenerateNewAnchorPositions()
+        {
+            float xMiddlePoint = _spriteMinPoint.x + (_spriteMaxPoint.x - _spriteMinPoint.x) / 2;
+            _frontWheelAnchorPos.x = Random.Range(xMiddlePoint, _spriteMaxPoint.x);
+            _backWheelAnchorPos.x = Random.Range(_spriteMinPoint.x, xMiddlePoint);
+            _frontWheelAnchorPos.y = Random.Range(_spriteMinPoint.y, _spriteMaxPoint.y);
+            _backWheelAnchorPos.y = Random.Range(_spriteMinPoint.y, _spriteMaxPoint.y);
         }
     }
 }
