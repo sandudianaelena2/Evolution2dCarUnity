@@ -151,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 138101399591894018}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.55, y: 0.91, z: 0}
-  m_LocalScale: {x: 0.1174922, y: 0.1351531, z: 1}
+  m_LocalScale: {x: 0.18913758, y: 0.10856543, z: 1}
   m_Children: []
   m_Father: {fileID: 138101400290357979}
   m_RootOrder: 0
@@ -267,16 +267,16 @@ WheelJoint2D:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 6.894058, y: -3.9436984}
+  m_Anchor: {x: 2.8670404, y: -3.7265954}
   m_ConnectedAnchor: {x: -0.00000020256266, y: -0.000000018547809}
   m_Suspension:
     m_DampingRatio: 1
     m_Frequency: 200
     m_Angle: 90
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
-    m_MotorSpeed: 0
-    m_MaximumMotorForce: 10000
+    m_MotorSpeed: -620
+    m_MaximumMotorForce: 100
 --- !u!235 &138101399591894073
 WheelJoint2D:
   m_ObjectHideFlags: 0
@@ -291,16 +291,16 @@ WheelJoint2D:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: -8.846834, y: -3.8545876}
+  m_Anchor: {x: -8.441966, y: -3.8579125}
   m_ConnectedAnchor: {x: -0.0000028405138, y: 0.000000033235892}
   m_Suspension:
     m_DampingRatio: 1
     m_Frequency: 200
     m_Angle: 90
-  m_UseMotor: 0
+  m_UseMotor: 1
   m_Motor:
-    m_MotorSpeed: 0
-    m_MaximumMotorForce: 10000
+    m_MotorSpeed: -620
+    m_MaximumMotorForce: 100
 --- !u!114 &138101399591894075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,7 +328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 138101400290357979}
   m_Layer: 0
-  m_Name: Car 1 1
+  m_Name: Car
   m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

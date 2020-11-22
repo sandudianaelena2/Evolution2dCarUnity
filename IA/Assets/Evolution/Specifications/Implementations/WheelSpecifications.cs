@@ -27,8 +27,8 @@ namespace Assets.Evolution.Specifications.Implementations
         }
 
         public void RemoveObject(GameObject car)
-        {
-            Object.Destroy(car.transform.GetChild(1).gameObject);
+        { 
+
         }
     }
 }

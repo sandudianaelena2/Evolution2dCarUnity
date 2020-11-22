@@ -1,14 +1,18 @@
-using System;
-using Assets.Evolution.Genes.Interfaces;
+﻿using Assets.Evolution.Genes.Interfaces;
 using Assets.Evolution.Specifications.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Assets.Evolution.Genes.Implementations
 {
-    public class BackWheelGene:IGene
+    class BoxGene:IGene
     {
         private bool _active;
 
-        public BackWheelGene(ISpecifications specifications)
+        public BoxGene(ISpecifications specifications)
         {
             var rand = new Random();
             var number = rand.NextDouble();
@@ -17,7 +21,7 @@ namespace Assets.Evolution.Genes.Implementations
                 _active = false;
             Specifications = specifications;
         }
-        
+
         public ISpecifications Specifications { get; }
 
         public void Mutate(double probability)

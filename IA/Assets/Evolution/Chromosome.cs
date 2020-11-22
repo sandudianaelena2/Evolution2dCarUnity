@@ -13,8 +13,10 @@ namespace Assets.Evolution
             Genes = new List<IGene>
             {
                 new CarBodyGene(new CarBodySpecifications()),
-                new BackWheelGene(new WheelSpecifications(WheelConstraints.Wheels.BackWheel)),
-                new FrontWheelGene(new WheelSpecifications(WheelConstraints.Wheels.FrontWheel))
+                new WheelGene(new WheelSpecifications(WheelConstraints.Wheels.BackWheel)),
+                new WheelGene(new WheelSpecifications(WheelConstraints.Wheels.FrontWheel)),
+                new BoxGene(new BoxSpecifications(BoxConstraints.Boxes.LeftBox)),
+                new BoxGene(new BoxSpecifications(BoxConstraints.Boxes.RightBox))
             };
         }
 

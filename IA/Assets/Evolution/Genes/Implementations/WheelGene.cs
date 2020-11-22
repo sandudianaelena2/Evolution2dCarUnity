@@ -4,11 +4,11 @@ using Assets.Evolution.Specifications.Interfaces;
 
 namespace Assets.Evolution.Genes.Implementations
 {
-    public class FrontWheelGene:IGene
+    public class WheelGene:IGene
     {
         private bool _active;
 
-        public FrontWheelGene(ISpecifications specifications)
+        public WheelGene(ISpecifications specifications)
         {
             var rand = new Random();
             var number = rand.NextDouble();
@@ -30,11 +30,10 @@ namespace Assets.Evolution.Genes.Implementations
         {
             return _active;
         }
-        
+
         public ISpecifications GetSpecifications()
         {
             return Specifications;
         }
-        
     }
 }

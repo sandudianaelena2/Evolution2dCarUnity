@@ -8,7 +8,7 @@ using UnityEngine;
 public class Test : MonoBehaviour
 {
     public static Test instance;
-
+    public GameObject[] _carPrefabsArray;
     public GameObject _car;
     private List<Car> _cars = new List<Car>();
     private List<Chromosome> _chromosomes = new List<Chromosome>();
@@ -16,12 +16,15 @@ public class Test : MonoBehaviour
     private double oldPosition = -1;
     private int index = 1;
     private bool resetCarFlag = false;
+    private static System.Random random;
+    private static object syncObj = new object();
 
     public List<Car> getCars() => _cars;
 
     void Awake()
     {
         instance = this;
+        _car = GetRandomCar();
         GenerateChromosomes();
     }
 
@@ -32,7 +35,7 @@ public class Test : MonoBehaviour
             Math.Round(_car.transform.GetChild(0).position.x,1) < -1)
         {
             resetCarFlag = false;
-            if (index < 10)
+            if (index < 40)
             {
                 _chromosomes[index - 1].score = Score.ScoreValue;
                 _cars[index-1].SetActive(false);
@@ -41,7 +44,7 @@ public class Test : MonoBehaviour
             }
             else
             {
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 40; i++)
                 {
                     Debug.Log("Masina " + i + " a avut scorul : " + _chromosomes[i].score);
                 }
@@ -59,9 +62,11 @@ public class Test : MonoBehaviour
        
     }
 
+    
+
     private void GenerateChromosomes()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 40; i++)
         {
             var newChromosome = new Chromosome();
             _chromosomes.Add(newChromosome);
@@ -82,6 +87,7 @@ public class Test : MonoBehaviour
     private Car constructCar(Chromosome chromosome)
     {
         var genes = chromosome.Genes;
+        _car = GetRandomCar();
         GameObject newCar = GameObject.Instantiate(_car);
         foreach (var gene in genes)
         {
@@ -89,5 +95,16 @@ public class Test : MonoBehaviour
         }
 
         return new Car(newCar);
+    }
+
+    private GameObject GetRandomCar()
+    {
+        lock (syncObj)
+        {
+            if (random == null)
+                random = new System.Random();
+            var randomIndex = random.Next(_carPrefabsArray.Length);
+            return _carPrefabsArray[randomIndex];
+        } 
     }
 }
