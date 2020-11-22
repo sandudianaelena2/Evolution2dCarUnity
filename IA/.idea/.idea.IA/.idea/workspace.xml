@@ -21,10 +21,11 @@
   <component name="ChangeListManager">
     <list default="true" id="b94badb7-5677-44b3-b474-4b958a7ee0a1" name="Default Changelist" comment="Bring changes from branch IA/refactorizare to master">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/BackWheelSpecifications.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/FrontWheelSpecifications.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/WheelSpecifications.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/WheelSpecifications.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Test.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,10 +63,10 @@
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/CarBodySpecifications.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/BackWheelSpecifications.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CameraController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Test.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Constraints/WheelConstraints.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Chromosome.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/WheelSpecifications.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Test.cs" />
       </list>
     </option>
   </component>
@@ -136,6 +137,7 @@
       <workItem from="1605974642703" duration="1090000" />
       <workItem from="1605978525971" duration="6928000" />
       <workItem from="1606033567191" duration="1445000" />
+      <workItem from="1606043884900" duration="716000" />
     </task>
     <task id="LOCAL-00001" summary="Instantiate more cars and change wheel dynamically">
       <created>1605282786091</created>

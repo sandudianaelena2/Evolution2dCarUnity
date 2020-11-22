@@ -15,6 +15,7 @@ public class Test : MonoBehaviour
     private float time = 0;
     private double oldPosition = -1;
     private int index = 1;
+    private bool resetCarFlag = false;
 
     public List<Car> getCars() => _cars;
 
@@ -26,20 +27,26 @@ public class Test : MonoBehaviour
 
     void Update()
     {
-        if( ((Time.time - time > 1) && Math.Round(_car.transform.GetChild(0).position.x,1) == oldPosition) ||
-            Math.Round(_car.transform.GetChild(0).position.x,4) < 0)
+        if( ((Time.time - time > 1) && Math.Round(_car.transform.GetChild(0).position.x,1) == oldPosition && resetCarFlag) ||
+            Math.Round(_car.transform.GetChild(0).position.x,1) < -1)
         {
-            if (index < 20)
+            resetCarFlag = false;
+            if (index < 10)
             {
                 _cars[index-1].SetActive(false);
                 _car = _cars[index].GetCar();
                 _cars[index].SetActive(true);
             }
+            else
+            {
+                Application.Quit();
+            }
             index++;
         }
         
-        if (Time.time - time > 10)
+        if (Time.time - time > 5)
         {
+            resetCarFlag = true;
             time = Time.time;
             oldPosition = Math.Round(_car.transform.GetChild(0).position.x, 1);
         }
@@ -48,17 +55,21 @@ public class Test : MonoBehaviour
 
     private void GenerateChromosomes()
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 10; i++)
         {
             var newChromosome = new Chromosome();
             _chromosomes.Add(newChromosome);
             var newCar = constructCar(newChromosome);
-            if (i != 0)
+            if (i == 0)
             {
                 _car = newCar.GetCar();
+            }
+            else
+            {
                 newCar.SetActive(false);
             }
-            _cars.Add(newCar);
+
+        _cars.Add(newCar);
         }
     }
 
