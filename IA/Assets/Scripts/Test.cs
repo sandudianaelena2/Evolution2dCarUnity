@@ -27,18 +27,24 @@ public class Test : MonoBehaviour
 
     void Update()
     {
+        Score.ScoreValue = Convert.ToInt32(_car.transform.GetChild(0).position.x);
         if( ((Time.time - time > 1) && Math.Round(_car.transform.GetChild(0).position.x,1) == oldPosition && resetCarFlag) ||
             Math.Round(_car.transform.GetChild(0).position.x,1) < -1)
         {
             resetCarFlag = false;
             if (index < 10)
             {
+                _chromosomes[index - 1].score = Score.ScoreValue;
                 _cars[index-1].SetActive(false);
                 _car = _cars[index].GetCar();
                 _cars[index].SetActive(true);
             }
             else
             {
+                for (int i = 0; i < 10; i++)
+                {
+                    Debug.Log("Masina " + i + " a avut scorul : " + _chromosomes[i].score);
+                }
                 Application.Quit();
             }
             index++;

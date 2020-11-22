@@ -40,6 +40,7 @@
           <e p="CameraController.cs" t="Include" />
           <e p="CarController.cs" t="Include" />
           <e p="FinalScript.cs" t="Include" />
+          <e p="Score.cs" t="Include" />
           <e p="Test.cs" t="Include" />
         </e>
       </e>
