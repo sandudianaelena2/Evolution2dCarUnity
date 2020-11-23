@@ -10,29 +10,18 @@ namespace Assets.Evolution.Genes.Implementations
 {
     class BoxGene:IGene
     {
-        private bool _active;
 
-        public BoxGene(ISpecifications specifications)
+        public BoxGene(ISpecifications specifications, ISpecificationsOperations specificationsOperations)
         {
-            var rand = new Random();
-            var number = rand.NextDouble();
-            _active = true;
-            if (number >= 0.5)
-                _active = false;
             Specifications = specifications;
+            SpecificationsOperations = specificationsOperations;
         }
 
         public ISpecifications Specifications { get; }
-
+        public ISpecificationsOperations SpecificationsOperations { get; }
         public void Mutate(double probability)
         {
-            _active = !_active;
             Specifications.RegenerateValues();
-        }
-
-        public bool IsActive()
-        {
-            return _active;
         }
 
         public ISpecifications GetSpecifications()

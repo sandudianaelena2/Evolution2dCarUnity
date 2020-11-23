@@ -28,8 +28,6 @@ public class Test : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("A PICAT LA RANDOM: " + GetRandomIntNumber(1));
-
         instance = this;
         _car = GetRandomCar();
         GenerateChromosomes();

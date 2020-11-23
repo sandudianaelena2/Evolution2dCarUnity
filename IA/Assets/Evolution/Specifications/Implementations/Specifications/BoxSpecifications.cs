@@ -42,10 +42,5 @@ namespace Assets.Evolution.Specifications.Implementations
         {
 
         }
-
-        Dictionary<string, Tuple<float, float>> ISpecifications.GetSpecifications()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

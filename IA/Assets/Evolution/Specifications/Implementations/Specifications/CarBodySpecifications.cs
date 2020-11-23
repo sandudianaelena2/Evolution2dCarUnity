@@ -1,12 +1,12 @@
 using Assets.Evolution.Specifications.Implementations.Constraints;
 using Assets.Evolution.Specifications.Interfaces;
-using System;
+
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Evolution.Specifications.Implementations
 {
-    public class CarBodySpecifications:ISpecifications
+    public class CarBodySpecifications : ISpecifications
     {
         private readonly GameObject _carBody;
 
@@ -22,22 +22,44 @@ namespace Assets.Evolution.Specifications.Implementations
         private Vector2 _leftBoxAnchorPos;
         private Vector2 _rightBoxAnchorPos;
 
-        private int childCount;
-        public Dictionary<string, Tuple<float,float>> GetSpecifications()
+        private bool hasOneBox;
+        private bool hasTwoBoxes;
+
+        public System.Tuple<Vector2, Vector2> GetWheelAnchorPosition()
         {
-            Dictionary<string, Tuple<float, float>> specifications = new Dictionary<string,Tuple<float, float>>();
-
-            Tuple<float, float> scale = new Tuple<float, float>(_scaleX, _scaleY);
-            specifications.Add("scale", scale);
-
-
-            return specifications;
+            return new System.Tuple<Vector2, Vector2>(_backWheelAnchorPos, _frontWheelAnchorPos);
+        }
+        public System.Tuple<Vector2, Vector2> GetBoxAnchorPosition()
+        {
+            return new System.Tuple<Vector2, Vector2>(_leftBoxAnchorPos, _rightBoxAnchorPos);
+        }
+        public System.Tuple<float, float> GetScale()
+        {
+            return new System.Tuple<float, float>(_scaleX, _scaleY);
+        }
+        public void SetWheelAnchorPosition(System.Tuple<Vector2, Vector2> newWheelAnchorPosition)
+        {
+            _frontWheelAnchorPos = newWheelAnchorPosition.Item1;
+            _backWheelAnchorPos = newWheelAnchorPosition.Item2;
         }
 
+        public void SetBoxAnchorPosition(System.Tuple<Vector2, Vector2> newBoxAnchorPosition)
+        {
+            _leftBoxAnchorPos = newBoxAnchorPosition.Item1;
+            _rightBoxAnchorPos = newBoxAnchorPosition.Item2;
+        }
+
+        public void SetScale(System.Tuple<float, float> newScale)
+        {
+            _scaleX = newScale.Item1;
+            _scaleY = newScale.Item2;
+        }
         public CarBodySpecifications()
         {
             _carBody = Test.instance._car.transform.GetChild(0).gameObject;
-            childCount = _carBody.transform.childCount;
+
+            hasOneBox = (_carBody.transform.childCount == 4);
+            hasTwoBoxes = (_carBody.transform.childCount == 5);
 
             _frontWheelAnchorPos = new Vector2();
             _backWheelAnchorPos = new Vector2();
@@ -68,12 +90,12 @@ namespace Assets.Evolution.Specifications.Implementations
             WheelJoint2D leftBoxJoint;
             WheelJoint2D rightBoxJoint;
 
-            if(childCount == 4)
+            if (hasOneBox)
             {
                 leftBoxJoint = _carBody.GetComponents<WheelJoint2D>()[0];
                 leftBoxJoint.connectedAnchor = new Vector2(0f, 0f);
             }
-            else if(childCount == 5)
+            else if (hasTwoBoxes)
             {
                 leftBoxJoint = _carBody.GetComponents<WheelJoint2D>()[0];
                 rightBoxJoint = _carBody.GetComponents<WheelJoint2D>()[1];
@@ -95,11 +117,14 @@ namespace Assets.Evolution.Specifications.Implementations
         {
             //Do nothing   
         }
-        
+
         private void RefreshSpriteBounds()
         {
             _spriteMaxPoint = _carBody.GetComponent<SpriteRenderer>().sprite.bounds.max;
             _spriteMinPoint = _carBody.GetComponent<SpriteRenderer>().sprite.bounds.min;
+
+            Debug.Log(_spriteMaxPoint + "<-max point,,,,,minpoint->" + _spriteMinPoint);
+            Debug.Log(_scaleX + "scalex.......scaley" + _scaleY);
         }
 
         private void GenerateNewScale()
@@ -123,18 +148,16 @@ namespace Assets.Evolution.Specifications.Implementations
         {
             float xMiddlePoint = _spriteMinPoint.x + (_spriteMaxPoint.x - _spriteMinPoint.x) / 2;
 
-            if (childCount == 4)
+            if (hasOneBox)
             {
                 _leftBoxAnchorPos.x = Random.Range(_spriteMinPoint.x + BoxConstraints.MaxScale, xMiddlePoint);
             }
-            else if(childCount == 5)
+            else if (hasTwoBoxes)
             {
                 _leftBoxAnchorPos.x = Random.Range(_spriteMinPoint.x + BoxConstraints.MaxScale, xMiddlePoint);
 
-                _rightBoxAnchorPos.x = Random.Range(xMiddlePoint, _spriteMaxPoint.x-BoxConstraints.MinScale);
+                _rightBoxAnchorPos.x = Random.Range(xMiddlePoint, _spriteMaxPoint.x - BoxConstraints.MinScale);
             }
         }
-
-     
     }
 }
