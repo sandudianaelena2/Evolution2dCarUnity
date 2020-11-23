@@ -19,10 +19,17 @@ public class Test : MonoBehaviour
     private static System.Random random;
     private static object syncObj = new object();
 
+    const float cr = 0.9f;
+    const float f = 0.8f;
+    const int noOfChromosomes = 30;
+    const int noOfGenes = 5; 
+
     public List<Car> getCars() => _cars;
 
     void Awake()
     {
+        Debug.Log("A PICAT LA RANDOM: " + GetRandomIntNumber(1));
+
         instance = this;
         _car = GetRandomCar();
         GenerateChromosomes();
@@ -35,7 +42,7 @@ public class Test : MonoBehaviour
             Math.Round(_car.transform.GetChild(0).position.x,1) < -1)
         {
             resetCarFlag = false;
-            if (index < 40)
+            if (index < noOfChromosomes)
             {
                 _chromosomes[index - 1].score = Score.ScoreValue;
                 _cars[index-1].SetActive(false);
@@ -44,7 +51,8 @@ public class Test : MonoBehaviour
             }
             else
             {
-                for (int i = 0; i < 40; i++)
+               
+                for (int i = 0; i < noOfChromosomes; i++)
                 {
                     Debug.Log("Masina " + i + " a avut scorul : " + _chromosomes[i].score);
                 }
@@ -62,11 +70,9 @@ public class Test : MonoBehaviour
        
     }
 
-    
-
     private void GenerateChromosomes()
     {
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < noOfChromosomes; i++)
         {
             var newChromosome = new Chromosome();
             _chromosomes.Add(newChromosome);
@@ -99,12 +105,66 @@ public class Test : MonoBehaviour
 
     private GameObject GetRandomCar()
     {
+        var randomIndex = GetRandomIntNumber(_carPrefabsArray.Length);
+        return _carPrefabsArray[randomIndex];
+    }
+
+    private int generateDivingPoint()
+    {
+        return GetRandomIntNumber(noOfGenes);
+    }
+
+    private int GetRandomIntNumber(int max)
+    {
         lock (syncObj)
         {
             if (random == null)
                 random = new System.Random();
-            var randomIndex = random.Next(_carPrefabsArray.Length);
-            return _carPrefabsArray[randomIndex];
-        } 
+            return random.Next(max);
+        }
     }
+
+    private double GetRandomDoubleNumber()
+    {
+        lock (syncObj)
+        {
+            if (random == null)
+                random = new System.Random();
+            return random.NextDouble();
+        }
+    }
+
+    //private GameObject Mutation()
+    //{
+
+    //    foreach(var chromosome in _chromosomes)
+    //    {
+    //        List<Chromosome> individuals = new List<Chromosome>();
+
+    //        individuals.Add(chromosome);
+    //        for (int i = 0; i < 3; ++i)
+    //        {
+    //            var randomIndx = GetRandomIntNumber(noOfChromosomes);
+    //            individuals.Add(_chromosomes[randomIndx]);
+    //        }
+
+    //        var potentialIndiv = new Chromosome();
+    //        var dividingPoint = GetRandomIntNumber(noOfGenes - 1);
+
+    //        for(int geneNo = 0; geneNo < noOfGenes; ++geneNo)
+    //        {
+    //            if(geneNo == dividingPoint || GetRandomDoubleNumber() < cr)
+    //            {
+
+    //            }
+    //            else
+    //            {
+
+    //            }
+    //        }
+
+    //    }
+
+    //}
+    
 }

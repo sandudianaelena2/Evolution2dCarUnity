@@ -1,5 +1,7 @@
 using Assets.Evolution.Specifications.Implementations.Constraints;
 using Assets.Evolution.Specifications.Interfaces;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Evolution.Specifications.Implementations
@@ -10,7 +12,7 @@ namespace Assets.Evolution.Specifications.Implementations
         private readonly WheelConstraints.Wheels _wheelNumber;
         public WheelSpecifications(WheelConstraints.Wheels wheelNumber)
         {
-            _scale = Random.Range(WheelConstraints.MinScale, WheelConstraints.MaxScale);
+            _scale = UnityEngine.Random.Range(WheelConstraints.MinScale, WheelConstraints.MaxScale);
             _wheelNumber = wheelNumber;
         }
 
@@ -23,12 +25,17 @@ namespace Assets.Evolution.Specifications.Implementations
 
         public void RegenerateValues()
         {
-            _scale = Random.Range(WheelConstraints.MinScale, WheelConstraints.MaxScale);
+            _scale = UnityEngine.Random.Range(WheelConstraints.MinScale, WheelConstraints.MaxScale);
         }
 
         public void RemoveObject(GameObject car)
         { 
 
+        }
+
+        public Dictionary<string, Tuple<float, float>> GetSpecifications()
+        {
+            throw new NotImplementedException();
         }
     }
 }

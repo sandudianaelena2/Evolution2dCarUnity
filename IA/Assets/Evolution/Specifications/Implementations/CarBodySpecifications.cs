@@ -1,5 +1,7 @@
 using Assets.Evolution.Specifications.Implementations.Constraints;
 using Assets.Evolution.Specifications.Interfaces;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Evolution.Specifications.Implementations
@@ -21,6 +23,17 @@ namespace Assets.Evolution.Specifications.Implementations
         private Vector2 _rightBoxAnchorPos;
 
         private int childCount;
+        public Dictionary<string, Tuple<float,float>> GetSpecifications()
+        {
+            Dictionary<string, Tuple<float, float>> specifications = new Dictionary<string,Tuple<float, float>>();
+
+            Tuple<float, float> scale = new Tuple<float, float>(_scaleX, _scaleY);
+            specifications.Add("scale", scale);
+
+
+            return specifications;
+        }
+
         public CarBodySpecifications()
         {
             _carBody = Test.instance._car.transform.GetChild(0).gameObject;
@@ -121,5 +134,7 @@ namespace Assets.Evolution.Specifications.Implementations
                 _rightBoxAnchorPos.x = Random.Range(xMiddlePoint, _spriteMaxPoint.x-BoxConstraints.MinScale);
             }
         }
+
+     
     }
 }

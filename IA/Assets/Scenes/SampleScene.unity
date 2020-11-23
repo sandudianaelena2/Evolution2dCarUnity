@@ -20251,5 +20251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bba2fe35dfbdf382ca699b7ecccef6ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carPrefabsArray: []
-  _car: {fileID: 2924685294412904730, guid: 74bb79f1d0d9e7c4a92eece74f517350, type: 3}
+  _carPrefabsArray:
+  - {fileID: 138101400290357976, guid: f97c871a2ddd98c4c9b9c72bed26173c, type: 3}
+  - {fileID: 8749968530978429171, guid: 75c978244b4126f4888773c35be4a74c, type: 3}
+  - {fileID: 2924685294412904730, guid: 74bb79f1d0d9e7c4a92eece74f517350, type: 3}
+  _car: {fileID: 0}

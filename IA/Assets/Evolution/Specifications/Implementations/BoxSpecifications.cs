@@ -1,5 +1,7 @@
 ﻿using Assets.Evolution.Specifications.Implementations.Constraints;
 using Assets.Evolution.Specifications.Interfaces;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 namespace Assets.Evolution.Specifications.Implementations
 {
@@ -32,7 +34,7 @@ namespace Assets.Evolution.Specifications.Implementations
 
         public void RegenerateValues()
         {
-            _scale = Random.Range(BoxConstraints.MinScale, BoxConstraints.MaxScale);
+            _scale = UnityEngine.Random.Range(BoxConstraints.MinScale, BoxConstraints.MaxScale);
             _mass = BoxConstraints.MinScale * _scale / BoxConstraints.MinMass;
         }
 
@@ -41,5 +43,9 @@ namespace Assets.Evolution.Specifications.Implementations
 
         }
 
+        Dictionary<string, Tuple<float, float>> ISpecifications.GetSpecifications()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
