@@ -28,9 +28,19 @@ namespace Assets.Evolution.Specifications.Implementations
             _scale = UnityEngine.Random.Range(WheelConstraints.MinScale, WheelConstraints.MaxScale);
         }
 
-        public void RemoveObject(GameObject car)
-        { 
+        public WheelConstraints.Wheels GetWheelNumber()
+        {
+            return _wheelNumber;
+        }
 
+        public float GetScale()
+        {
+            return _scale;
+        }
+
+        public void SetScale(float scale)
+        {
+            _scale = scale;
         }
     }
 }

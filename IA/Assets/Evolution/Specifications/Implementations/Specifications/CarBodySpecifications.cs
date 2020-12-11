@@ -113,11 +113,6 @@ namespace Assets.Evolution.Specifications.Implementations
             GenerateNewAnchorPositionsForBoxes();
         }
 
-        public void RemoveObject(GameObject car)
-        {
-            //Do nothing   
-        }
-
         private void RefreshSpriteBounds()
         {
             _spriteMaxPoint = _carBody.GetComponent<SpriteRenderer>().sprite.bounds.max;

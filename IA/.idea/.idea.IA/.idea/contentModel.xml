@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_IA.1488422585.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_IA.1697287470.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
@@ -10,9 +10,9 @@
           <e p="Chromosome.cs" t="Include" />
           <e p="Genes" t="Include">
             <e p="Implementations" t="Include">
-              <e p="BackWheelGene.cs" t="Include" />
+              <e p="BoxGene.cs" t="Include" />
               <e p="CarBodyGene.cs" t="Include" />
-              <e p="FrontWheelGene.cs" t="Include" />
+              <e p="WheelGene.cs" t="Include" />
             </e>
             <e p="Interfaces" t="Include">
               <e p="IGene.cs" t="Include" />
@@ -20,15 +20,25 @@
           </e>
           <e p="Specifications" t="Include">
             <e p="Implementations" t="Include">
-              <e p="CarBodySpecifications.cs" t="Include" />
-              <e p="Constraints" t="Include">
-                <e p="CarBodyConstraints.cs" t="Include" />
-                <e p="WheelConstraints.cs" t="Include" />
+              <e p="SpecificationOperations" t="Include">
+                <e p="BoxSpecificationsOperations.cs" t="Include" />
+                <e p="CarBodySpecificationsOperations.cs" t="Include" />
+                <e p="WheelSpecificationsOperations.cs" t="Include" />
               </e>
-              <e p="WheelSpecifications.cs" t="Include" />
+              <e p="Specifications" t="Include">
+                <e p="BoxSpecifications.cs" t="Include" />
+                <e p="CarBodySpecifications.cs" t="Include" />
+                <e p="Constraints" t="Include">
+                  <e p="BoxConstraints.cs" t="Include" />
+                  <e p="CarBodyConstraints.cs" t="Include" />
+                  <e p="WheelConstraints.cs" t="Include" />
+                </e>
+                <e p="WheelSpecifications.cs" t="Include" />
+              </e>
             </e>
             <e p="Interfaces" t="Include">
               <e p="ISpecifications.cs" t="Include" />
+              <e p="ISpecificationsOperations.cs" t="Include" />
             </e>
           </e>
         </e>

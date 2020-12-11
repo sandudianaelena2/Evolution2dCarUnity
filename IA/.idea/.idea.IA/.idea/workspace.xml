@@ -21,10 +21,15 @@
   <component name="ChangeListManager">
     <list default="true" id="b94badb7-5677-44b3-b474-4b958a7ee0a1" name="Default Changelist" comment="Bring changes from branch IA/refactorizare to master">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Chromosome.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Chromosome.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Test.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/WheelSpecificationsOperations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/WheelSpecificationsOperations.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/WheelSpecifications.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/WheelSpecifications.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Interfaces/ISpecifications.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Interfaces/ISpecifications.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +62,6 @@
         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/CarBodyGene.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/FrontWheelGene.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Interfaces/IGene.cs" />
-        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Interfaces/ISpecifications.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/FrontWheelSpecifications.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/CarBodySpecifications.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/BackWheelSpecifications.cs" />
@@ -67,6 +71,12 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Score.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Chromosome.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Test.cs" />
+        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/WheelSpecificationsOperations.cs" />
+        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Interfaces/ISpecifications.cs" />
+        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" />
+        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/WheelSpecifications.cs" />
+        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" />
+        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" />
       </list>
     </option>
   </component>
@@ -90,6 +100,7 @@
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Evolution2dCarUnityV2/IA/IA.sln" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -146,6 +157,7 @@
       <workItem from="1605978525971" duration="6928000" />
       <workItem from="1606033567191" duration="1445000" />
       <workItem from="1606043884900" duration="2210000" />
+      <workItem from="1607700328426" duration="1060000" />
     </task>
     <task id="LOCAL-00001" summary="Instantiate more cars and change wheel dynamically">
       <created>1605282786091</created>
@@ -184,6 +196,10 @@
       <screen x="1920" y="0" width="3440" height="1440" />
     </state>
     <state x="2238" y="391" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1920.1053/1920.0.3440.1440@1920.0.3440.1440" timestamp="1605974746123" />
+    <state x="3142" y="298" width="424" height="491" key="FileChooserDialogImpl" timestamp="1607700342896">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="3142" y="298" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1607700342896" />
     <state x="1259" y="256" width="352" height="630" key="RiderGenerateDialog" timestamp="1605431162716">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>

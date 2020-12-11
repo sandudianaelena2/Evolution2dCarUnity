@@ -8,6 +8,5 @@ namespace Assets.Evolution.Specifications.Interfaces
     {
         void ChangeGameObject(GameObject car);
         void RegenerateValues();
-        void RemoveObject(GameObject car);
     }
 }

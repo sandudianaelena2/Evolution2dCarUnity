@@ -19,6 +19,13 @@ namespace Assets.Evolution.Specifications.Implementations
             RegenerateValues();         
         }
 
+        public BoxSpecifications(BoxConstraints.Boxes boxNumber, float scale, float mass)
+        {
+            _scale = scale;
+            _mass = mass;
+            _boxNumber = boxNumber;
+        }
+
         public void ChangeGameObject(GameObject car)
         {
             if (car.transform.childCount > (int)_boxNumber)
@@ -38,9 +45,19 @@ namespace Assets.Evolution.Specifications.Implementations
             _mass = BoxConstraints.MinScale * _scale / BoxConstraints.MinMass;
         }
 
-        public void RemoveObject(GameObject car)
+        public BoxConstraints.Boxes GetBoxNumber()
         {
+            return _boxNumber;
+        }
 
+        public float GetScale()
+        {
+            return _scale;
+        }
+
+        public float GetMass()
+        {
+            return _mass;
         }
     }
 }
