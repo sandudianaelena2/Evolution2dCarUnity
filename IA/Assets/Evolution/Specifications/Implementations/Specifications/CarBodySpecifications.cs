@@ -1,14 +1,13 @@
-using Assets.Evolution.Specifications.Implementations.Constraints;
-using Assets.Evolution.Specifications.Interfaces;
-
-using System.Collections.Generic;
+using Evolution.Specifications.Implementations.Specifications.Constraints;
+using Evolution.Specifications.Interfaces;
 using UnityEngine;
 
-namespace Assets.Evolution.Specifications.Implementations
+namespace Evolution.Specifications.Implementations.Specifications
 {
     public class CarBodySpecifications : ISpecifications
     {
-        private readonly GameObject _carBody;
+        private GameObject _carBody;
+        private GameObject _car;
 
         private float _scaleX;
         private float _scaleY;
@@ -56,7 +55,8 @@ namespace Assets.Evolution.Specifications.Implementations
         }
         public CarBodySpecifications()
         {
-            _carBody = Test.instance._car.transform.GetChild(0).gameObject;
+            _car = GameObject.Instantiate(Test.instance.carPrefab);
+            _carBody = _car.transform.GetChild(0).gameObject;
 
             hasOneBox = (_carBody.transform.childCount == 4);
             hasTwoBoxes = (_carBody.transform.childCount == 5);
@@ -72,10 +72,11 @@ namespace Assets.Evolution.Specifications.Implementations
 
         public void ChangeGameObject(GameObject car)
         {
-            _carBody.transform.localScale = new Vector3(_scaleX, _scaleY, _carBody.transform.localScale.z);
+            var carBody = car.transform.GetChild(0).gameObject;
+            carBody.transform.localScale = new Vector3(_scaleX, _scaleY, carBody.transform.localScale.z);
 
-            var frontWheelJoint = _carBody.GetComponents<WheelJoint2D>()[0];
-            var backWheelJoint = _carBody.GetComponents<WheelJoint2D>()[1];
+            var frontWheelJoint = carBody.GetComponents<WheelJoint2D>()[0];
+            var backWheelJoint = carBody.GetComponents<WheelJoint2D>()[1];
 
             JointMotor2D jointMotor2D = new JointMotor2D();
             jointMotor2D.motorSpeed = CarBodyConstraints.MotorSpeed;
@@ -90,19 +91,12 @@ namespace Assets.Evolution.Specifications.Implementations
             WheelJoint2D leftBoxJoint;
             WheelJoint2D rightBoxJoint;
 
-            if (hasOneBox)
-            {
-                leftBoxJoint = _carBody.GetComponents<WheelJoint2D>()[0];
-                leftBoxJoint.connectedAnchor = new Vector2(0f, 0f);
-            }
-            else if (hasTwoBoxes)
-            {
-                leftBoxJoint = _carBody.GetComponents<WheelJoint2D>()[0];
-                rightBoxJoint = _carBody.GetComponents<WheelJoint2D>()[1];
 
-                leftBoxJoint.connectedAnchor = new Vector2(0f, 0f);
-                rightBoxJoint.connectedAnchor = new Vector2(0f, 0f);
-            }
+            leftBoxJoint = carBody.GetComponents<WheelJoint2D>()[0];
+            rightBoxJoint = carBody.GetComponents<WheelJoint2D>()[1];
+
+            leftBoxJoint.connectedAnchor = new Vector2(0f, 0f);
+            rightBoxJoint.connectedAnchor = new Vector2(0f, 0f);
         }
 
         public void RegenerateValues()
@@ -111,11 +105,7 @@ namespace Assets.Evolution.Specifications.Implementations
             RefreshSpriteBounds();
             GenerateNewAnchorPositionsForWheels();
             GenerateNewAnchorPositionsForBoxes();
-        }
-
-        public void RemoveObject(GameObject car)
-        {
-            //Do nothing   
+            GameObject.Destroy(_car);
         }
 
         private void RefreshSpriteBounds()

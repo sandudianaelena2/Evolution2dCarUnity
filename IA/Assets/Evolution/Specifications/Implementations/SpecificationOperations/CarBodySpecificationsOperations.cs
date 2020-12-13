@@ -1,13 +1,9 @@
-﻿using Assets.Evolution.Specifications.Interfaces;
-using System;
-using System.Collections.Generic;
-
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Evolution.Specifications.Implementations.Specifications;
+using Evolution.Specifications.Interfaces;
 using UnityEngine;
 
-namespace Assets.Evolution.Specifications.Implementations.SpecificationOperations
+namespace Evolution.Specifications.Implementations.SpecificationOperations
 {
     class CarBodySpecificationsOperations : ISpecificationsOperations
     {

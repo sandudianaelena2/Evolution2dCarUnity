@@ -1,11 +1,7 @@
-﻿using Assets.Evolution.Specifications.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Evolution.Specifications.Interfaces;
 
-namespace Assets.Evolution.Specifications.Implementations.SpecificationOperations
+namespace Evolution.Specifications.Implementations.SpecificationOperations
 {
     class BoxSpecificationsOperations : ISpecificationsOperations
     {

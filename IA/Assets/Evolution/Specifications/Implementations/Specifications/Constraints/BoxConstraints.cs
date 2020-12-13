@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Evolution.Specifications.Implementations.Constraints
+﻿namespace Evolution.Specifications.Implementations.Specifications.Constraints
 {
     class BoxConstraints
     {

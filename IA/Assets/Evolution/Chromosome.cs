@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Assets.Evolution.Genes.Implementations;
-using Assets.Evolution.Genes.Interfaces;
-using Assets.Evolution.Specifications.Implementations;
-using Assets.Evolution.Specifications.Implementations.Constraints;
-using Assets.Evolution.Specifications.Implementations.SpecificationOperations;
+using Evolution.Genes.Implementations;
+using Evolution.Genes.Interfaces;
+using Evolution.Specifications.Implementations.SpecificationOperations;
+using Evolution.Specifications.Implementations.Specifications;
+using Evolution.Specifications.Implementations.Specifications.Constraints;
 
-namespace Assets.Evolution
+namespace Evolution
 {
     public class Chromosome
     {
@@ -22,12 +22,6 @@ namespace Assets.Evolution
         }
 
         public List<IGene> Genes { get; set; }
-        public int score { get; set; }
-
-        public Chromosome Cross(Chromosome other)
-        {
-            //TODO:Implement a method of crossing chromosomes
-            return new Chromosome();
-        }
+        public int Fitness { get; set; }
     }
 }

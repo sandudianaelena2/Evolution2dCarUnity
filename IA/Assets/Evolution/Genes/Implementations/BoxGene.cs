@@ -1,12 +1,7 @@
-﻿using Assets.Evolution.Genes.Interfaces;
-using Assets.Evolution.Specifications.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Evolution.Genes.Interfaces;
+using Evolution.Specifications.Interfaces;
 
-namespace Assets.Evolution.Genes.Implementations
+namespace Evolution.Genes.Implementations
 {
     class BoxGene:IGene
     {

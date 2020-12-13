@@ -1,8 +1,7 @@
-using System;
-using Assets.Evolution.Genes.Interfaces;
-using Assets.Evolution.Specifications.Interfaces;
+using Evolution.Genes.Interfaces;
+using Evolution.Specifications.Interfaces;
 
-namespace Assets.Evolution.Genes.Implementations
+namespace Evolution.Genes.Implementations
 {
     public class WheelGene:IGene
     {

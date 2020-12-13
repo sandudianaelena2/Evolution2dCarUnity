@@ -1,9 +1,8 @@
-﻿using Assets.Evolution.Specifications.Implementations.Constraints;
-using Assets.Evolution.Specifications.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using Evolution.Specifications.Implementations.Specifications.Constraints;
+using Evolution.Specifications.Interfaces;
 using UnityEngine;
-namespace Assets.Evolution.Specifications.Implementations
+
+namespace Evolution.Specifications.Implementations.Specifications
 {
     class BoxSpecifications:ISpecifications
     {
@@ -36,11 +35,6 @@ namespace Assets.Evolution.Specifications.Implementations
         {
             _scale = UnityEngine.Random.Range(BoxConstraints.MinScale, BoxConstraints.MaxScale);
             _mass = BoxConstraints.MinScale * _scale / BoxConstraints.MinMass;
-        }
-
-        public void RemoveObject(GameObject car)
-        {
-
         }
     }
 }

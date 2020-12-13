@@ -1,6 +1,6 @@
-using Assets.Evolution.Specifications.Interfaces;
+using Evolution.Specifications.Interfaces;
 
-namespace Assets.Evolution.Genes.Interfaces
+namespace Evolution.Genes.Interfaces
 {
     public interface IGene
     {
