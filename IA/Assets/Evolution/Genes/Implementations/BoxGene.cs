@@ -1,27 +1,29 @@
-﻿using Assets.Evolution.Genes.Interfaces;
-using Assets.Evolution.Specifications.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Evolution.Genes.Interfaces;
+using Evolution.Specifications.Implementations.SpecificationOperations;
+using Evolution.Specifications.Interfaces;
 
-namespace Assets.Evolution.Genes.Implementations
+namespace Evolution.Genes.Implementations
 {
     class BoxGene:IGene
     {
 
-        public BoxGene(ISpecifications specifications, ISpecificationsOperations specificationsOperations)
+        public BoxGene(ISpecifications specifications)
         {
             Specifications = specifications;
-            SpecificationsOperations = specificationsOperations;
         }
 
-        public ISpecifications Specifications { get; }
-        public ISpecificationsOperations SpecificationsOperations { get; }
-        public void Mutate(double probability)
+        public ISpecifications Specifications { get; private set; }
+        public void Mutate(List<IGene> indivizi, float f)
         {
-            Specifications.RegenerateValues();
+            var operations = new BoxSpecificationsOperations();
+            var wheelGenes = indivizi.Select(gene => gene as BoxGene).ToList();
+            var minusSpec =operations
+                .ScalarMultiplySpecifications(wheelGenes[2].Specifications, -1);
+            var firstAddSpec = operations.AddSpecifications(minusSpec, wheelGenes[1].Specifications);
+            var fSpec = operations.ScalarMultiplySpecifications(firstAddSpec, f);
+            Specifications = operations.AddSpecifications(wheelGenes[3].Specifications, fSpec);
         }
 
         public ISpecifications GetSpecifications()

@@ -1,10 +1,11 @@
-using Assets.Evolution.Specifications.Interfaces;
+using System.Collections.Generic;
+using Evolution.Specifications.Interfaces;
 
-namespace Assets.Evolution.Genes.Interfaces
+namespace Evolution.Genes.Interfaces
 {
     public interface IGene
     {
-        void Mutate(double probability);
+        void Mutate(List<IGene> indivizi, float f);
         ISpecifications GetSpecifications();
     }
 }

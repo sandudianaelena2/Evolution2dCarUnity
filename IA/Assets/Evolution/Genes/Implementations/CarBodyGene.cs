@@ -1,27 +1,33 @@
-using Assets.Evolution.Genes.Interfaces;
-using Assets.Evolution.Specifications.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using Evolution.Genes.Interfaces;
+using Evolution.Specifications.Implementations.SpecificationOperations;
+using Evolution.Specifications.Interfaces;
 
-namespace Assets.Evolution.Genes.Implementations
+namespace Evolution.Genes.Implementations
 {
     public class CarBodyGene: IGene
     {
-        public CarBodyGene(ISpecifications specifications, ISpecificationsOperations specificationsOperations)
+        public CarBodyGene(ISpecifications specifications)
         {
             Specifications = specifications;
-            SpecificationsOperations = specificationsOperations;
         }
 
-        public ISpecifications Specifications { get; }
-        public ISpecificationsOperations SpecificationsOperations { get; }
+        public ISpecifications Specifications { get; private set; }
 
-        public void Mutate(double probability)
+        public void Mutate(List<IGene> indivizi, float f)
         {
-            throw new System.NotImplementedException();
+            var operations = new CarBodySpecificationsOperations();
+            var wheelGenes = indivizi.Select(gene => gene as CarBodyGene).ToList();
+            var minusSpec =operations
+                .ScalarMultiplySpecifications(wheelGenes[2].Specifications, -1);
+            var firstAddSpec = operations.AddSpecifications(minusSpec, wheelGenes[1].Specifications);
+            var fSpec = operations.ScalarMultiplySpecifications(firstAddSpec, f);
+            Specifications = operations.AddSpecifications(wheelGenes[3].Specifications, fSpec);
         }
         
         public ISpecifications GetSpecifications()
         {
-            SpecificationsOperations.AddSpecifications(Specifications,Specifications);
             return Specifications;
         }
         

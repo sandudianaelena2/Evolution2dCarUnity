@@ -1,7 +1,6 @@
-using System.Linq;
 using UnityEngine;
 
-namespace Assets.Models
+namespace Models
 {
     public class Car
     {

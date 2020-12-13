@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class FinalScript : MonoBehaviour
 {
-
-    public string stopCar;
+    public static FinalScript instance;
+    public bool finished = false;
     // Start is called before the first frame update
     void Start()
     {
-        
+        instance = this;
     }
 
     // Update is called once per frame
@@ -21,11 +21,12 @@ public class FinalScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        stopCar = collision.tag;
         if (collision.tag == "CarBody")
         {
-            CarController.instance.Stop();
+            finished = true;
         }
+        
+        
     }
 
 }

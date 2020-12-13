@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Evolution;
-using Assets.Models;
+using System.Linq;
+using Evolution;
+using Models;
 using UnityEngine;
 
 public class Test : MonoBehaviour
 {
     public static Test instance;
-    public GameObject[] _carPrefabsArray;
+    public GameObject _carPrefab;
     public GameObject _car;
     private List<Car> _cars = new List<Car>();
     private List<Chromosome> _chromosomes = new List<Chromosome>();
@@ -22,48 +23,85 @@ public class Test : MonoBehaviour
     const float cr = 0.9f;
     const float f = 0.8f;
     const int noOfChromosomes = 30;
-    const int noOfGenes = 5; 
+    const int noOfGenes = 5;
+    
 
     public List<Car> getCars() => _cars;
+
+    private bool adaptare = true;
+    private bool generarePopulatieNoua = false;
+
 
     void Awake()
     {
         instance = this;
-        _car = GetRandomCar();
         GenerateChromosomes();
     }
 
     void Update()
     {
-        Score.ScoreValue = Convert.ToInt32(_car.transform.GetChild(0).position.x);
-        if( ((Time.time - time > 1) && Math.Round(_car.transform.GetChild(0).position.x,1) == oldPosition && resetCarFlag) ||
-            Math.Round(_car.transform.GetChild(0).position.x,1) < -1)
+        if (adaptare)
         {
-            resetCarFlag = false;
-            if (index < noOfChromosomes)
+            Score.ScoreValue = Convert.ToInt32(_car.transform.GetChild(0).position.x);
+            if( ((Time.time - time > 1) && Math.Round(_car.transform.GetChild(0).position.x,1) == oldPosition && resetCarFlag) ||
+                Math.Round(_car.transform.GetChild(0).position.x,1) < -1)
             {
-                _chromosomes[index - 1].score = Score.ScoreValue;
-                _cars[index-1].SetActive(false);
-                _car = _cars[index].GetCar();
-                _cars[index].SetActive(true);
-            }
-            else
-            {
-               
-                for (int i = 0; i < noOfChromosomes; i++)
+                resetCarFlag = false;
+                if (index < noOfChromosomes)
                 {
-                    Debug.Log("Masina " + i + " a avut scorul : " + _chromosomes[i].score);
+                    _chromosomes[index - 1].score = Score.ScoreValue;
+                    _cars[index-1].SetActive(false);
+                    _car = _cars[index].GetCar();
+                    _cars[index].SetActive(true);
                 }
-                Application.Quit();
+                else
+                {
+                    index = 0;
+                    generarePopulatieNoua = true;
+                    adaptare = false;
+                }
+                index++;
+            }
+        
+            if (Time.time - time > 5)
+            {
+                resetCarFlag = true;
+                time = Time.time;
+                oldPosition = Math.Round(_car.transform.GetChild(0).position.x, 1);
+            }
+        }
+
+        if (generarePopulatieNoua)
+        {
+            var indivizi = new List<Chromosome>();
+            var chromose = _chromosomes[index];
+            indivizi.Add(chromose);
+            var temp = 3;
+            while (temp > 0)
+            {
+                int indexRandom;
+                do
+                {
+                    indexRandom = GetRandomIntNumber(_chromosomes.Count);
+                } while (indexRandom == index);
+                indivizi.Add(_chromosomes[indexRandom]);
+                temp--;
+            }
+            var individPotential = new Chromosome();
+            var punctDeDivizare = generateDivingPoint();
+            for(int gena=0;gena<noOfGenes; ++gena)
+            {
+                var nrAleatoriu = GetRandomDoubleNumber();
+                if (gena == punctDeDivizare || nrAleatoriu < cr)
+                {
+                    individPotential.Genes[gena].Mutate(indivizi.Select(individ => individ.Genes[gena]).ToList(), f);
+                }
+                else
+                {
+                    individPotential.Genes[gena] = indivizi[0].Genes[gena];
+                }
             }
             index++;
-        }
-        
-        if (Time.time - time > 5)
-        {
-            resetCarFlag = true;
-            time = Time.time;
-            oldPosition = Math.Round(_car.transform.GetChild(0).position.x, 1);
         }
        
     }
@@ -83,15 +121,13 @@ public class Test : MonoBehaviour
             {
                 newCar.SetActive(false);
             }
-
-        _cars.Add(newCar);
+            _cars.Add(newCar);
         }
     }
 
     private Car constructCar(Chromosome chromosome)
     {
         var genes = chromosome.Genes;
-        _car = GetRandomCar();
         GameObject newCar = GameObject.Instantiate(_car);
         foreach (var gene in genes)
         {
@@ -100,12 +136,7 @@ public class Test : MonoBehaviour
 
         return new Car(newCar);
     }
-
-    private GameObject GetRandomCar()
-    {
-        var randomIndex = GetRandomIntNumber(_carPrefabsArray.Length);
-        return _carPrefabsArray[randomIndex];
-    }
+    
 
     private int generateDivingPoint()
     {

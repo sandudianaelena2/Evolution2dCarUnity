@@ -9,6 +9,7 @@ TagManager:
   - FrontWheel
   - CarBody
   - Car
+  - FinishPoint
   layers:
   - Default
   - TransparentFX

@@ -1,10 +1,8 @@
-using Assets.Evolution.Specifications.Implementations.Constraints;
-using Assets.Evolution.Specifications.Interfaces;
-
-using System.Collections.Generic;
+using Evolution.Specifications.Implementations.Specifications.Constraints;
+using Evolution.Specifications.Interfaces;
 using UnityEngine;
 
-namespace Assets.Evolution.Specifications.Implementations
+namespace Evolution.Specifications.Implementations.Specifications
 {
     public class CarBodySpecifications : ISpecifications
     {

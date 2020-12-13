@@ -1,6 +1,4 @@
-using UnityEngine;
-
-namespace Assets.Evolution.Specifications.Implementations.Constraints
+namespace Evolution.Specifications.Implementations.Specifications.Constraints
 {
     public class WheelConstraints
     {
