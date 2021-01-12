@@ -54,7 +54,7 @@ namespace Evolution.Specifications.Implementations.Specifications
         }
         public CarBodySpecifications()
         {
-            _carBody = Test.instance._car.transform.GetChild(0).gameObject;
+            _carBody = Test.instance.prefabCar.transform.GetChild(0).gameObject;
 
             hasOneBox = (_carBody.transform.childCount == 4);
             hasTwoBoxes = (_carBody.transform.childCount == 5);

@@ -22,6 +22,11 @@ namespace Models
             _car.SetActive(active);
         }
 
+        public void Destroy()
+        {
+            Object.Destroy(_car);
+        }
+
         public void Stop()
         {
             GameObject carBody = _car.transform.GetChild(0).gameObject;

@@ -5,7 +5,6 @@ using UnityEngine;
 public class FinalScript : MonoBehaviour
 {
     public static FinalScript instance;
-    public bool finished = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +20,10 @@ public class FinalScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "CarBody")
+        if (collision.CompareTag("CarBody"))
         {
-            finished = true;
+            Test.instance.neTerminat = false;
         }
-        
-        
     }
 
 }
