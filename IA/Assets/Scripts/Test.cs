@@ -9,7 +9,6 @@ using UnityEngine;
 public class Test : MonoBehaviour
 {
     public static Test instance;
-    public GameObject _carPrefab;
     public GameObject _car;
     private List<Car> _cars = new List<Car>();
     private List<Chromosome> _chromosomes = new List<Chromosome>();

@@ -1,5 +1,6 @@
 ﻿using System;
 using Evolution.Specifications.Implementations.Specifications;
+using Evolution.Specifications.Implementations.Specifications.Constraints;
 using Evolution.Specifications.Interfaces;
 using UnityEngine;
 
@@ -18,8 +19,11 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
             Tuple<Vector2, Vector2> newWheelAnchorPosition = GetWheelAnchorPosSum(carBodySpecifications1, carBodySpecifications2);
             Tuple<Vector2, Vector2> newBoxAnchorPosition = GetBoxAnchorPosSum(carBodySpecifications1, carBodySpecifications2);
 
+            RepairScale(newScale);
             result.SetScale(newScale);
+
             result.SetWheelAnchorPosition(newWheelAnchorPosition);
+
             result.SetBoxAnchorPosition(newBoxAnchorPosition);
 
             return result;
@@ -42,6 +46,33 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
             return result;
         }
 
+        public Tuple<float, float> RepairScale(Tuple<float, float> scale)
+        {
+            var scaleX = scale.Item1;
+            var scaleY = scale.Item2;
+
+            if (scaleX > CarBodyConstraints.ScaleXmax)
+            {
+                scaleX = CarBodyConstraints.ScaleXmax;
+            }
+            else if (scaleX < CarBodyConstraints.ScaleXmin)
+            {
+                scaleX = CarBodyConstraints.ScaleXmin;
+            }
+
+            if (scaleY > CarBodyConstraints.ScaleYmax)
+            {
+                scaleY = CarBodyConstraints.ScaleYmax;
+            }
+            else if (scaleY < CarBodyConstraints.ScaleYmin)
+            {
+                scaleY = CarBodyConstraints.ScaleYmin;
+            }
+
+            scale = new Tuple<float, float>(scaleX, scaleY);
+
+            return scale;
+        }
 
         public Tuple<float, float> ScalarMultiplyScale(CarBodySpecifications carBodySpecifications, float scalar)
         {

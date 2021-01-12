@@ -413,7 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97019a3e44135424cae684e18f4e6179, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopCar: 
+  finished: 0
 --- !u!61 &289935140
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20251,5 +20251,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bba2fe35dfbdf382ca699b7ecccef6ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carPrefab: {fileID: 0}
-  _car: {fileID: 0}
+  _car: {fileID: 2924685294412904730, guid: 74bb79f1d0d9e7c4a92eece74f517350, type: 3}
