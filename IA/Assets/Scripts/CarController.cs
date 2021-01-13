@@ -14,6 +14,7 @@ public class CarController : MonoBehaviour
 	public WheelJoint2D backWheel;
 
 	JointMotor2D motorFront;
+	JointMotor2D motorBack;
 
 	public float frontSpeed;
 	public float frontTorque;
@@ -31,9 +32,12 @@ public class CarController : MonoBehaviour
 
 			motorFront.motorSpeed = frontSpeed * -1;
 			motorFront.maxMotorTorque = frontTorque;
+			
+			motorBack.motorSpeed = (frontSpeed * -1)/2;
+			motorBack.maxMotorTorque = frontTorque/2;
 
 			frontWheel.motor = motorFront;
-			//backWheel.motor = motorFront;
+			backWheel.motor = motorBack;
 		}
 	}
 

@@ -20,23 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b94badb7-5677-44b3-b474-4b958a7ee0a1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/BoxGene.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/BoxGene.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/CarBodyGene.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/CarBodyGene.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/WheelGene.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/WheelGene.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/WheelSpecificationsOperations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/WheelSpecificationsOperations.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PhysisMaterials/Grass.physicsMaterial2D" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PhysisMaterials/Grass.physicsMaterial2D" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PhysisMaterials/Wheel.physicsMaterial2D" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PhysisMaterials/Wheel.physicsMaterial2D" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CarController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Test.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/prefab/Car-2Box.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/prefab/Car-2Box.prefab" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,8 +77,8 @@
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Test.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CarController.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CarController.cs" />
       </list>
     </option>
   </component>
@@ -177,6 +164,7 @@
       <workItem from="1609149759177" duration="14000" />
       <workItem from="1610464282160" duration="8313000" />
       <workItem from="1610519927834" duration="13921000" />
+      <workItem from="1610540505893" duration="480000" />
     </task>
     <task id="LOCAL-00001" summary="Instantiate more cars and change wheel dynamically">
       <created>1605282786091</created>
