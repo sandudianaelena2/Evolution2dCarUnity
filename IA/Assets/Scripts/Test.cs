@@ -22,9 +22,9 @@ public class Test : MonoBehaviour
     private static System.Random random;
     private static object syncObj = new object();
 
-    const float cr = 0.9f;
+    const float cr = 0.5f;
     const float f = 0.8f;
-    const int noOfChromosomes = 3;
+    const int noOfChromosomes = 20;
     const int noOfGenes = 5;
     private int noMaximGeneratii = 10;
     

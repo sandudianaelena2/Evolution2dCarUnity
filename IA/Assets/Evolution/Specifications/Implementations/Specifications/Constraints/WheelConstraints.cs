@@ -7,7 +7,7 @@ namespace Evolution.Specifications.Implementations.Specifications.Constraints
             BackWheel = 1,
             FrontWheel
         } 
-        public static float MaxScale { get; } = 0.8f;
-        public static float MinScale { get; } = 0.4f;
+        public static float MaxScale { get; } = 1f;
+        public static float MinScale { get; } = 0.56f;
     }
 }

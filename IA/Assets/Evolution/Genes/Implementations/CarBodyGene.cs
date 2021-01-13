@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Evolution.Genes.Interfaces;
 using Evolution.Specifications.Implementations.SpecificationOperations;
+using Evolution.Specifications.Implementations.Specifications;
 using Evolution.Specifications.Interfaces;
+using UnityEngine;
 
 namespace Evolution.Genes.Implementations
 {
@@ -24,6 +26,8 @@ namespace Evolution.Genes.Implementations
             var firstAddSpec = operations.AddSpecifications(minusSpec, wheelGenes[1].Specifications);
             var fSpec = operations.ScalarMultiplySpecifications(firstAddSpec, f);
             Specifications = operations.AddSpecifications(wheelGenes[3].Specifications, fSpec);
+            var temp = Specifications as CarBodySpecifications;
+            Debug.Log($"Car scale x {temp.GetScale().Item1} y {temp.GetScale().Item2}");
         }
         
         public ISpecifications GetSpecifications()

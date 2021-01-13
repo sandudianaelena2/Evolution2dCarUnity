@@ -1,6 +1,7 @@
 ﻿using Evolution.Specifications.Implementations.Specifications;
 using Evolution.Specifications.Implementations.Specifications.Constraints;
 using Evolution.Specifications.Interfaces;
+using UnityEngine;
 
 namespace Evolution.Specifications.Implementations.SpecificationOperations
 {

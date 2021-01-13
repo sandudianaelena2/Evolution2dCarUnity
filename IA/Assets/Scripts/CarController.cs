@@ -22,7 +22,6 @@ public class CarController : MonoBehaviour
 	{
 		instance = this;
 		//AudioController.instance.PlayMusic();
-
 	}
 
 	void Update()
@@ -34,7 +33,7 @@ public class CarController : MonoBehaviour
 			motorFront.maxMotorTorque = frontTorque;
 
 			frontWheel.motor = motorFront;
-			backWheel.motor = motorFront;
+			//backWheel.motor = motorFront;
 		}
 	}
 

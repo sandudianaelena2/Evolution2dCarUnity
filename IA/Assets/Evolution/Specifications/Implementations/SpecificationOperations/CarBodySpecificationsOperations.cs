@@ -12,20 +12,9 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
         {
             CarBodySpecifications carBodySpecifications1 = (CarBodySpecifications)specifications1;
             CarBodySpecifications carBodySpecifications2 = (CarBodySpecifications)specifications2;
-
             CarBodySpecifications result = new CarBodySpecifications();
-
-            Tuple<float, float> newScale = GetScaleSum(carBodySpecifications1, carBodySpecifications2);
-            Tuple<Vector2, Vector2> newWheelAnchorPosition = GetWheelAnchorPosSum(carBodySpecifications1, carBodySpecifications2);
-            Tuple<Vector2, Vector2> newBoxAnchorPosition = GetBoxAnchorPosSum(carBodySpecifications1, carBodySpecifications2);
-
-            RepairScale(newScale);
+            Tuple<float, float> newScale = RepairScale(GetScaleSum(carBodySpecifications1, carBodySpecifications2));
             result.SetScale(newScale);
-
-            result.SetWheelAnchorPosition(newWheelAnchorPosition);
-
-            result.SetBoxAnchorPosition(newBoxAnchorPosition);
-
             return result;
         }
 
@@ -34,15 +23,8 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
         {
 
             CarBodySpecifications result = (CarBodySpecifications)specifications;
-
-            Tuple<float, float> newScale = ScalarMultiplyScale(result, scalar);
-            Tuple<Vector2, Vector2> newWheelAnchorPosition = ScalarMultiplyWheelAnchorPos(result, scalar);
-            Tuple<Vector2, Vector2> newBoxAnchorPosition = ScalarMultiplyBoxAnchorPos(result, scalar);
-
+            Tuple<float, float> newScale = RepairScale(ScalarMultiplyScale(result, scalar));
             result.SetScale(newScale);
-            result.SetWheelAnchorPosition(newWheelAnchorPosition);
-            result.SetBoxAnchorPosition(newBoxAnchorPosition);
-
             return result;
         }
 
@@ -83,26 +65,7 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
 
             return newScale;
         }
-
-        public Tuple<Vector2, Vector2> ScalarMultiplyWheelAnchorPos(CarBodySpecifications carBodySpecifications, float scalar)
-        {
-            var backWheelAnchorPos = carBodySpecifications.GetWheelAnchorPosition().Item1 * scalar;
-            var frontWheelPos = carBodySpecifications.GetWheelAnchorPosition().Item2 * scalar;
-
-            Tuple<Vector2, Vector2> newAnchorPosition = new Tuple<Vector2, Vector2>(backWheelAnchorPos, frontWheelPos);
-
-            return newAnchorPosition;
-        }
-
-        public Tuple<Vector2, Vector2> ScalarMultiplyBoxAnchorPos(CarBodySpecifications carBodySpecifications, float scalar)
-        {
-            var backWheelAnchorPos = carBodySpecifications.GetBoxAnchorPosition().Item1 * scalar;
-            var frontWheelPos = carBodySpecifications.GetBoxAnchorPosition().Item2 * scalar;
-
-            Tuple<Vector2, Vector2> newAnchorPosition = new Tuple<Vector2, Vector2>(backWheelAnchorPos, frontWheelPos);
-
-            return newAnchorPosition;
-        }
+        
 
         public Tuple<float, float> GetScaleSum(CarBodySpecifications carBodySpecifications1, CarBodySpecifications carBodySpecifications2)
         {
@@ -113,27 +76,5 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
 
             return newScale;
         }
-
-        public Tuple<Vector2, Vector2> GetWheelAnchorPosSum(CarBodySpecifications carBodySpecifications1, CarBodySpecifications carBodySpecifications2)
-        {
-            var backWheelAnchorPos = carBodySpecifications1.GetWheelAnchorPosition().Item1 + carBodySpecifications1.GetWheelAnchorPosition().Item1;
-            var frontWheelPos = carBodySpecifications1.GetWheelAnchorPosition().Item2 + carBodySpecifications2.GetWheelAnchorPosition().Item2;
-
-            Tuple<Vector2, Vector2> newAnchorPosition = new Tuple<Vector2, Vector2>(backWheelAnchorPos, frontWheelPos);
-
-            return newAnchorPosition;
-        }
-
-        public Tuple<Vector2, Vector2> GetBoxAnchorPosSum(CarBodySpecifications carBodySpecifications1, CarBodySpecifications carBodySpecifications2)
-        {
-            var backWheelAnchorPos = carBodySpecifications1.GetBoxAnchorPosition().Item1 + carBodySpecifications1.GetBoxAnchorPosition().Item1;
-            var frontWheelPos = carBodySpecifications1.GetBoxAnchorPosition().Item2 + carBodySpecifications2.GetBoxAnchorPosition().Item2;
-
-            Tuple<Vector2, Vector2> newAnchorPosition = new Tuple<Vector2, Vector2>(backWheelAnchorPos, frontWheelPos);
-
-            return newAnchorPosition;
-        }
-
-
     }
 }
