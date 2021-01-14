@@ -45,6 +45,7 @@ public class Test : MonoBehaviour
     void Awake()
     {
         instance = this;
+        
         GenerateChromosomes();
     }
 
@@ -54,6 +55,9 @@ public class Test : MonoBehaviour
         {
             if (adaptare)
             {
+
+              
+
                 Score.ScoreValue = Convert.ToInt32(_car.transform.GetChild(0).position.x);
                 if (((Time.time - time > 1) && Math.Round(_car.transform.GetChild(0).position.x, 1) == oldPosition &&
                      resetCarFlag) ||
@@ -64,10 +68,12 @@ public class Test : MonoBehaviour
                     {
                         if (index < noOfChromosomes)
                         {
+                           
                             _chromosomes[index - 1].score = Score.ScoreValue;
                             _cars[index - 1].SetActive(false);
                             _car = _cars[index].GetCar();
                             _cars[index].SetActive(true);
+
                         }
                         else
                         {
@@ -116,7 +122,7 @@ public class Test : MonoBehaviour
                 {
                     resetCarFlag = true;
                     time = Time.time;
-                    oldPosition = Math.Round(_car.transform.GetChild(0).position.x, 1);
+                    oldPosition = Math.Round(_car.transform.GetChild(0).position.x, 1);;
                 }
             }
 

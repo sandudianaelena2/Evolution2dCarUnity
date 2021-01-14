@@ -23,6 +23,7 @@ public class FinalScript : MonoBehaviour
         if (collision.CompareTag("CarBody"))
         {
             Test.instance.neTerminat = false;
+            Test.instance._car.transform.GetChild(0).GetComponent<CarController>().frontSpeed = 0;
         }
     }
 

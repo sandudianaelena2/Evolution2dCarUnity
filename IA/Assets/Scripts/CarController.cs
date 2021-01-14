@@ -19,6 +19,7 @@ public class CarController : MonoBehaviour
 	public float frontSpeed;
 	public float frontTorque;
 
+
 	private void Awake()
 	{
 		instance = this;
