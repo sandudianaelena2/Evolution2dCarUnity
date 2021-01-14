@@ -17,14 +17,14 @@ public class Test : MonoBehaviour
     private List<Chromosome> _chromosomes = new List<Chromosome>();
     private float time = 0;
     private double oldPosition = -1;
-    private int index = 1;
+    public int index = 1;
     private bool resetCarFlag = false;
     private static System.Random random;
     private static object syncObj = new object();
 
     const float cr = 0.5f;
     const float f = 0.8f;
-    const int noOfChromosomes = 20;
+    public const int noOfChromosomes = 4;
     const int noOfGenes = 5;
     private int noMaximGeneratii = 10;
     
@@ -38,9 +38,11 @@ public class Test : MonoBehaviour
     private Chromosome individPotential = null;
     private Car masinaActiva = null;
     private List<Chromosome> populatieNoua = new List<Chromosome>();
-    private int noGeneratie = 1;
+    public int noGeneratie = 1;
     private Chromosome solutie;
     public bool neTerminat = true;
+    public int maxScore;
+    public int score;
     
     void Awake()
     {
@@ -59,6 +61,7 @@ public class Test : MonoBehaviour
               
 
                 Score.ScoreValue = Convert.ToInt32(_car.transform.GetChild(0).position.x);
+                score = Score.ScoreValue;
                 if (((Time.time - time > 1) && Math.Round(_car.transform.GetChild(0).position.x, 1) == oldPosition &&
                      resetCarFlag) ||
                     Math.Round(_car.transform.GetChild(0).position.x, 1) < -1)
@@ -112,7 +115,7 @@ public class Test : MonoBehaviour
                         }
                         index = 0;
                         _chromosomes = populatieNoua.Select((item) => item).ToList();
-                        var maxScore = _chromosomes.Select((item) => item.score).Max();
+                        maxScore = _chromosomes.Select((item) => item.score).Max();
                         solutie = _chromosomes.Find((item) => item.score == maxScore);
                         populatieNoua.Clear();
                     }
