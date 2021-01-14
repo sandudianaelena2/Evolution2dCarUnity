@@ -28,18 +28,7 @@ public class CarController : MonoBehaviour
 
 	void Update()
 	{
-		if (isMoving)
-		{
-
-			motorFront.motorSpeed = frontSpeed * -1;
-			motorFront.maxMotorTorque = frontTorque;
-			
-			motorBack.motorSpeed = (frontSpeed * -1)/2;
-			motorBack.maxMotorTorque = frontTorque/2;
-
-			frontWheel.motor = motorFront;
-			backWheel.motor = motorBack;
-		}
+		
 	}
 
 	public void Stop()

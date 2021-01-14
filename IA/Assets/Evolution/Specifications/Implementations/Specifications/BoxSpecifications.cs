@@ -18,10 +18,10 @@ namespace Evolution.Specifications.Implementations.Specifications
             RegenerateValues();         
         }
 
-        public BoxSpecifications(BoxConstraints.Boxes boxNumber, float scale, float mass)
+        public BoxSpecifications(BoxConstraints.Boxes boxNumber, float scale)
         {
             _scale = scale;
-            _mass = mass;
+            ResetMass();
             _boxNumber = boxNumber;
         }
 
@@ -38,7 +38,12 @@ namespace Evolution.Specifications.Implementations.Specifications
         public void RegenerateValues()
         {
             _scale = UnityEngine.Random.Range(BoxConstraints.MinScale, BoxConstraints.MaxScale);
-            _mass = _scale * BoxConstraints.StandardMass;
+            ResetMass();
+        }
+
+        private void ResetMass()
+        {
+            _mass = (_scale * BoxConstraints.StandardMass) / BoxConstraints.MaxScale;
         }
 
         public BoxConstraints.Boxes GetBoxNumber()

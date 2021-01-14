@@ -1,0 +1,567 @@
+Index: Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>namespace Evolution.Specifications.Implementations.Specifications.Constraints\n{\n    public class WheelConstraints\n    {\n        public enum Wheels\n        {\n            BackWheel = 1,\n            FrontWheel\n        } \n        public static float MaxScale { get; } = 1f;\n        public static float MinScale { get; } = 0.56f;\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs	(date 1610642851309)
+@@ -7,7 +7,7 @@
+             BackWheel = 1,
+             FrontWheel
+         } 
+-        public static float MaxScale { get; } = 1f;
++        public static float MaxScale { get; } = 0.9f;
+         public static float MinScale { get; } = 0.56f;
+     }
+ }
+\ No newline at end of file
+Index: Assets/Scripts/FinalScript.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System.Collections;\nusing System.Collections.Generic;\nusing UnityEngine;\n\npublic class FinalScript : MonoBehaviour\n{\n    public static FinalScript instance;\n    // Start is called before the first frame update\n    void Start()\n    {\n        instance = this;\n    }\n\n    // Update is called once per frame\n    void Update()\n    {\n\n        \n    }\n\n    private void OnTriggerEnter2D(Collider2D collision)\n    {\n        if (collision.CompareTag(\"CarBody\"))\n        {\n            Test.instance.neTerminat = false;\n            Test.instance._car.transform.GetChild(0).GetComponent<CarController>().frontSpeed = 0;\n        }\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Scripts/FinalScript.cs	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ Assets/Scripts/FinalScript.cs	(date 1610642615850)
+@@ -1,5 +1,6 @@
+ using System.Collections;
+ using System.Collections.Generic;
++using TMPro;
+ using UnityEngine;
+ 
+ public class FinalScript : MonoBehaviour
+@@ -23,8 +24,18 @@
+         if (collision.CompareTag("CarBody"))
+         {
+             Test.instance.neTerminat = false;
+-            Test.instance._car.transform.GetChild(0).GetComponent<CarController>().frontSpeed = 0;
++            StopMotors();
+         }
+     }
++
++    private void StopMotors()
++    {
++        JointMotor2D motor2D = new JointMotor2D();
++        motor2D.motorSpeed = 0;
++        motor2D.maxMotorTorque = 0;
++        var joints = Test.instance._car.GetComponents<WheelJoint2D>();
++        joints[0].motor = motor2D;
++        joints[1].motor = motor2D;
++    }
+ 
+ }
+Index: Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>namespace Evolution.Specifications.Implementations.Specifications.Constraints\n{\n    public class CarBodyConstraints\n    {\n        public static float ScaleXmax { get; } = 0.18f;\n        public static float ScaleXmin { get; } = 0.1f;\n        public static float ScaleYmax { get; } = 0.18f;\n        public static float ScaleYmin { get; } = 0.11f;\n        public static float MotorSpeed { get; } = -620f;\n        public static float MotorTorque { get; } = 100f;\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs	(date 1610642851285)
+@@ -2,11 +2,18 @@
+ {
+     public class CarBodyConstraints
+     {
+-        public static float ScaleXmax { get; } = 0.18f;
+-        public static float ScaleXmin { get; } = 0.1f;
+-        public static float ScaleYmax { get; } = 0.18f;
+-        public static float ScaleYmin { get; } = 0.11f;
+-        public static float MotorSpeed { get; } = -620f;
+-        public static float MotorTorque { get; } = 100f;
++        public static float ScaleXmax { get; } = 0.24f;
++        public static float ScaleXmin { get; } = 0.12f;
++        public static float ScaleYmax { get; } = 0.2f;
++        public static float ScaleYmin { get; } = 0.12f;
++        
++        
++        public static float MaxMotorSpeed { get; } = 1500f;
++        public static float MaxMotorTorque { get; } = 1000f;
++        
++        public static float MinMotorSpeed { get; } = 100f;
++        public static float MinMotorTorque { get; } = 100f;
++
++        public static float StandardMass { get; } = 5f;
+     }
+ }
+\ No newline at end of file
+Index: Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>namespace Evolution.Specifications.Implementations.Specifications.Constraints\n{\n    class BoxConstraints\n    {\n        public enum Boxes\n        {\n            LeftBox = 3,\n            RightBox\n        }\n        public static float MaxScale { get; } = 1.6f;\n        public static float MinScale { get; } = 0.6f;\n\n        public static float MaxMass { get; } = 0.16f;\n        public static float MinMass { get; } = 0.06f;\n\n        public static float StandardMass { get; } = 0.1f;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs	(date 1610642851313)
+@@ -9,10 +9,7 @@
+         }
+         public static float MaxScale { get; } = 1.6f;
+         public static float MinScale { get; } = 0.6f;
+-
+-        public static float MaxMass { get; } = 0.16f;
+-        public static float MinMass { get; } = 0.06f;
+-
+-        public static float StandardMass { get; } = 0.1f;
++        
++        public static float StandardMass { get; } = 4f;
+     }
+ }
+Index: Assets/Scripts/CarController.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System.Collections;\nusing System.Collections.Generic;\nusing UnityEngine;\nusing System;\n\npublic class CarController : MonoBehaviour\n{\n\n\tstatic public CarController instance;\n\n\tpublic bool isMoving = true;\n\n\tpublic WheelJoint2D frontWheel;\n\tpublic WheelJoint2D backWheel;\n\n\tJointMotor2D motorFront;\n\tJointMotor2D motorBack;\n\n\tpublic float frontSpeed;\n\tpublic float frontTorque;\n\n\n\tprivate void Awake()\n\t{\n\t\tinstance = this;\n\t\t//AudioController.instance.PlayMusic();\n\t}\n\n\tvoid Update()\n\t{\n\t\tif (isMoving)\n\t\t{\n\n\t\t\tmotorFront.motorSpeed = frontSpeed * -1;\n\t\t\tmotorFront.maxMotorTorque = frontTorque;\n\t\t\t\n\t\t\tmotorBack.motorSpeed = (frontSpeed * -1)/2;\n\t\t\tmotorBack.maxMotorTorque = frontTorque/2;\n\n\t\t\tfrontWheel.motor = motorFront;\n\t\t\tbackWheel.motor = motorBack;\n\t\t}\n\t}\n\n\tpublic void Stop()\n\t{\n\t\tfrontSpeed = 0;\n\n\t\t//AudioController.instance.StopMusic();\n\t}\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Scripts/CarController.cs	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ Assets/Scripts/CarController.cs	(date 1610641722983)
+@@ -28,18 +28,7 @@
+ 
+ 	void Update()
+ 	{
+-		if (isMoving)
+-		{
+-
+-			motorFront.motorSpeed = frontSpeed * -1;
+-			motorFront.maxMotorTorque = frontTorque;
+-			
+-			motorBack.motorSpeed = (frontSpeed * -1)/2;
+-			motorBack.maxMotorTorque = frontTorque/2;
+-
+-			frontWheel.motor = motorFront;
+-			backWheel.motor = motorBack;
+-		}
++		
+ 	}
+ 
+ 	public void Stop()
+Index: Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using Evolution.Specifications.Implementations.Specifications.Constraints;\nusing Evolution.Specifications.Interfaces;\nusing UnityEngine;\n\nnamespace Evolution.Specifications.Implementations.Specifications\n{\n    public class CarBodySpecifications : ISpecifications\n    {\n        private float _scaleX;\n        private float _scaleY;\n        \n        public System.Tuple<float, float> GetScale()\n        {\n            return new System.Tuple<float, float>(_scaleX, _scaleY);\n        }\n\n        public void SetScale(System.Tuple<float, float> newScale)\n        {\n            _scaleX = newScale.Item1;\n            _scaleY = newScale.Item2;\n        }\n        public CarBodySpecifications()\n        {\n            RegenerateValues();\n        }\n\n        public void ChangeGameObject(GameObject car)\n        {\n            var carBody = car.transform.GetChild(0).gameObject;\n            carBody.transform.localScale = new Vector3(_scaleX, _scaleY, carBody.transform.localScale.z);\n        }\n\n        public void RegenerateValues()\n        {\n            GenerateNewScale();\n        }\n        \n\n        private void GenerateNewScale()\n        {\n            _scaleX = Random.Range(CarBodyConstraints.ScaleXmin, CarBodyConstraints.ScaleXmax);\n            _scaleY = Random.Range(CarBodyConstraints.ScaleYmin, CarBodyConstraints.ScaleYmax);\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs	(date 1610643704589)
+@@ -1,5 +1,6 @@
+ using Evolution.Specifications.Implementations.Specifications.Constraints;
+ using Evolution.Specifications.Interfaces;
++using Models;
+ using UnityEngine;
+ 
+ namespace Evolution.Specifications.Implementations.Specifications
+@@ -8,17 +9,12 @@
+     {
+         private float _scaleX;
+         private float _scaleY;
++        private float _motorFrontSpeed;
++        private float _motorBackSpeed;
++        private float _motorFrontTorque;
++        private float _motorBackTorque;
++        private float _mass;
+         
+-        public System.Tuple<float, float> GetScale()
+-        {
+-            return new System.Tuple<float, float>(_scaleX, _scaleY);
+-        }
+-
+-        public void SetScale(System.Tuple<float, float> newScale)
+-        {
+-            _scaleX = newScale.Item1;
+-            _scaleY = newScale.Item2;
+-        }
+         public CarBodySpecifications()
+         {
+             RegenerateValues();
+@@ -28,18 +24,82 @@
+         {
+             var carBody = car.transform.GetChild(0).gameObject;
+             carBody.transform.localScale = new Vector3(_scaleX, _scaleY, carBody.transform.localScale.z);
++            carBody.GetComponent<Rigidbody2D>().mass = _mass;
++            var joints = carBody.GetComponents<WheelJoint2D>();
++            JointMotor2D frontMotor2D = new JointMotor2D(), backMotor = new JointMotor2D();
++            frontMotor2D.motorSpeed = - _motorFrontSpeed;
++            frontMotor2D.maxMotorTorque = _motorFrontTorque;
++            backMotor.motorSpeed = - _motorBackSpeed;
++            backMotor.maxMotorTorque = _motorBackTorque;
++            joints[0].motor = frontMotor2D;
++            joints[1].motor = backMotor;
+         }
+ 
+         public void RegenerateValues()
+         {
+             GenerateNewScale();
++            GenerateSpeeds();
++            GenerateTorque();
++        }
++
++        private void GenerateSpeeds()
++        {
++            _motorFrontSpeed = Random.Range(CarBodyConstraints.MinMotorSpeed, CarBodyConstraints.MaxMotorSpeed);
++            _motorBackSpeed = Random.Range(CarBodyConstraints.MinMotorSpeed, CarBodyConstraints.MaxMotorSpeed);
+         }
+-        
++
++        private void GenerateTorque()
++        {
++            _motorFrontTorque = Random.Range(CarBodyConstraints.MinMotorTorque, CarBodyConstraints.MaxMotorTorque);
++            _motorBackTorque = Random.Range(CarBodyConstraints.MinMotorTorque, CarBodyConstraints.MaxMotorTorque);
++        }
+ 
+         private void GenerateNewScale()
+         {
+             _scaleX = Random.Range(CarBodyConstraints.ScaleXmin, CarBodyConstraints.ScaleXmax);
+             _scaleY = Random.Range(CarBodyConstraints.ScaleYmin, CarBodyConstraints.ScaleYmax);
++            ResetMass();
++        }
++        
++        public System.Tuple<float, float> GetScale()
++        {
++            return new System.Tuple<float, float>(_scaleX, _scaleY);
++        }
++
++        public void SetScale(System.Tuple<float, float> newScale)
++        {
++            _scaleX = newScale.Item1;
++            _scaleY = newScale.Item2;
++            ResetMass();
++        }
++
++        private void ResetMass()
++        {
++            _mass = (CarBodyConstraints.StandardMass * _scaleX * _scaleY) / (CarBodyConstraints.ScaleXmax * CarBodyConstraints.ScaleYmax);
++        }
++
++        public float MotorFrontSpeed
++        {
++            get => _motorFrontSpeed;
++            set => _motorFrontSpeed = value;
++        }
++
++        public float MotorFrontTorque
++        {
++            get => _motorFrontTorque;
++            set => _motorFrontTorque = value;
++        }
++
++        public float MotorBackSpeed
++        {
++            get => _motorBackSpeed;
++            set => _motorBackSpeed = value;
++        }
++
++        public float MotorBackTorque
++        {
++            get => _motorBackTorque;
++            set => _motorBackTorque = value;
+         }
+     }
+ }
+\ No newline at end of file
+Index: Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using Evolution.Specifications.Implementations.Specifications.Constraints;\nusing Evolution.Specifications.Interfaces;\nusing UnityEngine;\n\nnamespace Evolution.Specifications.Implementations.Specifications\n{\n    class BoxSpecifications:ISpecifications\n    {\n\n        private float _scale;\n        private float _mass;\n\n        private readonly BoxConstraints.Boxes _boxNumber;\n\n        public BoxSpecifications(BoxConstraints.Boxes boxNumber)\n        {\n            _boxNumber = boxNumber;\n            RegenerateValues();         \n        }\n\n        public BoxSpecifications(BoxConstraints.Boxes boxNumber, float scale, float mass)\n        {\n            _scale = scale;\n            _mass = mass;\n            _boxNumber = boxNumber;\n        }\n\n        public void ChangeGameObject(GameObject car)\n        {\n            var box = car.transform.GetChild((int)_boxNumber).gameObject;\n\n            var newScale = new Vector3(_scale, _scale, box.transform.localScale.z);\n            box.transform.localScale = newScale;\n\n            box.GetComponent<Rigidbody2D>().mass = _mass;\n        }\n\n        public void RegenerateValues()\n        {\n            _scale = UnityEngine.Random.Range(BoxConstraints.MinScale, BoxConstraints.MaxScale);\n            _mass = _scale * BoxConstraints.StandardMass;\n        }\n\n        public BoxConstraints.Boxes GetBoxNumber()\n        {\n            return _boxNumber;\n        }\n\n        public float GetScale()\n        {\n            return _scale;\n        }\n\n        public float GetMass()\n        {\n            return _mass;\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs	(date 1610642851329)
+@@ -18,10 +18,10 @@
+             RegenerateValues();         
+         }
+ 
+-        public BoxSpecifications(BoxConstraints.Boxes boxNumber, float scale, float mass)
++        public BoxSpecifications(BoxConstraints.Boxes boxNumber, float scale)
+         {
+             _scale = scale;
+-            _mass = mass;
++            ResetMass();
+             _boxNumber = boxNumber;
+         }
+ 
+@@ -38,7 +38,12 @@
+         public void RegenerateValues()
+         {
+             _scale = UnityEngine.Random.Range(BoxConstraints.MinScale, BoxConstraints.MaxScale);
+-            _mass = _scale * BoxConstraints.StandardMass;
++            ResetMass();
++        }
++
++        private void ResetMass()
++        {
++            _mass = (_scale * BoxConstraints.StandardMass) / BoxConstraints.MaxScale;
+         }
+ 
+         public BoxConstraints.Boxes GetBoxNumber()
+Index: Assets/Scripts/Test.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Runtime.InteropServices;\nusing Evolution;\nusing Models;\nusing UnityEngine;\n\npublic class Test : MonoBehaviour\n{\n    public static Test instance;\n    \n    public GameObject _car;\n    public GameObject prefabCar;\n    private List<Car> _cars = new List<Car>();\n    private List<Chromosome> _chromosomes = new List<Chromosome>();\n    private float time = 0;\n    private double oldPosition = -1;\n    private int index = 1;\n    private bool resetCarFlag = false;\n    private static System.Random random;\n    private static object syncObj = new object();\n\n    const float cr = 0.5f;\n    const float f = 0.8f;\n    const int noOfChromosomes = 20;\n    const int noOfGenes = 5;\n    private int noMaximGeneratii = 10;\n    \n\n    public List<Car> getCars() => _cars;\n\n    private bool adaptare = true;\n    private bool populatieInitiala = true;\n    private bool generarePopulatieNoua = false;\n\n    private Chromosome individPotential = null;\n    private Car masinaActiva = null;\n    private List<Chromosome> populatieNoua = new List<Chromosome>();\n    private int noGeneratie = 1;\n    private Chromosome solutie;\n    public bool neTerminat = true;\n    \n    void Awake()\n    {\n        instance = this;\n        \n        GenerateChromosomes();\n    }\n\n    void Update()\n    {\n        if (neTerminat)\n        {\n            if (adaptare)\n            {\n\n              \n\n                Score.ScoreValue = Convert.ToInt32(_car.transform.GetChild(0).position.x);\n                if (((Time.time - time > 1) && Math.Round(_car.transform.GetChild(0).position.x, 1) == oldPosition &&\n                     resetCarFlag) ||\n                    Math.Round(_car.transform.GetChild(0).position.x, 1) < -1)\n                {\n                    resetCarFlag = false;\n                    if (populatieInitiala)\n                    {\n                        if (index < noOfChromosomes)\n                        {\n                           \n                            _chromosomes[index - 1].score = Score.ScoreValue;\n                            _cars[index - 1].SetActive(false);\n                            _car = _cars[index].GetCar();\n                            _cars[index].SetActive(true);\n\n                        }\n                        else\n                        {\n                            _cars[index - 1].SetActive(false);\n                            index = -1;\n                            generarePopulatieNoua = true;\n                            populatieInitiala = false;\n                            adaptare = false;\n                        }\n                    }\n                    else\n                    {\n                        individPotential.score = Score.ScoreValue;\n                        if (individPotential.score > _chromosomes[index].score)\n                        {\n                            populatieNoua.Add(individPotential);\n                        }\n                        else\n                        {\n                            populatieNoua.Add(_chromosomes[index]);\n                        }\n\n                        masinaActiva.SetActive(false);\n                        adaptare = false;\n                        generarePopulatieNoua = true;\n                    }\n\n                    index++;\n                    if (!populatieInitiala && index >= noOfChromosomes)\n                    {\n                        noGeneratie++;\n                        Debug.Log(\"Numar generatii\" + noGeneratie);\n                        if (noGeneratie >= noMaximGeneratii)\n                        {\n                            neTerminat = false;\n                        }\n                        index = 0;\n                        _chromosomes = populatieNoua.Select((item) => item).ToList();\n                        var maxScore = _chromosomes.Select((item) => item.score).Max();\n                        solutie = _chromosomes.Find((item) => item.score == maxScore);\n                        populatieNoua.Clear();\n                    }\n                }\n\n                if (Time.time - time > 5)\n                {\n                    resetCarFlag = true;\n                    time = Time.time;\n                    oldPosition = Math.Round(_car.transform.GetChild(0).position.x, 1);;\n                }\n            }\n\n            if (generarePopulatieNoua)\n            {\n                var indivizi = new List<Chromosome>();\n                var chromose = _chromosomes[index];\n                indivizi.Add(chromose);\n                var temp = 3;\n                while (temp > 0)\n                {\n                    int indexRandom;\n                    do\n                    {\n                        indexRandom = GetRandomIntNumber(_chromosomes.Count);\n                    } while (indexRandom == index);\n\n                    indivizi.Add(_chromosomes[indexRandom]);\n                    temp--;\n                }\n\n                individPotential = new Chromosome();\n                var punctDeDivizare = generateDivingPoint();\n                for (int gena = 0; gena < noOfGenes; ++gena)\n                {\n                    var nrAleatoriu = GetRandomDoubleNumber();\n                    if (gena == punctDeDivizare || nrAleatoriu < cr)\n                    {\n                        individPotential.Genes[gena]\n                            .Mutate(indivizi.Select(individ => individ.Genes[gena]).ToList(), f);\n                    }\n                    else\n                    {\n                        individPotential.Genes[gena] = indivizi[0].Genes[gena];\n                    }\n                }\n                Debug.Log(\"Generat masina pentru chromose \" + index);\n                masinaActiva = constructCar(individPotential);\n                masinaActiva.SetActive(true);\n                _car = masinaActiva.GetCar();\n                adaptare = true;\n                generarePopulatieNoua = false;\n            }\n        }\n    }\n\n    private void GenerateChromosomes()\n    {\n        for (int i = 0; i < noOfChromosomes; i++)\n        {\n            var newChromosome = new Chromosome();\n            _chromosomes.Add(newChromosome);\n            var newCar = constructCar(newChromosome);\n            if (i == 0)\n            {\n                _car = newCar.GetCar();\n            }\n            else\n            {\n                newCar.SetActive(false);\n            }\n            _cars.Add(newCar);\n        }\n    }\n\n    private Car constructCar(Chromosome chromosome)\n    {\n        var genes = chromosome.Genes;\n        GameObject newCar = GameObject.Instantiate(prefabCar);\n        foreach (var gene in genes)\n        {\n            gene.GetSpecifications().ChangeGameObject(newCar);\n        }\n\n        return new Car(newCar);\n    }\n    \n\n    private int generateDivingPoint()\n    {\n        return GetRandomIntNumber(noOfGenes);\n    }\n\n    private int GetRandomIntNumber(int max)\n    {\n        lock (syncObj)\n        {\n            if (random == null)\n                random = new System.Random();\n            return random.Next(max);\n        }\n    }\n\n    private double GetRandomDoubleNumber()\n    {\n        lock (syncObj)\n        {\n            if (random == null)\n                random = new System.Random();\n            return random.NextDouble();\n        }\n    }\n\n    //private GameObject Mutation()\n    //{\n\n    //    foreach(var chromosome in _chromosomes)\n    //    {\n    //        List<Chromosome> individuals = new List<Chromosome>();\n\n    //        individuals.Add(chromosome);\n    //        for (int i = 0; i < 3; ++i)\n    //        {\n    //            var randomIndx = GetRandomIntNumber(noOfChromosomes);\n    //            individuals.Add(_chromosomes[randomIndx]);\n    //        }\n\n    //        var potentialIndiv = new Chromosome();\n    //        var dividingPoint = GetRandomIntNumber(noOfGenes - 1);\n\n    //        for(int geneNo = 0; geneNo < noOfGenes; ++geneNo)\n    //        {\n    //            if(geneNo == dividingPoint || GetRandomDoubleNumber() < cr)\n    //            {\n\n    //            }\n    //            else\n    //            {\n\n    //            }\n    //        }\n\n    //    }\n\n    //}\n    \n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Scripts/Test.cs	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ Assets/Scripts/Test.cs	(date 1610643478894)
+@@ -24,7 +24,7 @@
+ 
+     const float cr = 0.5f;
+     const float f = 0.8f;
+-    const int noOfChromosomes = 20;
++    const int noOfChromosomes = 10;
+     const int noOfGenes = 5;
+     private int noMaximGeneratii = 10;
+     
+Index: Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System;\nusing Evolution.Specifications.Implementations.Specifications;\nusing Evolution.Specifications.Implementations.Specifications.Constraints;\nusing Evolution.Specifications.Interfaces;\nusing UnityEngine;\n\nnamespace Evolution.Specifications.Implementations.SpecificationOperations\n{\n    class CarBodySpecificationsOperations : ISpecificationsOperations\n    {\n        public ISpecifications AddSpecifications(ISpecifications specifications1, ISpecifications specifications2)\n        {\n            CarBodySpecifications carBodySpecifications1 = (CarBodySpecifications)specifications1;\n            CarBodySpecifications carBodySpecifications2 = (CarBodySpecifications)specifications2;\n            CarBodySpecifications result = new CarBodySpecifications();\n            Tuple<float, float> newScale = RepairScale(GetScaleSum(carBodySpecifications1, carBodySpecifications2));\n            result.SetScale(newScale);\n            return result;\n        }\n\n      \n        public ISpecifications ScalarMultiplySpecifications(ISpecifications specifications, float scalar)\n        {\n\n            CarBodySpecifications result = (CarBodySpecifications)specifications;\n            Tuple<float, float> newScale = RepairScale(ScalarMultiplyScale(result, scalar));\n            result.SetScale(newScale);\n            return result;\n        }\n\n        public Tuple<float, float> RepairScale(Tuple<float, float> scale)\n        {\n            var scaleX = scale.Item1;\n            var scaleY = scale.Item2;\n\n            if (scaleX > CarBodyConstraints.ScaleXmax)\n            {\n                scaleX = CarBodyConstraints.ScaleXmax;\n            }\n            else if (scaleX < CarBodyConstraints.ScaleXmin)\n            {\n                scaleX = CarBodyConstraints.ScaleXmin;\n            }\n\n            if (scaleY > CarBodyConstraints.ScaleYmax)\n            {\n                scaleY = CarBodyConstraints.ScaleYmax;\n            }\n            else if (scaleY < CarBodyConstraints.ScaleYmin)\n            {\n                scaleY = CarBodyConstraints.ScaleYmin;\n            }\n\n            scale = new Tuple<float, float>(scaleX, scaleY);\n\n            return scale;\n        }\n\n        public Tuple<float, float> ScalarMultiplyScale(CarBodySpecifications carBodySpecifications, float scalar)\n        {\n            var newScaleX = carBodySpecifications.GetScale().Item1 * scalar;\n            var newScaleY = carBodySpecifications.GetScale().Item2 * scalar;\n\n            Tuple<float, float> newScale = new Tuple<float, float>(newScaleX, newScaleY);\n\n            return newScale;\n        }\n        \n\n        public Tuple<float, float> GetScaleSum(CarBodySpecifications carBodySpecifications1, CarBodySpecifications carBodySpecifications2)\n        {\n            var newScaleX = carBodySpecifications1.GetScale().Item1 + carBodySpecifications2.GetScale().Item1;\n            var newScaleY = carBodySpecifications1.GetScale().Item2 + carBodySpecifications2.GetScale().Item2;\n\n            Tuple<float, float> newScale = new Tuple<float, float>(newScaleX, newScaleY);\n\n            return newScale;\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs	(date 1610643368570)
+@@ -15,16 +15,35 @@
+             CarBodySpecifications result = new CarBodySpecifications();
+             Tuple<float, float> newScale = RepairScale(GetScaleSum(carBodySpecifications1, carBodySpecifications2));
+             result.SetScale(newScale);
++            var frontSpeed =
++                RepairSpeed(carBodySpecifications1.MotorFrontSpeed + carBodySpecifications2.MotorFrontSpeed);
++            var backSpeed = RepairSpeed(carBodySpecifications1.MotorBackSpeed + carBodySpecifications2.MotorBackSpeed);
++            var frontTorque =
++                RepairTorque(carBodySpecifications1.MotorFrontTorque + carBodySpecifications2.MotorFrontTorque);
++            var backTorque =
++                RepairTorque(carBodySpecifications1.MotorBackTorque + carBodySpecifications2.MotorBackTorque);
++            result.MotorBackSpeed = backSpeed;
++            result.MotorBackTorque = backTorque;
++            result.MotorFrontSpeed = frontSpeed;
++            result.MotorFrontTorque = frontTorque;
+             return result;
+         }
+ 
+       
+         public ISpecifications ScalarMultiplySpecifications(ISpecifications specifications, float scalar)
+         {
+-
+-            CarBodySpecifications result = (CarBodySpecifications)specifications;
++            CarBodySpecifications specs = (CarBodySpecifications)specifications;
++            var result = new CarBodySpecifications();
+             Tuple<float, float> newScale = RepairScale(ScalarMultiplyScale(result, scalar));
+             result.SetScale(newScale);
++            var frontSpeed = RepairSpeed(scalar * specs.MotorFrontSpeed);
++            var backSpeed = RepairSpeed(scalar * specs.MotorBackSpeed);
++            var frontTorque = RepairTorque(scalar * specs.MotorFrontTorque);
++            var backTorque = RepairTorque(scalar * specs.MotorBackTorque);
++            result.MotorBackSpeed = backSpeed;
++            result.MotorBackTorque = backTorque;
++            result.MotorFrontSpeed = frontSpeed;
++            result.MotorFrontTorque = frontTorque;
+             return result;
+         }
+ 
+@@ -56,6 +75,33 @@
+             return scale;
+         }
+ 
++        private float RepairSpeed(float speed)
++        {
++            if (speed < CarBodyConstraints.MinMotorSpeed)
++            {
++                speed = CarBodyConstraints.MinMotorSpeed;
++            }
++            else if (speed > CarBodyConstraints.MaxMotorSpeed)
++            {
++                speed = CarBodyConstraints.MaxMotorSpeed;
++            }
++            return speed;
++        }
++
++        private float RepairTorque(float torque)
++        {
++            if (torque < CarBodyConstraints.MinMotorTorque)
++            {
++                torque = CarBodyConstraints.MinMotorTorque;
++            }
++            else if (torque > CarBodyConstraints.MaxMotorTorque)
++            {
++                torque = CarBodyConstraints.MaxMotorTorque;
++            }
++
++            return torque;
++        }
++
+         public Tuple<float, float> ScalarMultiplyScale(CarBodySpecifications carBodySpecifications, float scalar)
+         {
+             var newScaleX = carBodySpecifications.GetScale().Item1 * scalar;
+Index: Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using Evolution.Specifications.Implementations.Specifications;\nusing Evolution.Specifications.Implementations.Specifications.Constraints;\nusing Evolution.Specifications.Interfaces;\nusing UnityEngine;\n\nnamespace Evolution.Specifications.Implementations.SpecificationOperations\n{\n    class BoxSpecificationsOperations : ISpecificationsOperations\n    {\n        public ISpecifications AddSpecifications(ISpecifications specifications1, ISpecifications specifications2)\n        {\n            var specs1 = specifications1 as BoxSpecifications;\n            var specs2 = specifications2 as BoxSpecifications;\n            var mass = RepairMass(specs1.GetMass() + specs2.GetMass());\n            var scale = RepairScale(specs1.GetScale() + specs2.GetScale());\n            return new BoxSpecifications(specs1.GetBoxNumber(), scale, mass);\n        }\n\n        public ISpecifications ScalarMultiplySpecifications(ISpecifications specifications, float scalar)\n        {\n            var specs = specifications as BoxSpecifications;\n            var mass = RepairMass(specs.GetMass() * scalar);\n            var scale = RepairScale(specs.GetScale() * scalar);\n            return new BoxSpecifications(specs.GetBoxNumber(), scale, mass);\n        }\n        \n        private float RepairScale(float scale)\n        {\n            if (scale > BoxConstraints.MaxScale)\n                scale = BoxConstraints.MaxScale;\n            \n            if (scale < BoxConstraints.MinScale)\n                scale = BoxConstraints.MinScale;\n            return scale;\n        }\n\n        private float RepairMass(float mass)\n        {\n            if (mass > BoxConstraints.MaxMass)\n                mass = BoxConstraints.MaxMass;\n            \n            if (mass < BoxConstraints.MinMass)\n                mass = BoxConstraints.MinMass;\n            return mass;\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs	(date 1610642851321)
+@@ -11,17 +11,15 @@
+         {
+             var specs1 = specifications1 as BoxSpecifications;
+             var specs2 = specifications2 as BoxSpecifications;
+-            var mass = RepairMass(specs1.GetMass() + specs2.GetMass());
+             var scale = RepairScale(specs1.GetScale() + specs2.GetScale());
+-            return new BoxSpecifications(specs1.GetBoxNumber(), scale, mass);
++            return new BoxSpecifications(specs1.GetBoxNumber(), scale);
+         }
+ 
+         public ISpecifications ScalarMultiplySpecifications(ISpecifications specifications, float scalar)
+         {
+             var specs = specifications as BoxSpecifications;
+-            var mass = RepairMass(specs.GetMass() * scalar);
+             var scale = RepairScale(specs.GetScale() * scalar);
+-            return new BoxSpecifications(specs.GetBoxNumber(), scale, mass);
++            return new BoxSpecifications(specs.GetBoxNumber(), scale);
+         }
+         
+         private float RepairScale(float scale)
+@@ -33,15 +31,6 @@
+                 scale = BoxConstraints.MinScale;
+             return scale;
+         }
+-
+-        private float RepairMass(float mass)
+-        {
+-            if (mass > BoxConstraints.MaxMass)
+-                mass = BoxConstraints.MaxMass;
+-            
+-            if (mass < BoxConstraints.MinMass)
+-                mass = BoxConstraints.MinMass;
+-            return mass;
+-        }
++        
+     }
+ }
+Index: .idea/.idea.IA/.idea/contentModel.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ContentModelStore\">\n    <e p=\"$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources\" t=\"IncludeRecursive\" />\n    <e p=\"$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_IA.1488422585.00\" t=\"ExcludeRecursive\" />\n    <e p=\"$PROJECT_DIR$\" t=\"IncludeRecursive\">\n      <e p=\"Assembly-CSharp.csproj\" t=\"IncludeRecursive\" />\n      <e p=\"Assets\" t=\"Include\">\n        <e p=\"Evolution\" t=\"Include\">\n          <e p=\"Chromosome.cs\" t=\"Include\" />\n          <e p=\"Genes\" t=\"Include\">\n            <e p=\"Implementations\" t=\"Include\">\n              <e p=\"BoxGene.cs\" t=\"Include\" />\n              <e p=\"CarBodyGene.cs\" t=\"Include\" />\n              <e p=\"WheelGene.cs\" t=\"Include\" />\n            </e>\n            <e p=\"Interfaces\" t=\"Include\">\n              <e p=\"IGene.cs\" t=\"Include\" />\n            </e>\n          </e>\n          <e p=\"Specifications\" t=\"Include\">\n            <e p=\"Implementations\" t=\"Include\">\n              <e p=\"SpecificationOperations\" t=\"Include\">\n                <e p=\"BoxSpecificationsOperations.cs\" t=\"Include\" />\n                <e p=\"CarBodySpecificationsOperations.cs\" t=\"Include\" />\n                <e p=\"WheelSpecificationsOperations.cs\" t=\"Include\" />\n              </e>\n              <e p=\"Specifications\" t=\"Include\">\n                <e p=\"BoxSpecifications.cs\" t=\"Include\" />\n                <e p=\"CarBodySpecifications.cs\" t=\"Include\" />\n                <e p=\"Constraints\" t=\"Include\">\n                  <e p=\"BoxConstraints.cs\" t=\"Include\" />\n                  <e p=\"CarBodyConstraints.cs\" t=\"Include\" />\n                  <e p=\"WheelConstraints.cs\" t=\"Include\" />\n                </e>\n                <e p=\"WheelSpecifications.cs\" t=\"Include\" />\n              </e>\n            </e>\n            <e p=\"Interfaces\" t=\"Include\">\n              <e p=\"ISpecifications.cs\" t=\"Include\" />\n              <e p=\"ISpecificationsOperations.cs\" t=\"Include\" />\n            </e>\n          </e>\n        </e>\n        <e p=\"Models\" t=\"Include\">\n          <e p=\"Car.cs\" t=\"Include\" />\n        </e>\n        <e p=\"Scripts\" t=\"Include\">\n          <e p=\"AudioController.cs\" t=\"Include\" />\n          <e p=\"CameraController.cs\" t=\"Include\" />\n          <e p=\"CarController.cs\" t=\"Include\" />\n          <e p=\"FinalScript.cs\" t=\"Include\" />\n          <e p=\"Score.cs\" t=\"Include\" />\n          <e p=\"Test.cs\" t=\"Include\" />\n        </e>\n      </e>\n      <e p=\"IA.sln\" t=\"IncludeFlat\" />\n      <e p=\"Temp/bin\" t=\"ExcludeRecursive\" />\n      <e p=\"obj\" t=\"ExcludeRecursive\" />\n      <e p=\"packages\" t=\"ExcludeRecursive\" />\n    </e>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.IA/.idea/contentModel.xml	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ .idea/.idea.IA/.idea/contentModel.xml	(date 1610640398021)
+@@ -2,7 +2,7 @@
+ <project version="4">
+   <component name="ContentModelStore">
+     <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
+-    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_IA.1488422585.00" t="ExcludeRecursive" />
++    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_IA.1697287470.00" t="ExcludeRecursive" />
+     <e p="$PROJECT_DIR$" t="IncludeRecursive">
+       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+       <e p="Assets" t="Include">
+Index: .idea/.idea.IA/.idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"BranchesTreeState\">\n    <expand>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"LOCAL_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"GROUP_NODE:origin\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n    </expand>\n    <select />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"b94badb7-5677-44b3-b474-4b958a7ee0a1\" name=\"Default Changelist\" comment=\"\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.IA/.idea/indexLayout.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/.idea.IA/.idea/indexLayout.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Assets/Scripts/CarController.cs\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Assets/Scripts/CarController.cs\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Assets/prefab/Car-2Box.prefab\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Assets/prefab/Car-2Box.prefab\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\n  </component>\n  <component name=\"IdeDocumentHistory\">\n    <option name=\"CHANGED_PATHS\">\n      <list>\n        <option value=\"$PROJECT_DIR$/Assets/Test.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/script.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Constraints/FrontWheelConstraints.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Attachers/Interfaces/IAttacher.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Attachers/Implementations/CarBodyAttacher.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Attachers/Implementations/CarBodyAttach.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Constructors/Implementations/CarBodyAttach.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Constructors/Interfaces/IConstructor.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Constructors/Implementations/BackWheelConstructor.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Constructors/Implementations/FrontWheelConstructor.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Constructors/Implementations/CarBodyConstructor.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Constraints/BackWheelConstraints.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Constraints/CarBodyConstraints.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/BackWheelGene.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/FrontWheelGene.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/FrontWheelSpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/CarBodySpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/BackWheelSpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Scripts/CameraController.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Constraints/WheelConstraints.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/WheelSpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Scripts/Score.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Interfaces/ISpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/WheelSpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Interfaces/ISpecificationsOperations.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Genes/Interfaces/IGene.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Chromosome.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Scripts/FinalScript.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Models/Car.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/WheelSpecificationsOperations.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/BoxGene.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/CarBodyGene.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/WheelGene.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Scripts/Test.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Scripts/CarController.cs\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"JsFlowSettings\">\n    <service-enabled>true</service-enabled>\n    <exe-path />\n    <other-services-enabled>true</other-services-enabled>\n    <auto-save>true</auto-save>\n  </component>\n  <component name=\"ProjectId\" id=\"1jxlTK1pvRl1VXYEV4kJJLJM2n7\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\n  </component>\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"ASKED_ADD_EXTERNAL_FILES\" value=\"true\" />\n    <property name=\"ASKED_SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\n    <property name=\"Discover.Launch.Via.Unity\" value=\"true\" />\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/../../Evolution2dCarUnityV2/IA/IA.sln\" />\n    <property name=\"settings.editor.selected.configurable\" value=\"preferences.pluginManager\" />\n    <property name=\"vue.rearranger.settings.migration\" value=\"true\" />\n  </component>\n  <component name=\"RunManager\" selected=\"Attach to Unity Editor.Attach to Unity Editor\">\n    <configuration name=\"Standalone Player\" type=\"RunUnityExe\" factoryName=\"Unity Executable\">\n      <option name=\"EXE_PATH\" value=\"$PROJECT_DIR$/DacaNuMergiTeSterg.x86_64\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"Attach to Unity Editor &amp; Play\" type=\"UNITY_DEBUG_RUN_CONFIGURATION\" factoryName=\"UNITY_ATTACH_AND_PLAY\" show_console_on_std_err=\"false\" show_console_on_std_out=\"false\" port=\"50000\" address=\"localhost\">\n      <option name=\"allowRunningInParallel\" value=\"false\" />\n      <option name=\"listenPortForConnections\" value=\"false\" />\n      <option name=\"pid\" />\n      <option name=\"selectedOptions\">\n        <set />\n      </option>\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"Attach to Unity Editor\" type=\"UNITY_DEBUG_RUN_CONFIGURATION\" factoryName=\"Unity Debug\" show_console_on_std_err=\"false\" show_console_on_std_out=\"false\" port=\"50000\" address=\"localhost\">\n      <option name=\"allowRunningInParallel\" value=\"false\" />\n      <option name=\"listenPortForConnections\" value=\"false\" />\n      <option name=\"pid\" />\n      <option name=\"selectedOptions\">\n        <set />\n      </option>\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"b94badb7-5677-44b3-b474-4b958a7ee0a1\" name=\"Default Changelist\" comment=\"\" />\n      <created>1604753632339</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1604753632339</updated>\n      <workItem from=\"1604753638772\" duration=\"213000\" />\n      <workItem from=\"1604755905861\" duration=\"332000\" />\n      <workItem from=\"1604862530510\" duration=\"958000\" />\n      <workItem from=\"1604863770313\" duration=\"1144000\" />\n      <workItem from=\"1604865151632\" duration=\"241000\" />\n      <workItem from=\"1604906813098\" duration=\"2952000\" />\n      <workItem from=\"1605028572715\" duration=\"5277000\" />\n      <workItem from=\"1605119251829\" duration=\"4623000\" />\n      <workItem from=\"1605277471258\" duration=\"8211000\" />\n      <workItem from=\"1605365469043\" duration=\"5964000\" />\n      <workItem from=\"1605425955738\" duration=\"12128000\" />\n      <workItem from=\"1605440523788\" duration=\"198000\" />\n      <workItem from=\"1605973665101\" duration=\"395000\" />\n      <workItem from=\"1605974642703\" duration=\"1090000\" />\n      <workItem from=\"1605978525971\" duration=\"6928000\" />\n      <workItem from=\"1606033567191\" duration=\"1445000\" />\n      <workItem from=\"1606043884900\" duration=\"2210000\" />\n      <workItem from=\"1607700328426\" duration=\"1863000\" />\n      <workItem from=\"1607855318268\" duration=\"5728000\" />\n      <workItem from=\"1609149759177\" duration=\"14000\" />\n      <workItem from=\"1610464282160\" duration=\"8313000\" />\n      <workItem from=\"1610519927834\" duration=\"13921000\" />\n      <workItem from=\"1610540505893\" duration=\"480000\" />\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Instantiate more cars and change wheel dynamically\">\n      <created>1605282786091</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1605282786091</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"Box + Wheel operations\">\n      <created>1607701412724</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1607701412724</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"Incercare realizare algoritm v1\">\n      <created>1607860997563</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1607860997563</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"Algoritm gata, mai trebuie imbunatatiri\">\n      <created>1610473378107</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1610473378107</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"5\" />\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"UnityProjectConfiguration\" hasMinimizedUI=\"false\" />\n  <component name=\"UnityUnitTestConfiguration\" currentTestLauncher=\"EditMode\" />\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"CLEAR_INITIAL_COMMIT_MESSAGE\" value=\"true\" />\n    <MESSAGE value=\"Instantiate more cars and change wheel dynamically\" />\n    <MESSAGE value=\"Box + Wheel operations\" />\n    <MESSAGE value=\"Incercare realizare algoritm v1\" />\n    <MESSAGE value=\"Algoritm gata, mai trebuie imbunatatiri\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Algoritm gata, mai trebuie imbunatatiri\" />\n  </component>\n  <component name=\"WindowStateProjectService\">\n    <state x=\"2238\" y=\"391\" key=\"#com.intellij.execution.impl.EditConfigurationsDialog\" timestamp=\"1605974746123\">\n      <screen x=\"1920\" y=\"0\" width=\"3440\" height=\"1440\" />\n    </state>\n    <state x=\"2238\" y=\"391\" key=\"#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1920.1053/1920.0.3440.1440@1920.0.3440.1440\" timestamp=\"1605974746123\" />\n    <state x=\"3142\" y=\"298\" width=\"424\" height=\"491\" key=\"FileChooserDialogImpl\" timestamp=\"1607700342896\">\n      <screen x=\"1920\" y=\"0\" width=\"1920\" height=\"1080\" />\n    </state>\n    <state x=\"3142\" y=\"298\" width=\"424\" height=\"491\" key=\"FileChooserDialogImpl/0.27.1920.1053/1920.0.1920.1080@1920.0.1920.1080\" timestamp=\"1607700342896\" />\n    <state x=\"1259\" y=\"256\" width=\"352\" height=\"630\" key=\"RiderGenerateDialog\" timestamp=\"1605431162716\">\n      <screen x=\"0\" y=\"27\" width=\"1920\" height=\"1053\" />\n    </state>\n    <state x=\"1259\" y=\"256\" width=\"352\" height=\"630\" key=\"RiderGenerateDialog/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053\" timestamp=\"1605431162716\" />\n    <state x=\"3179\" y=\"235\" width=\"352\" height=\"638\" key=\"RiderGenerateDialog/0.27.1920.1053/1920.0.1920.1080@1920.0.1920.1080\" timestamp=\"1605366978918\" />\n    <state x=\"2751\" y=\"233\" width=\"992\" height=\"737\" key=\"SettingsEditor\" timestamp=\"1605978623450\">\n      <screen x=\"1920\" y=\"0\" width=\"3440\" height=\"1440\" />\n    </state>\n    <state x=\"2384\" y=\"175\" width=\"992\" height=\"737\" key=\"SettingsEditor/0.27.1920.1053/1920.0.1920.1080@1920.0.1920.1080\" timestamp=\"1604753839004\" />\n    <state x=\"2751\" y=\"233\" key=\"SettingsEditor/0.27.1920.1053/1920.0.3440.1440@1920.0.3440.1440\" timestamp=\"1605978623450\" />\n    <state x=\"4\" y=\"555\" width=\"954\" height=\"520\" key=\"VCS.FileHistoryDialog\" timestamp=\"1610531732344\">\n      <screen x=\"0\" y=\"27\" width=\"1920\" height=\"1053\" />\n    </state>\n    <state x=\"4\" y=\"555\" width=\"954\" height=\"520\" key=\"VCS.FileHistoryDialog/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053\" timestamp=\"1610531732344\" />\n    <state x=\"2020\" y=\"127\" width=\"1520\" height=\"1213\" key=\"VCS.FileHistoryDialog/0.27.1920.1053/1920.0.3440.1440@1920.0.3440.1440\" timestamp=\"1605979229476\" />\n    <state x=\"962\" y=\"31\" width=\"954\" height=\"1045\" key=\"VCS.FileHistoryDialog/0.27.1920.1053@0.27.1920.1053\" timestamp=\"1607859779209\" />\n    <state x=\"2954\" y=\"269\" width=\"800\" height=\"535\" key=\"Vcs.Push.Dialog.v2\" timestamp=\"1610473385102\">\n      <screen x=\"1920\" y=\"0\" width=\"1920\" height=\"1080\" />\n    </state>\n    <state x=\"1034\" y=\"289\" width=\"800\" height=\"535\" key=\"Vcs.Push.Dialog.v2/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053\" timestamp=\"1605282794242\" />\n    <state x=\"2954\" y=\"269\" width=\"800\" height=\"535\" key=\"Vcs.Push.Dialog.v2/0.27.1920.1053/1920.0.1920.1080@1920.0.1920.1080\" timestamp=\"1610473385102\" />\n    <state x=\"1034\" y=\"289\" key=\"Vcs.Push.Dialog.v2/0.27.1920.1053@0.27.1920.1053\" timestamp=\"1607861003963\" />\n    <state x=\"144\" y=\"261\" width=\"672\" height=\"679\" key=\"search.everywhere.popup\" timestamp=\"1607856248961\">\n      <screen x=\"0\" y=\"27\" width=\"1920\" height=\"1053\" />\n    </state>\n    <state x=\"144\" y=\"261\" width=\"672\" height=\"678\" key=\"search.everywhere.popup/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053\" timestamp=\"1605428382833\" />\n    <state x=\"2178\" y=\"320\" width=\"1204\" height=\"928\" key=\"search.everywhere.popup/0.27.1920.1053/1920.0.3440.1440@1920.0.3440.1440\" timestamp=\"1605975133048\" />\n    <state x=\"144\" y=\"261\" width=\"672\" height=\"679\" key=\"search.everywhere.popup/0.27.1920.1053@0.27.1920.1053\" timestamp=\"1607856248961\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.IA/.idea/workspace.xml	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ .idea/.idea.IA/.idea/workspace.xml	(date 1610644289565)
+@@ -21,10 +21,19 @@
+   <component name="ChangeListManager">
+     <list default="true" id="b94badb7-5677-44b3-b474-4b958a7ee0a1" name="Default Changelist" comment="">
+       <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/indexLayout.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CarController.cs" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Assets/prefab/Car-2Box.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/prefab/Car-2Box.prefab" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Test.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -64,21 +73,21 @@
+         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Interfaces/ISpecificationsOperations.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Interfaces/IGene.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Chromosome.cs" />
+-        <option value="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" />
+         <option value="$PROJECT_DIR$/Assets/Models/Car.cs" />
+-        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" />
+-        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" />
+-        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" />
+-        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/WheelSpecificationsOperations.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/BoxGene.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/CarBodyGene.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/WheelGene.cs" />
++        <option value="$PROJECT_DIR$/Assets/Scripts/CarController.cs" />
++        <option value="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs" />
++        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs" />
++        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" />
++        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" />
+         <option value="$PROJECT_DIR$/Assets/Scripts/Test.cs" />
+-        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs" />
+-        <option value="$PROJECT_DIR$/Assets/Scripts/CarController.cs" />
++        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" />
++        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs" />
+       </list>
+     </option>
+   </component>
+@@ -165,6 +174,7 @@
+       <workItem from="1610464282160" duration="8313000" />
+       <workItem from="1610519927834" duration="13921000" />
+       <workItem from="1610540505893" duration="480000" />
++      <workItem from="1610640296806" duration="3992000" />
+     </task>
+     <task id="LOCAL-00001" summary="Instantiate more cars and change wheel dynamically">
+       <created>1605282786091</created>
+Index: ProjectSettings/PackageManagerSettings.asset
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>%YAML 1.1\n%TAG !u! tag:unity3d.com,2011:\n--- !u!114 &1\nMonoBehaviour:\n  m_ObjectHideFlags: 61\n  m_CorrespondingSourceObject: {fileID: 0}\n  m_PrefabInstance: {fileID: 0}\n  m_PrefabAsset: {fileID: 0}\n  m_GameObject: {fileID: 0}\n  m_Enabled: 1\n  m_EditorHideFlags: 0\n  m_Script: {fileID: 0}\n  m_Name: \n  m_EditorClassIdentifier: UnityEditor:UnityEditor.PackageManager.UI:PackageManagerProjectSettings\n  m_ScopedRegistriesSettingsExpanded: 1\n  oneTimeWarningShown: 0\n  m_Registries:\n  - m_Id: main\n    m_Name: \n    m_Url: https://packages.unity.com\n    m_Scopes: []\n    m_IsDefault: 1\n  m_UserSelectedRegistryName: \n  m_UserAddingNewScopedRegistry: 0\n  m_RegistryInfoDraft:\n    m_ErrorMessage: \n    m_Original:\n      m_Id: \n      m_Name: \n      m_Url: \n      m_Scopes: []\n      m_IsDefault: 0\n    m_Modified: 0\n    m_Name: \n    m_Url: \n    m_Scopes:\n    - \n    m_SelectedScopeIndex: 0\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ProjectSettings/PackageManagerSettings.asset	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ ProjectSettings/PackageManagerSettings.asset	(date 1610631699866)
+@@ -9,9 +9,9 @@
+   m_GameObject: {fileID: 0}
+   m_Enabled: 1
+   m_EditorHideFlags: 0
+-  m_Script: {fileID: 0}
++  m_Script: {fileID: 13960, guid: 0000000000000000e000000000000000, type: 0}
+   m_Name: 
+-  m_EditorClassIdentifier: UnityEditor:UnityEditor.PackageManager.UI:PackageManagerProjectSettings
++  m_EditorClassIdentifier: 
+   m_ScopedRegistriesSettingsExpanded: 1
+   oneTimeWarningShown: 0
+   m_Registries:
+Index: ProjectSettings/ProjectVersion.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>m_EditorVersion: 2019.4.13f1\nm_EditorVersionWithRevision: 2019.4.13f1 (518737b1de84)\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ProjectSettings/ProjectVersion.txt	(revision 1681f36cef4eb26af2c6739151744f3f39af9694)
++++ ProjectSettings/ProjectVersion.txt	(date 1610631698986)
+@@ -1,2 +1,2 @@
+-m_EditorVersion: 2019.4.13f1
+-m_EditorVersionWithRevision: 2019.4.13f1 (518737b1de84)
++m_EditorVersion: 2019.4.15f1
++m_EditorVersionWithRevision: 2019.4.15f1 (fbf367ac14e9)

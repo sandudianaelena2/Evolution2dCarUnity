@@ -30565,7 +30565,11 @@ MonoBehaviour:
   _car: {fileID: 2924685294412904730, guid: 74bb79f1d0d9e7c4a92eece74f517350, type: 3}
   prefabCar: {fileID: 2924685294412904730, guid: 74bb79f1d0d9e7c4a92eece74f517350,
     type: 3}
+  index: 0
+  noGeneratie: 1
   neTerminat: 1
+  maxScore: 0
+  score: 0
 --- !u!1 &1637985848
 GameObject:
   m_ObjectHideFlags: 0
@@ -30733,6 +30737,7 @@ GameObject:
   - component: {fileID: 1994777819}
   - component: {fileID: 1994777821}
   - component: {fileID: 1994777820}
+  - component: {fileID: 1994777822}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -30766,8 +30771,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -254.75, y: 79.86}
-  m_SizeDelta: {x: -519.1068, y: -188.17007}
+  m_AnchoredPosition: {x: -311.82996, y: 32.67}
+  m_SizeDelta: {x: -633.2689, y: -93.78406}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1994777820
 MonoBehaviour:
@@ -30806,3 +30811,15 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994777818}
   m_CullTransparentMesh: 0
+--- !u!114 &1994777822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994777818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28009f69992f8b0b4a7eed26f31737fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

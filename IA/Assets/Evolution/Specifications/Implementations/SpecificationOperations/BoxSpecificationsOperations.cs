@@ -11,17 +11,15 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
         {
             var specs1 = specifications1 as BoxSpecifications;
             var specs2 = specifications2 as BoxSpecifications;
-            var mass = RepairMass(specs1.GetMass() + specs2.GetMass());
             var scale = RepairScale(specs1.GetScale() + specs2.GetScale());
-            return new BoxSpecifications(specs1.GetBoxNumber(), scale, mass);
+            return new BoxSpecifications(specs1.GetBoxNumber(), scale);
         }
 
         public ISpecifications ScalarMultiplySpecifications(ISpecifications specifications, float scalar)
         {
             var specs = specifications as BoxSpecifications;
-            var mass = RepairMass(specs.GetMass() * scalar);
             var scale = RepairScale(specs.GetScale() * scalar);
-            return new BoxSpecifications(specs.GetBoxNumber(), scale, mass);
+            return new BoxSpecifications(specs.GetBoxNumber(), scale);
         }
         
         private float RepairScale(float scale)
@@ -33,15 +31,6 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
                 scale = BoxConstraints.MinScale;
             return scale;
         }
-
-        private float RepairMass(float mass)
-        {
-            if (mass > BoxConstraints.MaxMass)
-                mass = BoxConstraints.MaxMass;
-            
-            if (mass < BoxConstraints.MinMass)
-                mass = BoxConstraints.MinMass;
-            return mass;
-        }
+        
     }
 }

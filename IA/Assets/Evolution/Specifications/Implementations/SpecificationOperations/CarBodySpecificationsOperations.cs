@@ -15,16 +15,35 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
             CarBodySpecifications result = new CarBodySpecifications();
             Tuple<float, float> newScale = RepairScale(GetScaleSum(carBodySpecifications1, carBodySpecifications2));
             result.SetScale(newScale);
+            var frontSpeed =
+                RepairSpeed(carBodySpecifications1.MotorFrontSpeed + carBodySpecifications2.MotorFrontSpeed);
+            var backSpeed = RepairSpeed(carBodySpecifications1.MotorBackSpeed + carBodySpecifications2.MotorBackSpeed);
+            var frontTorque =
+                RepairTorque(carBodySpecifications1.MotorFrontTorque + carBodySpecifications2.MotorFrontTorque);
+            var backTorque =
+                RepairTorque(carBodySpecifications1.MotorBackTorque + carBodySpecifications2.MotorBackTorque);
+            result.MotorBackSpeed = backSpeed;
+            result.MotorBackTorque = backTorque;
+            result.MotorFrontSpeed = frontSpeed;
+            result.MotorFrontTorque = frontTorque;
             return result;
         }
 
       
         public ISpecifications ScalarMultiplySpecifications(ISpecifications specifications, float scalar)
         {
-
-            CarBodySpecifications result = (CarBodySpecifications)specifications;
+            CarBodySpecifications specs = (CarBodySpecifications)specifications;
+            var result = new CarBodySpecifications();
             Tuple<float, float> newScale = RepairScale(ScalarMultiplyScale(result, scalar));
             result.SetScale(newScale);
+            var frontSpeed = RepairSpeed(scalar * specs.MotorFrontSpeed);
+            var backSpeed = RepairSpeed(scalar * specs.MotorBackSpeed);
+            var frontTorque = RepairTorque(scalar * specs.MotorFrontTorque);
+            var backTorque = RepairTorque(scalar * specs.MotorBackTorque);
+            result.MotorBackSpeed = backSpeed;
+            result.MotorBackTorque = backTorque;
+            result.MotorFrontSpeed = frontSpeed;
+            result.MotorFrontTorque = frontTorque;
             return result;
         }
 
@@ -54,6 +73,33 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
             scale = new Tuple<float, float>(scaleX, scaleY);
 
             return scale;
+        }
+
+        private float RepairSpeed(float speed)
+        {
+            if (speed < CarBodyConstraints.MinMotorSpeed)
+            {
+                speed = CarBodyConstraints.MinMotorSpeed;
+            }
+            else if (speed > CarBodyConstraints.MaxMotorSpeed)
+            {
+                speed = CarBodyConstraints.MaxMotorSpeed;
+            }
+            return speed;
+        }
+
+        private float RepairTorque(float torque)
+        {
+            if (torque < CarBodyConstraints.MinMotorTorque)
+            {
+                torque = CarBodyConstraints.MinMotorTorque;
+            }
+            else if (torque > CarBodyConstraints.MaxMotorTorque)
+            {
+                torque = CarBodyConstraints.MaxMotorTorque;
+            }
+
+            return torque;
         }
 
         public Tuple<float, float> ScalarMultiplyScale(CarBodySpecifications carBodySpecifications, float scalar)

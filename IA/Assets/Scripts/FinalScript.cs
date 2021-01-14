@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class FinalScript : MonoBehaviour
@@ -22,9 +23,19 @@ public class FinalScript : MonoBehaviour
     {
         if (collision.CompareTag("CarBody"))
         {
-            Test.instance.neTerminat = false;
-            Test.instance._car.transform.GetChild(0).GetComponent<CarController>().frontSpeed = 0;
+            Test.instance.terminat = true;
+            StopMotors();
         }
+    }
+
+    private void StopMotors()
+    {
+        JointMotor2D motor2D = new JointMotor2D();
+        motor2D.motorSpeed = 0;
+        motor2D.maxMotorTorque = 0;
+        var joints = Test.instance._car.GetComponents<WheelJoint2D>();
+        joints[0].motor = motor2D;
+        joints[1].motor = motor2D;
     }
 
 }
