@@ -9,40 +9,36 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    public static Test instance;
+    const float cr = 0.5f;
+    const float f = 0.8f;
+    const int noOfGenes = 5;
     
+    public static Test instance;
     public GameObject _car;
     public GameObject prefabCar;
+    public int noGeneratie = 1;
+    public bool algorithmIsFinish = false;
+    public int maxScore;
+    public int score;
+    public int index = 0;
+    public const int noOfChromosomes = 8;
+    public List<Car> getCars() => _cars;
+ 
     private List<Car> _cars = new List<Car>();
     private List<Chromosome> _chromosomes = new List<Chromosome>();
     private float time = 0;
     private double oldPosition = -1;
-    public int index = 0;
     private bool resetCarFlag = false;
     private static System.Random random;
     private static object syncObj = new object();
-
-    const float cr = 0.5f;
-    const float f = 0.8f;
-    public const int noOfChromosomes = 8;
-    const int noOfGenes = 5;
-    private int noMaximGeneratii = 10;
-    
-
-    public List<Car> getCars() => _cars;
-
-    private bool adaptare = true;
-    private bool populatieInitiala = true;
-    private bool generarePopulatieNoua = false;
-
-    private Chromosome individPotential = null;
-    private Car masinaActiva = null;
-    private List<Chromosome> populatieNoua = new List<Chromosome>();
-    public int noGeneratie = 1;
+    private int noMaximumGenerations = 10;
+    private bool adaptationPhase = true;
+    private bool initialPopulationPhase = true;
+    private bool generateNewPopulation = false;
+    private Chromosome potentialSpecimen = null;
+    private Car activeCar = null;
+    private List<Chromosome> newPopulation = new List<Chromosome>();
     private Chromosome solutie;
-    public bool terminat = false;
-    public int maxScore;
-    public int score;
     
     void Awake()
     {
@@ -53,8 +49,8 @@ public class Test : MonoBehaviour
 
     void Update()
     {
-        if (terminat) return;
-        if (adaptare)
+        if (algorithmIsFinish) return;
+        if (adaptationPhase)
         {
             Score.ScoreValue = Convert.ToInt32(_car.transform.GetChild(0).position.x);
             score = Score.ScoreValue;
@@ -62,62 +58,10 @@ public class Test : MonoBehaviour
                  resetCarFlag) ||
                 Math.Round(_car.transform.GetChild(0).position.x, 1) < -1)
             {
-                resetCarFlag = false;
-                if (populatieInitiala)
+                resetCarIfBlocked();
+                if (!initialPopulationPhase && index >= noOfChromosomes)
                 {
-                    if (index < noOfChromosomes - 1)
-                    {
-                        _chromosomes[index].score = Score.ScoreValue;
-                        _cars[index].SetActive(false);
-                        _car = _cars[index + 1].GetCar();
-                        _cars[index + 1].SetActive(true);
-                    }
-                    else
-                    {
-                        _cars[index].SetActive(false);
-                        _chromosomes[index].score = Score.ScoreValue;
-                        noGeneratie++;
-                        index = -1;
-                        generarePopulatieNoua = true;
-                        populatieInitiala = false;
-                        adaptare = false;
-                    }
-                }
-                else
-                {
-                    individPotential.score = Score.ScoreValue;
-                    if (individPotential.score > _chromosomes[index].score)
-                    {
-                        populatieNoua.Add(individPotential);
-                    }
-                    else
-                    {
-                        populatieNoua.Add(_chromosomes[index]);
-                    }
-
-                    masinaActiva.SetActive(false);
-                    adaptare = false;
-                    generarePopulatieNoua = true;
-                }
-                    
-                if (Score.ScoreValue > maxScore)
-                {
-                    maxScore = Score.ScoreValue;
-                }
-
-                index++;
-                if (!populatieInitiala && index >= noOfChromosomes)
-                {
-                    noGeneratie++;
-                    Debug.Log("Numar generatii" + noGeneratie);
-                    if (noGeneratie >= noMaximGeneratii)
-                    {
-                        terminat = true;
-                    }
-                    index = 0;
-                    _chromosomes = populatieNoua.Select((item) => item).ToList();
-                    solutie = _chromosomes.Find((item) => item.score == maxScore);
-                    populatieNoua.Clear();
+                    createNewGeneration();
                 }
             }
 
@@ -129,46 +73,112 @@ public class Test : MonoBehaviour
             }
         }
 
-        if (generarePopulatieNoua)
+        if (generateNewPopulation)
         {
-            var indivizi = new List<Chromosome>();
-            var chromose = _chromosomes[index];
-            indivizi.Add(chromose);
-            var temp = 3;
-            while (temp > 0)
-            {
-                int indexRandom;
-                do
-                {
-                    indexRandom = GetRandomIntNumber(_chromosomes.Count);
-                } while (indexRandom == index);
-
-                indivizi.Add(_chromosomes[indexRandom]);
-                temp--;
-            }
-
-            individPotential = new Chromosome();
-            var punctDeDivizare = generateDivingPoint();
-            for (int gena = 0; gena < noOfGenes; ++gena)
-            {
-                var nrAleatoriu = GetRandomDoubleNumber();
-                if (gena == punctDeDivizare || nrAleatoriu < cr)
-                {
-                    individPotential.Genes[gena]
-                        .Mutate(indivizi.Select(individ => individ.Genes[gena]).ToList(), f);
-                }
-                else
-                {
-                    individPotential.Genes[gena] = indivizi[0].Genes[gena];
-                }
-            }
+            createNewPontentialSpecimen();
             Debug.Log("Generat masina pentru chromose " + index);
-            masinaActiva = constructCar(individPotential);
-            masinaActiva.SetActive(true);
-            _car = masinaActiva.GetCar();
-            adaptare = true;
-            generarePopulatieNoua = false;
+            activeCar = constructCar(potentialSpecimen);
+            activeCar.SetActive(true);
+            _car = activeCar.GetCar();
+            adaptationPhase = true;
+            generateNewPopulation = false;
         }
+    }
+
+    private void createNewPontentialSpecimen()
+    {
+        var indivizi = new List<Chromosome>();
+        var chromose = _chromosomes[index];
+        indivizi.Add(chromose);
+        var temp = 3;
+        while (temp > 0)
+        {
+            int indexRandom;
+            do
+            {
+                indexRandom = GetRandomIntNumber(_chromosomes.Count);
+            } while (indexRandom == index);
+
+            indivizi.Add(_chromosomes[indexRandom]);
+            temp--;
+        }
+
+        potentialSpecimen = new Chromosome();
+        var punctDeDivizare = generateDivingPoint();
+        for (int gena = 0; gena < noOfGenes; ++gena)
+        {
+            var nrAleatoriu = GetRandomDoubleNumber();
+            if (gena == punctDeDivizare || nrAleatoriu < cr)
+            {
+                potentialSpecimen.Genes[gena]
+                    .Mutate(indivizi.Select(individ => individ.Genes[gena]).ToList(), f);
+            }
+            else
+            {
+                potentialSpecimen.Genes[gena] = indivizi[0].Genes[gena];
+            }
+        }
+    }
+
+    private void createNewGeneration()
+    {
+        noGeneratie++;
+        Debug.Log("Numar generatii" + noGeneratie);
+        if (noGeneratie >= noMaximumGenerations)
+        {
+            algorithmIsFinish = true;
+        }
+        index = 0;
+        _chromosomes = newPopulation.Select((item) => item).ToList();
+        solutie = _chromosomes.Find((item) => item.score == maxScore);
+        newPopulation.Clear();
+    }
+    private void resetCarIfBlocked()
+    {
+        resetCarFlag = false;
+        if (initialPopulationPhase)
+        {
+            if (index < noOfChromosomes - 1)
+            {
+                _chromosomes[index].score = Score.ScoreValue;
+                _cars[index].SetActive(false);
+                _car = _cars[index + 1].GetCar();
+                _cars[index + 1].SetActive(true);
+            }
+            else
+            {
+                _cars[index].SetActive(false);
+                _chromosomes[index].score = Score.ScoreValue;
+                noGeneratie++;
+                index = -1;
+                generateNewPopulation = true;
+                initialPopulationPhase = false;
+                adaptationPhase = false;
+            }
+        }
+        else
+        {
+            potentialSpecimen.score = Score.ScoreValue;
+            if (potentialSpecimen.score > _chromosomes[index].score)
+            {
+                newPopulation.Add(potentialSpecimen);
+            }
+            else
+            {
+                newPopulation.Add(_chromosomes[index]);
+            }
+
+            activeCar.SetActive(false);
+            adaptationPhase = false;
+            generateNewPopulation = true;
+        }
+
+        if (Score.ScoreValue > maxScore)
+        {
+            maxScore = Score.ScoreValue;
+        }
+
+        index++;
     }
 
     private void GenerateChromosomes()
@@ -203,7 +213,6 @@ public class Test : MonoBehaviour
         return new Car(newCar);
     }
     
-
     private int generateDivingPoint()
     {
         return GetRandomIntNumber(noOfGenes);

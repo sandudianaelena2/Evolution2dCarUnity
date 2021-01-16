@@ -23,7 +23,7 @@ public class FinalScript : MonoBehaviour
     {
         if (collision.CompareTag("CarBody"))
         {
-            Test.instance.terminat = true;
+            Test.instance.algorithmIsFinish = true;
             StopMotors();
         }
     }

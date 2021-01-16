@@ -8,8 +8,8 @@ namespace Evolution.Specifications.Implementations.Specifications.Constraints
         public static float ScaleYmin { get; } = 0.12f;
         
         
-        public static float MaxMotorSpeed { get; } = 1500f;
-        public static float MaxMotorTorque { get; } = 1000f;
+        public static float MaxMotorSpeed { get; } = 1000f;
+        public static float MaxMotorTorque { get; } = 800f;
         
         public static float MinMotorSpeed { get; } = 100f;
         public static float MinMotorTorque { get; } = 100f;
