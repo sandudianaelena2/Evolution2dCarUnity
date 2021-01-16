@@ -19,24 +19,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b94badb7-5677-44b3-b474-4b958a7ee0a1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml" afterDir="false" />
+    <list default="true" id="b94badb7-5677-44b3-b474-4b958a7ee0a1" name="Default Changelist" comment="Add speed and torque to car constraints">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/WheelSpecificationsOperations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/WheelSpecificationsOperations.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PanelController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PanelController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CarController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Test.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/prefab/Car-2Box.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/prefab/Car-2Box.prefab" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,10 +35,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -81,22 +67,22 @@
         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Interfaces/IGene.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Chromosome.cs" />
         <option value="$PROJECT_DIR$/Assets/Models/Car.cs" />
-        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/WheelSpecificationsOperations.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/BoxGene.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/CarBodyGene.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/WheelGene.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CarController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs" />
-        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" />
-        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" />
         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" />
-        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs" />
         <option value="$PROJECT_DIR$/Assets/PanelController.cs" />
         <option value="$PROJECT_DIR$/Assets/PanelScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Test.cs" />
+        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/BoxSpecificationsOperations.cs" />
+        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/CarBodySpecificationsOperations.cs" />
+        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/SpecificationOperations/WheelSpecificationsOperations.cs" />
+        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" />
+        <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/BoxConstraints.cs" />
       </list>
     </option>
   </component>
@@ -183,7 +169,8 @@
       <workItem from="1610464282160" duration="8313000" />
       <workItem from="1610519927834" duration="13921000" />
       <workItem from="1610540505893" duration="480000" />
-      <workItem from="1610640296806" duration="5897000" />
+      <workItem from="1610640296806" duration="6728000" />
+      <workItem from="1610734558013" duration="1230000" />
     </task>
     <task id="LOCAL-00001" summary="Instantiate more cars and change wheel dynamically">
       <created>1605282786091</created>
@@ -213,7 +200,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610473378107</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add speed and torque to car constraints">
+      <created>1610646399627</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1610646399627</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,7 +233,8 @@
     <MESSAGE value="Box + Wheel operations" />
     <MESSAGE value="Incercare realizare algoritm v1" />
     <MESSAGE value="Algoritm gata, mai trebuie imbunatatiri" />
-    <option name="LAST_COMMIT_MESSAGE" value="Algoritm gata, mai trebuie imbunatatiri" />
+    <MESSAGE value="Add speed and torque to car constraints" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add speed and torque to car constraints" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2238" y="391" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605974746123">
@@ -270,10 +265,10 @@
     <state x="4" y="555" width="954" height="520" key="VCS.FileHistoryDialog/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1610531732344" />
     <state x="2020" y="127" width="1520" height="1213" key="VCS.FileHistoryDialog/0.27.1920.1053/1920.0.3440.1440@1920.0.3440.1440" timestamp="1605979229476" />
     <state x="962" y="31" width="954" height="1045" key="VCS.FileHistoryDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1607859779209" />
-    <state x="2954" y="269" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1610473385102">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="1034" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1610646404517">
+      <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="1034" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1605282794242" />
+    <state x="1034" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1610646404517" />
     <state x="2954" y="269" width="800" height="535" key="Vcs.Push.Dialog.v2/0.27.1920.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1610473385102" />
     <state x="1034" y="289" key="Vcs.Push.Dialog.v2/0.27.1920.1053@0.27.1920.1053" timestamp="1607861003963" />
     <state x="1243" y="469" width="382" height="175" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1610644289541">

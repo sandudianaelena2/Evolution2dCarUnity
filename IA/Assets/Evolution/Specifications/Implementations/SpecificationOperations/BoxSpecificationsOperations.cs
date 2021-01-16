@@ -24,11 +24,8 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
         
         private float RepairScale(float scale)
         {
-            if (scale > BoxConstraints.MaxScale)
-                scale = BoxConstraints.MaxScale;
-            
-            if (scale < BoxConstraints.MinScale)
-                scale = BoxConstraints.MinScale;
+            if (scale > BoxConstraints.MaxScale || scale < BoxConstraints.MinScale)
+                scale = Random.Range(BoxConstraints.MinScale, BoxConstraints.MaxScale);
             return scale;
         }
         

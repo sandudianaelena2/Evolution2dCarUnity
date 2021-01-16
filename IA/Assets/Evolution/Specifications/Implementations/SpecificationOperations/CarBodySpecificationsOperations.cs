@@ -3,6 +3,7 @@ using Evolution.Specifications.Implementations.Specifications;
 using Evolution.Specifications.Implementations.Specifications.Constraints;
 using Evolution.Specifications.Interfaces;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Evolution.Specifications.Implementations.SpecificationOperations
 {
@@ -52,22 +53,14 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
             var scaleX = scale.Item1;
             var scaleY = scale.Item2;
 
-            if (scaleX > CarBodyConstraints.ScaleXmax)
+            if (scaleX > CarBodyConstraints.ScaleXmax || scaleX < CarBodyConstraints.ScaleXmin)
             {
-                scaleX = CarBodyConstraints.ScaleXmax;
-            }
-            else if (scaleX < CarBodyConstraints.ScaleXmin)
-            {
-                scaleX = CarBodyConstraints.ScaleXmin;
+                scaleX = Random.Range(CarBodyConstraints.ScaleXmin, CarBodyConstraints.ScaleXmax);
             }
 
-            if (scaleY > CarBodyConstraints.ScaleYmax)
+            if (scaleY > CarBodyConstraints.ScaleYmax || scaleY < CarBodyConstraints.ScaleYmin)
             {
-                scaleY = CarBodyConstraints.ScaleYmax;
-            }
-            else if (scaleY < CarBodyConstraints.ScaleYmin)
-            {
-                scaleY = CarBodyConstraints.ScaleYmin;
+                scaleY = Random.Range(CarBodyConstraints.ScaleYmin, CarBodyConstraints.ScaleYmax);;
             }
 
             scale = new Tuple<float, float>(scaleX, scaleY);
@@ -77,26 +70,18 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
 
         private float RepairSpeed(float speed)
         {
-            if (speed < CarBodyConstraints.MinMotorSpeed)
+            if (speed < CarBodyConstraints.MinMotorSpeed || speed > CarBodyConstraints.MaxMotorSpeed)
             {
-                speed = CarBodyConstraints.MinMotorSpeed;
-            }
-            else if (speed > CarBodyConstraints.MaxMotorSpeed)
-            {
-                speed = CarBodyConstraints.MaxMotorSpeed;
+                speed = Random.Range(CarBodyConstraints.MinMotorSpeed, CarBodyConstraints.MaxMotorSpeed);
             }
             return speed;
         }
 
         private float RepairTorque(float torque)
         {
-            if (torque < CarBodyConstraints.MinMotorTorque)
+            if (torque < CarBodyConstraints.MinMotorTorque || torque > CarBodyConstraints.MaxMotorTorque)
             {
-                torque = CarBodyConstraints.MinMotorTorque;
-            }
-            else if (torque > CarBodyConstraints.MaxMotorTorque)
-            {
-                torque = CarBodyConstraints.MaxMotorTorque;
+                torque = Random.Range(CarBodyConstraints.MinMotorTorque, CarBodyConstraints.MaxMotorTorque);
             }
 
             return torque;

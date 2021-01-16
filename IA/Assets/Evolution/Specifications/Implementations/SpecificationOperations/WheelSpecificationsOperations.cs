@@ -28,16 +28,10 @@ namespace Evolution.Specifications.Implementations.SpecificationOperations
         
         private float RepairScale(float scale)
         {
-            if (scale > WheelConstraints.MaxScale)
+            if (scale > WheelConstraints.MaxScale || scale < WheelConstraints.MinScale)
             {
-                scale = WheelConstraints.MaxScale;
+                scale = Random.Range(WheelConstraints.MinScale, WheelConstraints.MaxScale);
             }
-
-            if (scale < WheelConstraints.MinScale)
-            {
-                scale = WheelConstraints.MinScale;
-            }
-
             return scale;
         }
         

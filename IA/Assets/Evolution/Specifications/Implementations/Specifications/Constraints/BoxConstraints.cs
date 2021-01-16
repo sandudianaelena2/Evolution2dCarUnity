@@ -7,9 +7,9 @@
             LeftBox = 3,
             RightBox
         }
-        public static float MaxScale { get; } = 1.6f;
-        public static float MinScale { get; } = 0.6f;
+        public static float MaxScale { get; } = 2f;
+        public static float MinScale { get; } = 0.9f;
         
-        public static float StandardMass { get; } = 4f;
+        public static float StandardMass { get; } = 2f;
     }
 }
