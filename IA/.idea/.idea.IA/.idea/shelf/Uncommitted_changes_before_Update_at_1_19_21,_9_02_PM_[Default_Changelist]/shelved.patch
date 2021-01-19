@@ -1,0 +1,317 @@
+Index: Assets/Scripts/FinalScript.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System.Collections;\nusing System.Collections.Generic;\nusing TMPro;\nusing UnityEngine;\n\npublic class FinalScript : MonoBehaviour\n{\n    public static FinalScript instance;\n    // Start is called before the first frame update\n    void Start()\n    {\n        instance = this;\n    }\n\n    // Update is called once per frame\n    void Update()\n    {\n\n        \n    }\n\n    private void OnTriggerEnter2D(Collider2D collision)\n    {\n        if (collision.CompareTag(\"CarBody\"))\n        {\n            Test.instance.algorithmIsFinish = true;\n            StopMotors();\n        }\n    }\n\n    private void StopMotors()\n    {\n        JointMotor2D motor2D = new JointMotor2D();\n        motor2D.motorSpeed = 0;\n        motor2D.maxMotorTorque = 0;\n        var joints = Test.instance._car.GetComponents<WheelJoint2D>();\n        joints[0].motor = motor2D;\n        joints[1].motor = motor2D;\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Scripts/FinalScript.cs	(revision ef4cbac1df5635a68e221c009cf997136a42548b)
++++ Assets/Scripts/FinalScript.cs	(date 1611082895367)
+@@ -30,12 +30,9 @@
+ 
+     private void StopMotors()
+     {
+-        JointMotor2D motor2D = new JointMotor2D();
+-        motor2D.motorSpeed = 0;
+-        motor2D.maxMotorTorque = 0;
+-        var joints = Test.instance._car.GetComponents<WheelJoint2D>();
+-        joints[0].motor = motor2D;
+-        joints[1].motor = motor2D;
++        Test.instance._car.transform.GetChild(0).GetComponent<CarController>().stop = true;
++        var rigidBody = Test.instance._car.transform.GetChild(0).GetComponent<Rigidbody2D>();
++        rigidBody.constraints = RigidbodyConstraints2D.FreezePosition;
+     }
+ 
+ }
+Index: Assets/Scripts/CarController.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System.Collections;\nusing System.Collections.Generic;\nusing UnityEngine;\nusing System;\n\npublic class CarController : MonoBehaviour\n{\n\n\tstatic public CarController instance;\n\n\tpublic bool isMoving = true;\n\n\tpublic WheelJoint2D frontWheel;\n\tpublic WheelJoint2D backWheel;\n\n\tJointMotor2D motorFront;\n\tJointMotor2D motorBack;\n\n\tpublic float frontSpeed;\n\tpublic float frontTorque;\n\n\n\tprivate void Awake()\n\t{\n\t\tinstance = this;\n\t\t//AudioController.instance.PlayMusic();\n\t}\n\n\tvoid Update()\n\t{\n\t\t\n\t}\n\n\tpublic void Stop()\n\t{\n\t\tfrontSpeed = 0;\n\n\t\t//AudioController.instance.StopMusic();\n\t}\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Scripts/CarController.cs	(revision ef4cbac1df5635a68e221c009cf997136a42548b)
++++ Assets/Scripts/CarController.cs	(date 1611082564119)
+@@ -8,33 +8,28 @@
+ 
+ 	static public CarController instance;
+ 
+-	public bool isMoving = true;
++	public bool stop = false;
+ 
+ 	public WheelJoint2D frontWheel;
+ 	public WheelJoint2D backWheel;
+ 
+-	JointMotor2D motorFront;
+-	JointMotor2D motorBack;
+-
+-	public float frontSpeed;
+-	public float frontTorque;
+-
+-
++	private JointMotor2D motorFront;
++	private JointMotor2D motorBack;
++	
+ 	private void Awake()
+ 	{
+ 		instance = this;
+-		//AudioController.instance.PlayMusic();
+ 	}
+ 
+ 	void Update()
+ 	{
+-		
+-	}
+-
+-	public void Stop()
+-	{
+-		frontSpeed = 0;
+-
+-		//AudioController.instance.StopMusic();
+-	}
++		if (stop)
++		{
++			motorBack.motorSpeed = 0;
++			motorFront.motorSpeed = 0;
++			frontWheel.motor = motorFront;
++			backWheel.motor = motorBack;
++		}
++	}
++	
+ }
+\ No newline at end of file
+Index: Assets/Evolution/Chromosome.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System.Collections.Generic;\nusing Evolution.Genes.Implementations;\nusing Evolution.Genes.Interfaces;\nusing Evolution.Specifications.Implementations.SpecificationOperations;\nusing Evolution.Specifications.Implementations.Specifications;\nusing Evolution.Specifications.Implementations.Specifications.Constraints;\n\nnamespace Evolution\n{\n    public class Chromosome\n    {\n        public Chromosome()\n        {\n            Genes = new List<IGene>\n            {\n                new CarBodyGene(new CarBodySpecifications()),\n                new WheelGene(new WheelSpecifications(WheelConstraints.Wheels.BackWheel)),\n                new WheelGene(new WheelSpecifications(WheelConstraints.Wheels.FrontWheel)),\n                new BoxGene(new BoxSpecifications(BoxConstraints.Boxes.LeftBox)),\n                new BoxGene(new BoxSpecifications(BoxConstraints.Boxes.RightBox))\n            };\n        }\n\n        public List<IGene> Genes { get; set; }\n        public int score { get; set; }\n\n        public Chromosome Cross(Chromosome other)\n        {\n            //TODO:Implement a method of crossing chromosomes\n            return new Chromosome();\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Evolution/Chromosome.cs	(revision ef4cbac1df5635a68e221c009cf997136a42548b)
++++ Assets/Evolution/Chromosome.cs	(date 1611050668362)
+@@ -23,11 +23,5 @@
+ 
+         public List<IGene> Genes { get; set; }
+         public int score { get; set; }
+-
+-        public Chromosome Cross(Chromosome other)
+-        {
+-            //TODO:Implement a method of crossing chromosomes
+-            return new Chromosome();
+-        }
+     }
+ }
+\ No newline at end of file
+Index: Assets/Scripts/Test.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Runtime.InteropServices;\nusing Evolution;\nusing Models;\nusing UnityEngine;\n\npublic class Test : MonoBehaviour\n{\n    const float cr = 0.5f;\n    const float f = 0.8f;\n    const int noOfGenes = 5;\n    \n    public static Test instance;\n    public GameObject _car;\n    public GameObject prefabCar;\n    public int noGeneratie = 1;\n    public bool algorithmIsFinish = false;\n    public int maxScore;\n    public int score;\n    public int index = 0;\n    public const int noOfChromosomes = 8;\n    public List<Car> getCars() => _cars;\n \n    private List<Car> _cars = new List<Car>();\n    private List<Chromosome> _chromosomes = new List<Chromosome>();\n    private float time = 0;\n    private double oldPosition = -1;\n    private bool resetCarFlag = false;\n    private static System.Random random;\n    private static object syncObj = new object();\n    private int noMaximumGenerations = 10;\n    private bool adaptationPhase = true;\n    private bool initialPopulationPhase = true;\n    private bool generateNewPopulation = false;\n    private Chromosome potentialSpecimen = null;\n    private Car activeCar = null;\n    private List<Chromosome> newPopulation = new List<Chromosome>();\n    private Chromosome solutie;\n    \n    void Awake()\n    {\n        instance = this;\n        \n        GenerateChromosomes();\n    }\n\n    void Update()\n    {\n        if (algorithmIsFinish) return;\n        if (adaptationPhase)\n        {\n            Score.ScoreValue = Convert.ToInt32(_car.transform.GetChild(0).position.x);\n            score = Score.ScoreValue;\n            if (((Time.time - time > 1) && Math.Round(_car.transform.GetChild(0).position.x, 1) == oldPosition &&\n                 resetCarFlag) ||\n                Math.Round(_car.transform.GetChild(0).position.x, 1) < -1)\n            {\n                resetCarIfBlocked();\n                if (!initialPopulationPhase && index >= noOfChromosomes)\n                {\n                    createNewGeneration();\n                }\n            }\n\n            if (Time.time - time > 5)\n            {\n                resetCarFlag = true;\n                time = Time.time;\n                oldPosition = Math.Round(_car.transform.GetChild(0).position.x, 1);;\n            }\n        }\n\n        if (generateNewPopulation)\n        {\n            createNewPontentialSpecimen();\n            Debug.Log(\"Generat masina pentru chromose \" + index);\n            activeCar = constructCar(potentialSpecimen);\n            activeCar.SetActive(true);\n            _car = activeCar.GetCar();\n            adaptationPhase = true;\n            generateNewPopulation = false;\n        }\n    }\n\n    private void createNewPontentialSpecimen()\n    {\n        var indivizi = new List<Chromosome>();\n        var chromose = _chromosomes[index];\n        indivizi.Add(chromose);\n        var temp = 3;\n        while (temp > 0)\n        {\n            int indexRandom;\n            do\n            {\n                indexRandom = GetRandomIntNumber(_chromosomes.Count);\n            } while (indexRandom == index);\n\n            indivizi.Add(_chromosomes[indexRandom]);\n            temp--;\n        }\n\n        potentialSpecimen = new Chromosome();\n        var punctDeDivizare = generateDivingPoint();\n        for (int gena = 0; gena < noOfGenes; ++gena)\n        {\n            var nrAleatoriu = GetRandomDoubleNumber();\n            if (gena == punctDeDivizare || nrAleatoriu < cr)\n            {\n                potentialSpecimen.Genes[gena]\n                    .Mutate(indivizi.Select(individ => individ.Genes[gena]).ToList(), f);\n            }\n            else\n            {\n                potentialSpecimen.Genes[gena] = indivizi[0].Genes[gena];\n            }\n        }\n    }\n\n    private void createNewGeneration()\n    {\n        noGeneratie++;\n        Debug.Log(\"Numar generatii\" + noGeneratie);\n        if (noGeneratie >= noMaximumGenerations)\n        {\n            algorithmIsFinish = true;\n        }\n        index = 0;\n        _chromosomes = newPopulation.Select((item) => item).ToList();\n        solutie = _chromosomes.Find((item) => item.score == maxScore);\n        newPopulation.Clear();\n    }\n    private void resetCarIfBlocked()\n    {\n        resetCarFlag = false;\n        if (initialPopulationPhase)\n        {\n            if (index < noOfChromosomes - 1)\n            {\n                _chromosomes[index].score = Score.ScoreValue;\n                _cars[index].SetActive(false);\n                _car = _cars[index + 1].GetCar();\n                _cars[index + 1].SetActive(true);\n            }\n            else\n            {\n                _cars[index].SetActive(false);\n                _chromosomes[index].score = Score.ScoreValue;\n                noGeneratie++;\n                index = -1;\n                generateNewPopulation = true;\n                initialPopulationPhase = false;\n                adaptationPhase = false;\n            }\n        }\n        else\n        {\n            potentialSpecimen.score = Score.ScoreValue;\n            if (potentialSpecimen.score > _chromosomes[index].score)\n            {\n                newPopulation.Add(potentialSpecimen);\n            }\n            else\n            {\n                newPopulation.Add(_chromosomes[index]);\n            }\n\n            activeCar.SetActive(false);\n            adaptationPhase = false;\n            generateNewPopulation = true;\n        }\n\n        if (Score.ScoreValue > maxScore)\n        {\n            maxScore = Score.ScoreValue;\n        }\n\n        index++;\n    }\n\n    private void GenerateChromosomes()\n    {\n        for (int i = 0; i < noOfChromosomes; i++)\n        {\n            var newChromosome = new Chromosome();\n            _chromosomes.Add(newChromosome);\n            var newCar = constructCar(newChromosome);\n            if (i == 0)\n            {\n                _car = newCar.GetCar();\n            }\n            else\n            {\n                newCar.SetActive(false);\n            }\n\n            _cars.Add(newCar);\n        }\n    }\n\n    private Car constructCar(Chromosome chromosome)\n    {\n        var genes = chromosome.Genes;\n        GameObject newCar = GameObject.Instantiate(prefabCar);\n        foreach (var gene in genes)\n        {\n            gene.GetSpecifications().ChangeGameObject(newCar);\n        }\n\n        return new Car(newCar);\n    }\n    \n    private int generateDivingPoint()\n    {\n        return GetRandomIntNumber(noOfGenes);\n    }\n\n    private int GetRandomIntNumber(int max)\n    {\n        lock (syncObj)\n        {\n            if (random == null)\n                random = new System.Random();\n            return random.Next(max);\n        }\n    }\n\n    private double GetRandomDoubleNumber()\n    {\n        lock (syncObj)\n        {\n            if (random == null)\n                random = new System.Random();\n            return random.NextDouble();\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Scripts/Test.cs	(revision ef4cbac1df5635a68e221c009cf997136a42548b)
++++ Assets/Scripts/Test.cs	(date 1611080985446)
+@@ -31,12 +31,12 @@
+     private bool resetCarFlag = false;
+     private static System.Random random;
+     private static object syncObj = new object();
+-    private int noMaximumGenerations = 10;
++    private int noMaximumGenerations = 20;
+     private bool adaptationPhase = true;
+     private bool initialPopulationPhase = true;
+     private bool generateNewPopulation = false;
+     private Chromosome potentialSpecimen = null;
+-    private Car activeCar = null;
++    public Car activeCar = null;
+     private List<Chromosome> newPopulation = new List<Chromosome>();
+     private Chromosome solutie;
+     
+@@ -58,10 +58,10 @@
+                  resetCarFlag) ||
+                 Math.Round(_car.transform.GetChild(0).position.x, 1) < -1)
+             {
+-                resetCarIfBlocked();
++                ResetCarIfBlocked();
+                 if (!initialPopulationPhase && index >= noOfChromosomes)
+                 {
+-                    createNewGeneration();
++                    CreateNewGeneration();
+                 }
+             }
+ 
+@@ -75,7 +75,7 @@
+ 
+         if (generateNewPopulation)
+         {
+-            createNewPontentialSpecimen();
++            CreateNewPontentialSpecimen();
+             Debug.Log("Generat masina pentru chromose " + index);
+             activeCar = constructCar(potentialSpecimen);
+             activeCar.SetActive(true);
+@@ -85,7 +85,7 @@
+         }
+     }
+ 
+-    private void createNewPontentialSpecimen()
++    private void CreateNewPontentialSpecimen()
+     {
+         var indivizi = new List<Chromosome>();
+         var chromose = _chromosomes[index];
+@@ -97,7 +97,7 @@
+             do
+             {
+                 indexRandom = GetRandomIntNumber(_chromosomes.Count);
+-            } while (indexRandom == index);
++            } while (indexRandom == index && !indivizi.Contains(_chromosomes[indexRandom]));
+ 
+             indivizi.Add(_chromosomes[indexRandom]);
+             temp--;
+@@ -120,7 +120,7 @@
+         }
+     }
+ 
+-    private void createNewGeneration()
++    private void CreateNewGeneration()
+     {
+         noGeneratie++;
+         Debug.Log("Numar generatii" + noGeneratie);
+@@ -133,7 +133,7 @@
+         solutie = _chromosomes.Find((item) => item.score == maxScore);
+         newPopulation.Clear();
+     }
+-    private void resetCarIfBlocked()
++    private void ResetCarIfBlocked()
+     {
+         resetCarFlag = false;
+         if (initialPopulationPhase)
+@@ -191,6 +191,7 @@
+             if (i == 0)
+             {
+                 _car = newCar.GetCar();
++                activeCar = newCar;
+             }
+             else
+             {
+Index: .idea/.idea.IA/.idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"BranchesTreeState\">\n    <expand>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"LOCAL_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n      <path>\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\n        <item name=\"GROUP_NODE:origin\" type=\"e8cecc67:BranchNodeDescriptor\" />\n      </path>\n    </expand>\n    <select />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"b94badb7-5677-44b3-b474-4b958a7ee0a1\" name=\"Default Changelist\" comment=\"Add speed and torque to car constraints\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Assets/Scripts/FinalScript.cs\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Assets/Scripts/FinalScript.cs\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Assets/Scripts/Test.cs\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Assets/Scripts/Test.cs\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\n  </component>\n  <component name=\"IdeDocumentHistory\">\n    <option name=\"CHANGED_PATHS\">\n      <list>\n        <option value=\"$PROJECT_DIR$/Assets/Test.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/script.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Constraints/FrontWheelConstraints.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Attachers/Interfaces/IAttacher.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Attachers/Implementations/CarBodyAttacher.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Attachers/Implementations/CarBodyAttach.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Constructors/Implementations/CarBodyAttach.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Constructors/Interfaces/IConstructor.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Constructors/Implementations/BackWheelConstructor.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Constructors/Implementations/FrontWheelConstructor.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Constructors/Implementations/CarBodyConstructor.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Constraints/BackWheelConstraints.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Constraints/CarBodyConstraints.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/BackWheelGene.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/FrontWheelGene.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/FrontWheelSpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/CarBodySpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/BackWheelSpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Scripts/CameraController.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Constraints/WheelConstraints.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/WheelSpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Scripts/Score.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Interfaces/ISpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/WheelSpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Interfaces/ISpecificationsOperations.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Genes/Interfaces/IGene.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Chromosome.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Models/Car.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/BoxGene.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/CarBodyGene.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/WheelGene.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Scripts/CarController.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Scripts/FinalScript.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/PanelController.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/PanelScript.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Scripts/FinalScript.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Scripts/Test.cs\" />\n        <option value=\"$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"JsFlowSettings\">\n    <service-enabled>true</service-enabled>\n    <exe-path />\n    <other-services-enabled>true</other-services-enabled>\n    <auto-save>true</auto-save>\n  </component>\n  <component name=\"ProjectId\" id=\"1jxlTK1pvRl1VXYEV4kJJLJM2n7\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\n  </component>\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"ASKED_ADD_EXTERNAL_FILES\" value=\"true\" />\n    <property name=\"ASKED_SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\n    <property name=\"Discover.Launch.Via.Unity\" value=\"true\" />\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/../../Evolution2dCarUnityV2/IA/IA.sln\" />\n    <property name=\"settings.editor.selected.configurable\" value=\"preferences.pluginManager\" />\n    <property name=\"vue.rearranger.settings.migration\" value=\"true\" />\n  </component>\n  <component name=\"RunManager\" selected=\"Attach to Unity Editor.Attach to Unity Editor\">\n    <configuration name=\"Standalone Player\" type=\"RunUnityExe\" factoryName=\"Unity Executable\">\n      <option name=\"EXE_PATH\" value=\"$PROJECT_DIR$/DacaNuMergiTeSterg.x86_64\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"Attach to Unity Editor &amp; Play\" type=\"UNITY_DEBUG_RUN_CONFIGURATION\" factoryName=\"UNITY_ATTACH_AND_PLAY\" show_console_on_std_err=\"false\" show_console_on_std_out=\"false\" port=\"50000\" address=\"localhost\">\n      <option name=\"allowRunningInParallel\" value=\"false\" />\n      <option name=\"listenPortForConnections\" value=\"false\" />\n      <option name=\"pid\" />\n      <option name=\"selectedOptions\">\n        <set />\n      </option>\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"Attach to Unity Editor\" type=\"UNITY_DEBUG_RUN_CONFIGURATION\" factoryName=\"Unity Debug\" show_console_on_std_err=\"false\" show_console_on_std_out=\"false\" port=\"50000\" address=\"localhost\">\n      <option name=\"allowRunningInParallel\" value=\"false\" />\n      <option name=\"listenPortForConnections\" value=\"false\" />\n      <option name=\"pid\" />\n      <option name=\"selectedOptions\">\n        <set />\n      </option>\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"b94badb7-5677-44b3-b474-4b958a7ee0a1\" name=\"Default Changelist\" comment=\"\" />\n      <created>1604753632339</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1604753632339</updated>\n      <workItem from=\"1604753638772\" duration=\"213000\" />\n      <workItem from=\"1604755905861\" duration=\"332000\" />\n      <workItem from=\"1604862530510\" duration=\"958000\" />\n      <workItem from=\"1604863770313\" duration=\"1144000\" />\n      <workItem from=\"1604865151632\" duration=\"241000\" />\n      <workItem from=\"1604906813098\" duration=\"2952000\" />\n      <workItem from=\"1605028572715\" duration=\"5277000\" />\n      <workItem from=\"1605119251829\" duration=\"4623000\" />\n      <workItem from=\"1605277471258\" duration=\"8211000\" />\n      <workItem from=\"1605365469043\" duration=\"5964000\" />\n      <workItem from=\"1605425955738\" duration=\"12128000\" />\n      <workItem from=\"1605440523788\" duration=\"198000\" />\n      <workItem from=\"1605973665101\" duration=\"395000\" />\n      <workItem from=\"1605974642703\" duration=\"1090000\" />\n      <workItem from=\"1605978525971\" duration=\"6928000\" />\n      <workItem from=\"1606033567191\" duration=\"1445000\" />\n      <workItem from=\"1606043884900\" duration=\"2210000\" />\n      <workItem from=\"1607700328426\" duration=\"1863000\" />\n      <workItem from=\"1607855318268\" duration=\"5728000\" />\n      <workItem from=\"1609149759177\" duration=\"14000\" />\n      <workItem from=\"1610464282160\" duration=\"8313000\" />\n      <workItem from=\"1610519927834\" duration=\"13921000\" />\n      <workItem from=\"1610540505893\" duration=\"480000\" />\n      <workItem from=\"1610640296806\" duration=\"5897000\" />\n      <workItem from=\"1610817999463\" duration=\"2293000\" />\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Instantiate more cars and change wheel dynamically\">\n      <created>1605282786091</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1605282786091</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"Box + Wheel operations\">\n      <created>1607701412724</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1607701412724</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"Incercare realizare algoritm v1\">\n      <created>1607860997563</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1607860997563</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"Algoritm gata, mai trebuie imbunatatiri\">\n      <created>1610473378107</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1610473378107</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"Add speed and torque to car constraints\">\n      <created>1610646399627</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1610646399627</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"6\" />\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"UnityProjectConfiguration\" hasMinimizedUI=\"false\" />\n  <component name=\"UnityUnitTestConfiguration\" currentTestLauncher=\"EditMode\" />\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"CLEAR_INITIAL_COMMIT_MESSAGE\" value=\"true\" />\n    <MESSAGE value=\"Instantiate more cars and change wheel dynamically\" />\n    <MESSAGE value=\"Box + Wheel operations\" />\n    <MESSAGE value=\"Incercare realizare algoritm v1\" />\n    <MESSAGE value=\"Algoritm gata, mai trebuie imbunatatiri\" />\n    <MESSAGE value=\"Add speed and torque to car constraints\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Add speed and torque to car constraints\" />\n  </component>\n  <component name=\"WindowStateProjectService\">\n    <state x=\"2238\" y=\"391\" key=\"#com.intellij.execution.impl.EditConfigurationsDialog\" timestamp=\"1605974746123\">\n      <screen x=\"1920\" y=\"0\" width=\"3440\" height=\"1440\" />\n    </state>\n    <state x=\"2238\" y=\"391\" key=\"#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1920.1053/1920.0.3440.1440@1920.0.3440.1440\" timestamp=\"1605974746123\" />\n    <state x=\"3142\" y=\"298\" width=\"424\" height=\"491\" key=\"FileChooserDialogImpl\" timestamp=\"1607700342896\">\n      <screen x=\"1920\" y=\"0\" width=\"1920\" height=\"1080\" />\n    </state>\n    <state x=\"3142\" y=\"298\" width=\"424\" height=\"491\" key=\"FileChooserDialogImpl/0.27.1920.1053/1920.0.1920.1080@1920.0.1920.1080\" timestamp=\"1607700342896\" />\n    <state x=\"374\" y=\"117\" width=\"1536\" height=\"879\" key=\"MergeDialog\" timestamp=\"1610644312013\">\n      <screen x=\"0\" y=\"27\" width=\"1920\" height=\"1053\" />\n    </state>\n    <state x=\"374\" y=\"117\" width=\"1536\" height=\"879\" key=\"MergeDialog/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053\" timestamp=\"1610644312013\" />\n    <state x=\"1259\" y=\"256\" width=\"352\" height=\"630\" key=\"RiderGenerateDialog\" timestamp=\"1605431162716\">\n      <screen x=\"0\" y=\"27\" width=\"1920\" height=\"1053\" />\n    </state>\n    <state x=\"1259\" y=\"256\" width=\"352\" height=\"630\" key=\"RiderGenerateDialog/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053\" timestamp=\"1605431162716\" />\n    <state x=\"3179\" y=\"235\" width=\"352\" height=\"638\" key=\"RiderGenerateDialog/0.27.1920.1053/1920.0.1920.1080@1920.0.1920.1080\" timestamp=\"1605366978918\" />\n    <state x=\"2751\" y=\"233\" width=\"992\" height=\"737\" key=\"SettingsEditor\" timestamp=\"1605978623450\">\n      <screen x=\"1920\" y=\"0\" width=\"3440\" height=\"1440\" />\n    </state>\n    <state x=\"2384\" y=\"175\" width=\"992\" height=\"737\" key=\"SettingsEditor/0.27.1920.1053/1920.0.1920.1080@1920.0.1920.1080\" timestamp=\"1604753839004\" />\n    <state x=\"2751\" y=\"233\" key=\"SettingsEditor/0.27.1920.1053/1920.0.3440.1440@1920.0.3440.1440\" timestamp=\"1605978623450\" />\n    <state x=\"1927\" y=\"722\" width=\"1710\" height=\"712\" key=\"VCS.FileHistoryDialog\" timestamp=\"1610819867718\">\n      <screen x=\"1920\" y=\"0\" width=\"3440\" height=\"1440\" />\n    </state>\n    <state x=\"4\" y=\"555\" width=\"954\" height=\"520\" key=\"VCS.FileHistoryDialog/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053\" timestamp=\"1610531732344\" />\n    <state x=\"2020\" y=\"127\" width=\"1520\" height=\"1213\" key=\"VCS.FileHistoryDialog/0.27.1920.1053/1920.0.3440.1440@1920.0.3440.1440\" timestamp=\"1605979229476\" />\n    <state x=\"962\" y=\"31\" width=\"954\" height=\"1045\" key=\"VCS.FileHistoryDialog/0.27.1920.1053@0.27.1920.1053\" timestamp=\"1607859779209\" />\n    <state x=\"1927\" y=\"722\" width=\"1710\" height=\"712\" key=\"VCS.FileHistoryDialog/1920.0.3440.1440/0.27.1920.1053@1920.0.3440.1440\" timestamp=\"1610819867718\" />\n    <state x=\"2954\" y=\"269\" width=\"800\" height=\"535\" key=\"Vcs.Push.Dialog.v2\" timestamp=\"1610473385102\">\n      <screen x=\"1920\" y=\"0\" width=\"1920\" height=\"1080\" />\n    </state>\n    <state x=\"1034\" y=\"289\" width=\"800\" height=\"535\" key=\"Vcs.Push.Dialog.v2/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053\" timestamp=\"1610646404517\" />\n    <state x=\"2954\" y=\"269\" width=\"800\" height=\"535\" key=\"Vcs.Push.Dialog.v2/0.27.1920.1053/1920.0.1920.1080@1920.0.1920.1080\" timestamp=\"1610473385102\" />\n    <state x=\"1034\" y=\"289\" key=\"Vcs.Push.Dialog.v2/0.27.1920.1053@0.27.1920.1053\" timestamp=\"1607861003963\" />\n    <state x=\"1243\" y=\"469\" width=\"382\" height=\"175\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2\" timestamp=\"1610644289541\">\n      <screen x=\"0\" y=\"27\" width=\"1920\" height=\"1053\" />\n    </state>\n    <state x=\"1243\" y=\"469\" width=\"382\" height=\"175\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053\" timestamp=\"1610644289541\" />\n    <state x=\"144\" y=\"261\" width=\"672\" height=\"679\" key=\"search.everywhere.popup\" timestamp=\"1607856248961\">\n      <screen x=\"0\" y=\"27\" width=\"1920\" height=\"1053\" />\n    </state>\n    <state x=\"144\" y=\"261\" width=\"672\" height=\"678\" key=\"search.everywhere.popup/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053\" timestamp=\"1605428382833\" />\n    <state x=\"2178\" y=\"320\" width=\"1204\" height=\"928\" key=\"search.everywhere.popup/0.27.1920.1053/1920.0.3440.1440@1920.0.3440.1440\" timestamp=\"1605975133048\" />\n    <state x=\"144\" y=\"261\" width=\"672\" height=\"679\" key=\"search.everywhere.popup/0.27.1920.1053@0.27.1920.1053\" timestamp=\"1607856248961\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.IA/.idea/workspace.xml	(revision ef4cbac1df5635a68e221c009cf997136a42548b)
++++ .idea/.idea.IA/.idea/workspace.xml	(date 1611082895779)
+@@ -20,8 +20,11 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="b94badb7-5677-44b3-b474-4b958a7ee0a1" name="Default Changelist" comment="Add speed and torque to car constraints">
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/contentModel.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IA/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Evolution/Chromosome.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Evolution/Chromosome.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CarController.cs" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Test.cs" afterDir="false" />
+     </list>
+@@ -62,21 +65,21 @@
+         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/WheelSpecifications.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Interfaces/ISpecificationsOperations.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Interfaces/IGene.cs" />
+-        <option value="$PROJECT_DIR$/Assets/Evolution/Chromosome.cs" />
+         <option value="$PROJECT_DIR$/Assets/Models/Car.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/BoxGene.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/CarBodyGene.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Genes/Implementations/WheelGene.cs" />
+-        <option value="$PROJECT_DIR$/Assets/Scripts/CarController.cs" />
+-        <option value="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/WheelConstraints.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/BoxSpecifications.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/CarBodySpecifications.cs" />
+         <option value="$PROJECT_DIR$/Assets/PanelController.cs" />
+         <option value="$PROJECT_DIR$/Assets/PanelScript.cs" />
+-        <option value="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" />
+-        <option value="$PROJECT_DIR$/Assets/Scripts/Test.cs" />
+         <option value="$PROJECT_DIR$/Assets/Evolution/Specifications/Implementations/Specifications/Constraints/CarBodyConstraints.cs" />
++        <option value="$PROJECT_DIR$/Assets/Evolution/Chromosome.cs" />
++        <option value="$PROJECT_DIR$/Assets/Scripts/Test.cs" />
++        <option value="$PROJECT_DIR$/Assets/Scripts/CarController.cs" />
++        <option value="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" />
++        <option value="$PROJECT_DIR$/Assets/Scripts/FinalScript.cs" />
+       </list>
+     </option>
+   </component>
+@@ -165,6 +168,8 @@
+       <workItem from="1610540505893" duration="480000" />
+       <workItem from="1610640296806" duration="5897000" />
+       <workItem from="1610817999463" duration="2293000" />
++      <workItem from="1611050334001" duration="923000" />
++      <workItem from="1611078844834" duration="3870000" />
+     </task>
+     <task id="LOCAL-00001" summary="Instantiate more cars and change wheel dynamically">
+       <created>1605282786091</created>
+Index: Assets/Scenes/SampleScene.unity
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Assets/Scenes/SampleScene.unity	(revision ef4cbac1df5635a68e221c009cf997136a42548b)
++++ Assets/Scenes/SampleScene.unity	(date 1611078947845)
+@@ -1069,7 +1069,7 @@
+   m_PrefabAsset: {fileID: 0}
+   m_GameObject: {fileID: 289935138}
+   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+-  m_LocalPosition: {x: 146.14, y: -3.02, z: 0}
++  m_LocalPosition: {x: 154.3, y: -1.5, z: 0}
+   m_LocalScale: {x: 1, y: 1, z: 1}
+   m_Children: []
+   m_Father: {fileID: 0}
+@@ -30565,11 +30565,11 @@
+   _car: {fileID: 2924685294412904730, guid: 74bb79f1d0d9e7c4a92eece74f517350, type: 3}
+   prefabCar: {fileID: 2924685294412904730, guid: 74bb79f1d0d9e7c4a92eece74f517350,
+     type: 3}
+-  index: 0
+   noGeneratie: 1
+-  neTerminat: 1
++  algorithmIsFinish: 0
+   maxScore: 0
+   score: 0
++  index: 0
+ --- !u!1 &1637985848
+ GameObject:
+   m_ObjectHideFlags: 0
+Index: .idea/.idea.IA/.idea/contentModel.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ContentModelStore\">\n    <e p=\"$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources\" t=\"IncludeRecursive\" />\n    <e p=\"$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_IA.1488422585.00\" t=\"ExcludeRecursive\" />\n    <e p=\"$PROJECT_DIR$\" t=\"IncludeRecursive\">\n      <e p=\"Assembly-CSharp.csproj\" t=\"IncludeRecursive\" />\n      <e p=\"Assets\" t=\"Include\">\n        <e p=\"Evolution\" t=\"Include\">\n          <e p=\"Chromosome.cs\" t=\"Include\" />\n          <e p=\"Genes\" t=\"Include\">\n            <e p=\"Implementations\" t=\"Include\">\n              <e p=\"BoxGene.cs\" t=\"Include\" />\n              <e p=\"CarBodyGene.cs\" t=\"Include\" />\n              <e p=\"WheelGene.cs\" t=\"Include\" />\n            </e>\n            <e p=\"Interfaces\" t=\"Include\">\n              <e p=\"IGene.cs\" t=\"Include\" />\n            </e>\n          </e>\n          <e p=\"Specifications\" t=\"Include\">\n            <e p=\"Implementations\" t=\"Include\">\n              <e p=\"SpecificationOperations\" t=\"Include\">\n                <e p=\"BoxSpecificationsOperations.cs\" t=\"Include\" />\n                <e p=\"CarBodySpecificationsOperations.cs\" t=\"Include\" />\n                <e p=\"WheelSpecificationsOperations.cs\" t=\"Include\" />\n              </e>\n              <e p=\"Specifications\" t=\"Include\">\n                <e p=\"BoxSpecifications.cs\" t=\"Include\" />\n                <e p=\"CarBodySpecifications.cs\" t=\"Include\" />\n                <e p=\"Constraints\" t=\"Include\">\n                  <e p=\"BoxConstraints.cs\" t=\"Include\" />\n                  <e p=\"CarBodyConstraints.cs\" t=\"Include\" />\n                  <e p=\"WheelConstraints.cs\" t=\"Include\" />\n                </e>\n                <e p=\"WheelSpecifications.cs\" t=\"Include\" />\n              </e>\n            </e>\n            <e p=\"Interfaces\" t=\"Include\">\n              <e p=\"ISpecifications.cs\" t=\"Include\" />\n              <e p=\"ISpecificationsOperations.cs\" t=\"Include\" />\n            </e>\n          </e>\n        </e>\n        <e p=\"Models\" t=\"Include\">\n          <e p=\"Car.cs\" t=\"Include\" />\n        </e>\n        <e p=\"PanelScript.cs\" t=\"Include\" />\n        <e p=\"Scripts\" t=\"Include\">\n          <e p=\"AudioController.cs\" t=\"Include\" />\n          <e p=\"CameraController.cs\" t=\"Include\" />\n          <e p=\"CarController.cs\" t=\"Include\" />\n          <e p=\"FinalScript.cs\" t=\"Include\" />\n          <e p=\"Score.cs\" t=\"Include\" />\n          <e p=\"Test.cs\" t=\"Include\" />\n        </e>\n      </e>\n      <e p=\"IA.sln\" t=\"IncludeFlat\" />\n      <e p=\"Temp/bin\" t=\"ExcludeRecursive\" />\n      <e p=\"obj\" t=\"ExcludeRecursive\" />\n      <e p=\"packages\" t=\"ExcludeRecursive\" />\n    </e>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.IA/.idea/contentModel.xml	(revision ef4cbac1df5635a68e221c009cf997136a42548b)
++++ .idea/.idea.IA/.idea/contentModel.xml	(date 1611050526505)
+@@ -2,7 +2,7 @@
+ <project version="4">
+   <component name="ContentModelStore">
+     <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
+-    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_IA.1488422585.00" t="ExcludeRecursive" />
++    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_IA.1697287470.00" t="ExcludeRecursive" />
+     <e p="$PROJECT_DIR$" t="IncludeRecursive">
+       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+       <e p="Assets" t="Include">
+Index: .idea/.idea.IA/.idea/indexLayout.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ContentModelUserStore\">\n    <attachedFolders />\n    <explicitIncludes>\n      <Path>Library/PackageCache/com.unity.2d.animation@3.2.5</Path>\n      <Path>Library/PackageCache/com.unity.2d.common@2.0.2</Path>\n      <Path>Library/PackageCache/com.unity.2d.path@2.0.6</Path>\n      <Path>Library/PackageCache/com.unity.2d.pixel-perfect@2.0.4</Path>\n      <Path>Library/PackageCache/com.unity.2d.psdimporter@2.1.6</Path>\n      <Path>Library/PackageCache/com.unity.2d.spriteshape@3.0.14</Path>\n      <Path>Library/PackageCache/com.unity.collab-proxy@1.2.16</Path>\n      <Path>Library/PackageCache/com.unity.ext.nunit@1.0.0</Path>\n      <Path>Library/PackageCache/com.unity.ide.rider@1.1.4</Path>\n      <Path>Library/PackageCache/com.unity.ide.vscode@1.2.3</Path>\n      <Path>Library/PackageCache/com.unity.mathematics@1.1.0</Path>\n      <Path>Library/PackageCache/com.unity.test-framework@1.1.18</Path>\n      <Path>Library/PackageCache/com.unity.textmeshpro@2.1.1</Path>\n      <Path>Library/PackageCache/com.unity.timeline@1.2.17</Path>\n      <Path>Packages</Path>\n      <Path>ProjectSettings</Path>\n    </explicitIncludes>\n    <explicitExcludes>\n      <Path>.idea</Path>\n      <Path>DacaNuMergiTeSterg_Data</Path>\n      <Path>Library</Path>\n      <Path>Temp</Path>\n      <Path>obj</Path>\n    </explicitExcludes>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.idea.IA/.idea/indexLayout.xml	(revision ef4cbac1df5635a68e221c009cf997136a42548b)
++++ .idea/.idea.IA/.idea/indexLayout.xml	(date 1611082962054)
+@@ -24,7 +24,6 @@
+       <Path>.idea</Path>
+       <Path>DacaNuMergiTeSterg_Data</Path>
+       <Path>Library</Path>
+-      <Path>Temp</Path>
+       <Path>obj</Path>
+     </explicitExcludes>
+   </component>

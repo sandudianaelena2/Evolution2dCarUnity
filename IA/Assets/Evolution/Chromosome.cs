@@ -23,11 +23,5 @@ namespace Evolution
 
         public List<IGene> Genes { get; set; }
         public int score { get; set; }
-
-        public Chromosome Cross(Chromosome other)
-        {
-            //TODO:Implement a method of crossing chromosomes
-            return new Chromosome();
-        }
     }
 }

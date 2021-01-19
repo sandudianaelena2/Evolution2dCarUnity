@@ -30646,11 +30646,11 @@ MonoBehaviour:
   _car: {fileID: 2924685294412904730, guid: 74bb79f1d0d9e7c4a92eece74f517350, type: 3}
   prefabCar: {fileID: 2924685294412904730, guid: 74bb79f1d0d9e7c4a92eece74f517350,
     type: 3}
+  index: 0
   noGeneratie: 1
   algorithmIsFinish: 0
   maxScore: 0
   score: 0
-  index: 0
 --- !u!1 &1637985848
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,12 +31,12 @@ public class Test : MonoBehaviour
     private bool resetCarFlag = false;
     private static System.Random random;
     private static object syncObj = new object();
-    private int noMaximumGenerations = 10;
+    private int noMaximumGenerations = 20;
     private bool adaptationPhase = true;
     private bool initialPopulationPhase = true;
     private bool generateNewPopulation = false;
     private Chromosome potentialSpecimen = null;
-    private Car activeCar = null;
+    public Car activeCar = null;
     private List<Chromosome> newPopulation = new List<Chromosome>();
     private Chromosome solutie;
     
@@ -58,10 +58,10 @@ public class Test : MonoBehaviour
                  resetCarFlag) ||
                 Math.Round(_car.transform.GetChild(0).position.x, 1) < -1)
             {
-                resetCarIfBlocked();
+                ResetCarIfBlocked();
                 if (!initialPopulationPhase && index >= noOfChromosomes)
                 {
-                    createNewGeneration();
+                    CreateNewGeneration();
                 }
             }
 
@@ -75,7 +75,7 @@ public class Test : MonoBehaviour
 
         if (generateNewPopulation)
         {
-            createNewPontentialSpecimen();
+            CreateNewPontentialSpecimen();
             Debug.Log("Generat masina pentru chromose " + index);
             activeCar = constructCar(potentialSpecimen);
             activeCar.SetActive(true);
@@ -85,7 +85,7 @@ public class Test : MonoBehaviour
         }
     }
 
-    private void createNewPontentialSpecimen()
+    private void CreateNewPontentialSpecimen()
     {
         var indivizi = new List<Chromosome>();
         var chromose = _chromosomes[index];
@@ -97,7 +97,7 @@ public class Test : MonoBehaviour
             do
             {
                 indexRandom = GetRandomIntNumber(_chromosomes.Count);
-            } while (indexRandom == index);
+            } while (indexRandom == index && !indivizi.Contains(_chromosomes[indexRandom]));
 
             indivizi.Add(_chromosomes[indexRandom]);
             temp--;
@@ -120,7 +120,7 @@ public class Test : MonoBehaviour
         }
     }
 
-    private void createNewGeneration()
+    private void CreateNewGeneration()
     {
         noGeneratie++;
         Debug.Log("Numar generatii" + noGeneratie);
@@ -133,7 +133,7 @@ public class Test : MonoBehaviour
         solutie = _chromosomes.Find((item) => item.score == maxScore);
         newPopulation.Clear();
     }
-    private void resetCarIfBlocked()
+    private void ResetCarIfBlocked()
     {
         resetCarFlag = false;
         if (initialPopulationPhase)
@@ -191,6 +191,7 @@ public class Test : MonoBehaviour
             if (i == 0)
             {
                 _car = newCar.GetCar();
+                activeCar = newCar;
             }
             else
             {

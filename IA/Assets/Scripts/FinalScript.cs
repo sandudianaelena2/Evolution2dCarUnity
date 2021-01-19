@@ -30,13 +30,9 @@ public class FinalScript : MonoBehaviour
 
     private void StopMotors()
     {
-        JointMotor2D motor2D = new JointMotor2D();
-        motor2D.motorSpeed = 0;
-        motor2D.maxMotorTorque = 0;
-        var carBody = Test.instance._car.transform.GetChild(0).gameObject;
-        var joints = carBody.GetComponents<WheelJoint2D>();
-        joints[0].motor = motor2D;
-        joints[1].motor = motor2D;
+        Test.instance._car.transform.GetChild(0).GetComponent<CarController>().stop = true;
+        var rigidBody = Test.instance._car.transform.GetChild(0).GetComponent<Rigidbody2D>();
+        rigidBody.constraints = RigidbodyConstraints2D.FreezePosition;
     }
 
 }
