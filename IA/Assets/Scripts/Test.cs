@@ -85,10 +85,14 @@ public class Test : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// <para>Functie care genereaza individul potential.</para>
+    /// </summary>
     private void CreateNewPontentialSpecimen()
     {
         var indivizi = new List<Chromosome>();
         var chromose = _chromosomes[index];
+        //se stocheaza individul existent
         indivizi.Add(chromose);
         var temp = 3;
         while (temp > 0)
@@ -96,6 +100,7 @@ public class Test : MonoBehaviour
             int indexRandom;
             do
             {
+                //se genereaza alti 3 indivizi diferiti de individul existent in mod aleatoriu
                 indexRandom = GetRandomIntNumber(_chromosomes.Count);
             } while (indexRandom == index && !indivizi.Contains(_chromosomes[indexRandom]));
 
@@ -110,16 +115,22 @@ public class Test : MonoBehaviour
             var nrAleatoriu = GetRandomDoubleNumber();
             if (gena == punctDeDivizare || nrAleatoriu < cr)
             {
+                //se genereaza individul potential efectuand operatii asupra
+                //celorlalti 3 indivizi
                 potentialSpecimen.Genes[gena]
                     .Mutate(indivizi.Select(individ => individ.Genes[gena]).ToList(), f);
             }
             else
             {
+                //individul potential va prelua caracteristicile individului existent
                 potentialSpecimen.Genes[gena] = indivizi[0].Genes[gena];
             }
         }
     }
 
+    /// <summary>
+    /// <para>Functie care genereaza individul potential.</para>
+    /// </summary>
     private void CreateNewGeneration()
     {
         noGeneratie++;
@@ -133,6 +144,10 @@ public class Test : MonoBehaviour
         solutie = _chromosomes.Find((item) => item.score == maxScore);
         newPopulation.Clear();
     }
+
+    /// <summary>
+    /// <para>Functie care activeaza urmatoarea masina(daca exista) in caz ca s-a blocat.</para>
+    /// </summary>
     private void ResetCarIfBlocked()
     {
         resetCarFlag = false;
@@ -140,6 +155,7 @@ public class Test : MonoBehaviour
         {
             if (index < noOfChromosomes - 1)
             {
+                //se va dezactiva masina actuala si se va activa urmatoarea masina din lista
                 _chromosomes[index].score = Score.ScoreValue;
                 _cars[index].SetActive(false);
                 _car = _cars[index + 1].GetCar();
@@ -147,6 +163,8 @@ public class Test : MonoBehaviour
             }
             else
             {
+                //se va dezactiva masina actuala 
+                //se pregateste trecerea in faza de generare a unui nou individ
                 _cars[index].SetActive(false);
                 _chromosomes[index].score = Score.ScoreValue;
                 noGeneratie++;
@@ -158,6 +176,8 @@ public class Test : MonoBehaviour
         }
         else
         {
+            //se compara scorul individului existent cu cel al individului potential
+            //functia de adaptare(scor)
             potentialSpecimen.score = Score.ScoreValue;
             if (potentialSpecimen.score > _chromosomes[index].score)
             {
@@ -173,6 +193,7 @@ public class Test : MonoBehaviour
             generateNewPopulation = true;
         }
 
+        //se actualizeaza scorul maxim
         if (Score.ScoreValue > maxScore)
         {
             maxScore = Score.ScoreValue;
@@ -181,13 +202,18 @@ public class Test : MonoBehaviour
         index++;
     }
 
+    /// <summary>
+    /// <para>Functie care genereaza populatia initiala.</para>
+    /// </summary>
     private void GenerateChromosomes()
     {
         for (int i = 0; i < noOfChromosomes; i++)
         {
             var newChromosome = new Chromosome();
             _chromosomes.Add(newChromosome);
+            //se genereaza un individ in mod aleatoriu
             var newCar = constructCar(newChromosome);
+            //prima masina se activeaza iar restul se dezactiveaza
             if (i == 0)
             {
                 _car = newCar.GetCar();
@@ -202,12 +228,16 @@ public class Test : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// <para>Functie care genereaza in mod aleatoriu un individ.</para>
+    /// </summary>
     private Car constructCar(Chromosome chromosome)
     {
         var genes = chromosome.Genes;
         GameObject newCar = GameObject.Instantiate(prefabCar);
         foreach (var gene in genes)
         {
+            //se genereaza un individ in mod aleatoriu
             gene.GetSpecifications().ChangeGameObject(newCar);
         }
 
