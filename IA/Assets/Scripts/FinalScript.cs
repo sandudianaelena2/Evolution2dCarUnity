@@ -33,7 +33,8 @@ public class FinalScript : MonoBehaviour
         JointMotor2D motor2D = new JointMotor2D();
         motor2D.motorSpeed = 0;
         motor2D.maxMotorTorque = 0;
-        var joints = Test.instance._car.GetComponents<WheelJoint2D>();
+        var carBody = Test.instance._car.transform.GetChild(0).gameObject;
+        var joints = carBody.GetComponents<WheelJoint2D>();
         joints[0].motor = motor2D;
         joints[1].motor = motor2D;
     }
